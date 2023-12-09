@@ -1,3 +1,4 @@
+// ignore_for_file: prefer_const_constructors
 
 import 'package:buyers/constants/constants.dart';
 import 'package:buyers/models/product_model.dart';
@@ -68,7 +69,8 @@ class _SIngleCartItemState extends State<SIngleCartItem> {
                                     child: Text(
                                       widget.singleProduct.name,
                                       style: const TextStyle(
-                                          fontSize: 16, color: Colors.black),
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black),
                                     ),
                                   ),
                                   Row(
@@ -98,6 +100,8 @@ class _SIngleCartItemState extends State<SIngleCartItem> {
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
+                                      // if (quantity <
+                                      //     widget.singleProduct.quantity)
                                       CupertinoButton(
                                         onPressed: () {
                                           setState(() {
@@ -137,13 +141,15 @@ class _SIngleCartItemState extends State<SIngleCartItem> {
                                                 .contains(widget.singleProduct)
                                             ? 'Remove to Wishlist'
                                             : 'Add to Wishlist',
-                                        style:
-                                            const TextStyle(color: Colors.red),
+                                        style: const TextStyle(
+                                            color: Colors.red, fontSize: 14),
                                       )),
                                 ],
                               ),
-                              Text(
-                                  'Price: ETB ${(widget.singleProduct.price).toDouble()}'),
+                              FittedBox(
+                                child: Text(
+                                    'Price: ETB ${(widget.singleProduct.price).toDouble()}'),
+                              ),
                             ],
                           ),
                           CupertinoButton(
@@ -158,7 +164,7 @@ class _SIngleCartItemState extends State<SIngleCartItem> {
                               onPressed: () {
                                 appProvider
                                     .removeCartproduct(widget.singleProduct);
-                                showMessage('Removed from cart');
+                                showMessage('Product Removed from cart');
                               }),
                         ],
                       ),

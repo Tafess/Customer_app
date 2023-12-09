@@ -7,6 +7,7 @@ class OrderModel {
   double totalprice;
   String orderId;
   String userId;
+  String sellerId;
 
   OrderModel({
     required this.totalprice,
@@ -15,10 +16,11 @@ class OrderModel {
     required this.products,
     required this.status,
     required this.userId,
+    required this.sellerId,
   });
 
   factory OrderModel.fromJson(Map<String, dynamic> json) {
-    List<dynamic> productMap = json['products'];
+    List<dynamic>? productMap = json['products'];
     return OrderModel(
       orderId: json['orderId'] ?? "",
       products:
@@ -27,6 +29,7 @@ class OrderModel {
       status: json['status'] ?? "",
       payment: json['payment'] ?? "",
       userId: json['userId'] ?? "",
+      sellerId: json['sellerId'] ?? "",
     );
   }
 }

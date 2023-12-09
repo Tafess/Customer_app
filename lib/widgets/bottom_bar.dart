@@ -1,4 +1,3 @@
-
 import 'package:buyers/screens/account_screen.dart';
 import 'package:buyers/screens/cart_screen.dart';
 import 'package:buyers/screens/favorite_screen.dart';
@@ -35,36 +34,37 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
   List<PersistentBottomNavBarItem> _navBarsItems() => [
         PersistentBottomNavBarItem(
             icon: const Icon(Icons.home),
-            inactiveIcon: const Icon(Icons.home_outlined),
+            inactiveIcon: const Icon(Icons.home_outlined, size: 20),
             title: 'Home',
-            activeColorPrimary: Colors.white,
-            inactiveColorPrimary: Colors.white,
+            activeColorPrimary: Colors.blue,
+            inactiveColorPrimary: Colors.deepOrange,
             inactiveColorSecondary: Colors.purple),
         PersistentBottomNavBarItem(
           icon: const Icon(Icons.shopping_cart),
-          inactiveIcon: const Icon(Icons.shopping_cart_outlined),
+          inactiveIcon: const Icon(Icons.shopping_cart_outlined, size: 20),
           title: 'Cart',
-          activeColorPrimary: Colors.white,
-          inactiveColorPrimary: Colors.white,
+          activeColorPrimary: Colors.blue,
+          inactiveColorPrimary: Colors.deepOrange,
         ),
         PersistentBottomNavBarItem(
             icon: const Icon(Icons.circle),
-            inactiveIcon: const Icon(Icons.circle_outlined),
+            inactiveIcon: const Icon(Icons.circle_outlined, size: 20),
             title: 'Orders',
-            activeColorPrimary: Colors.white,
-            inactiveColorPrimary: Colors.white),
+            activeColorPrimary: Colors.blue,
+            inactiveColorPrimary: Colors.deepOrange),
         PersistentBottomNavBarItem(
           icon: const Icon(Icons.person),
-          inactiveIcon: const Icon(Icons.person_2_outlined),
+          inactiveIcon: const Icon(Icons.person_2_outlined, size: 20),
           title: 'Profile',
-          activeColorPrimary: Colors.white,
-          inactiveColorPrimary: Colors.white,
+          activeColorPrimary: Colors.blue,
+          inactiveColorPrimary: Colors.deepOrange,
         ),
         PersistentBottomNavBarItem(
-          icon: const Icon(Icons.settings),
+          icon: Icon(Icons.settings_applications),
+          inactiveIcon: const Icon(Icons.settings, size: 20),
           title: 'Settings',
-          activeColorPrimary: Colors.white,
-          inactiveColorPrimary: Colors.white,
+          activeColorPrimary: Colors.blue,
+          inactiveColorPrimary: Colors.deepOrange,
         )
       ];
 
@@ -81,13 +81,13 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
               : kBottomNavigationBarHeight,
           bottomScreenMargin: 0,
 
-          backgroundColor: Colors.blue.shade400,
+          backgroundColor: Colors.white,
 
           hideNavigationBar: _hideNavBar,
           decoration: const NavBarDecoration(colorBehindNavBar: Colors.red),
           itemAnimationProperties: const ItemAnimationProperties(
-            duration: Duration(milliseconds: 50),
-            curve: Curves.ease,
+            duration: Duration(milliseconds: 10),
+            curve: Curves.bounceIn,
           ),
           screenTransitionAnimation: const ScreenTransitionAnimation(
             animateTabTransition: true,

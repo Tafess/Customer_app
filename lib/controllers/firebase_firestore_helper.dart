@@ -1,6 +1,5 @@
 // ignore_for_file: use_build_context_synchronously
 
-
 import 'package:buyers/constants/constants.dart';
 import 'package:buyers/models/catagory_model.dart';
 import 'package:buyers/models/order_model.dart';
@@ -75,23 +74,35 @@ class FirebaseFirestoreHelper {
       ShowLoderDialog(context);
       double totalPrice = 0.0;
       for (var element in list) {
-        totalPrice += element.price * element.quantity!;
+        totalPrice += element.price * element.quantity;
       }
       DocumentReference documentReference = _firebaseFirestore
           .collection('userOrders')
           .doc(FirebaseAuth.instance.currentUser!.uid)
           .collection('orders')
           .doc();
+
       DocumentReference admin =
           _firebaseFirestore.collection('orders').doc(documentReference.id);
+
+      QuerySnapshot<Map<String, dynamic>> querySnapshot =
+          await _firebaseFirestore.collectionGroup('products').get();
+      String productId = querySnapshot.docs.first.id;
+
+      DocumentSnapshot<Map<String, dynamic>> snapshot = await _firebaseFirestore
+          .collection('adminProducts')
+          .doc(productId)
+          .get();
+      String sellerId = snapshot['sellerId'];
       String uid = FirebaseAuth.instance.currentUser!.uid;
       admin.set({
         'products': list.map((e) => e.toJson()),
         'status': 'pending',
         'totalprice': totalPrice,
         'payment': payment,
-        'userid': uid,
+        'userId': uid,
         'orderId': admin.id,
+        'sellerId': sellerId,
       });
 
       documentReference.set({
@@ -101,6 +112,7 @@ class FirebaseFirestoreHelper {
         'payment': payment,
         'userId': uid,
         'orderId': documentReference.id,
+        'sellerId': sellerId,
       });
       showMessage('Ordered Successfully');
       Navigator.of(context, rootNavigator: true).pop();
@@ -109,7 +121,6 @@ class FirebaseFirestoreHelper {
     } catch (e) {
       showMessage(e.toString());
       Navigator.of(context, rootNavigator: true).pop();
-
       return false;
     }
   }
@@ -132,6 +143,7 @@ class FirebaseFirestoreHelper {
       return orderList;
     } catch (error) {
       showMessage(error.toString());
+      print(error.toString());
 
       return [];
     }
@@ -141,7 +153,7 @@ class FirebaseFirestoreHelper {
     String? token = await FirebaseMessaging.instance.getToken();
     if (token != null) {
       await _firebaseFirestore
-          .collection('users')
+          .collection('sellers')
           .doc(FirebaseAuth.instance.currentUser!.uid)
           .update({'notificationToken': token});
     }

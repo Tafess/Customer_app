@@ -1,6 +1,5 @@
 // ignore_for_file: use_build_context_synchronously
 
-
 import 'package:buyers/constants/constants.dart';
 import 'package:buyers/constants/routes.dart';
 import 'package:buyers/models/user_model.dart';
@@ -20,7 +19,10 @@ class FirebaseAuthHelper {
     try {
       ShowLoderDialog(context);
 
-      await _auth.signInWithEmailAndPassword(email: email, password: password);
+      await _auth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
 
       Routes.instance
           .pushAndRemoveUntil(widget: const Home(), context: context);
@@ -33,15 +35,26 @@ class FirebaseAuthHelper {
   }
 
   Future<bool> signUp(
-      String name, String email, String password, BuildContext context) async {
+    String name,
+    String email,
+    String password,
+    BuildContext context,
+  ) async {
     try {
       ShowLoderDialog(context);
 
-      UserCredential? userCredential = await _auth
-          .createUserWithEmailAndPassword(email: email, password: password);
+      UserCredential? userCredential =
+          await _auth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
 
       UserModel userModel = UserModel(
-          id: userCredential.user!.uid, name: name, email: email, image: null);
+        id: userCredential.user!.uid,
+        name: name,
+        email: email,
+        image: null,
+      );
       Routes.instance
           .pushAndRemoveUntil(widget: const Home(), context: context);
 
@@ -64,15 +77,6 @@ class FirebaseAuthHelper {
 
       _auth.currentUser!.updatePassword(password);
 
-      // UserCredential? userCredential = await _auth
-      //     .createUserWithEmailAndPassword(email: email, password: Password);
-
-      // UserModel userModel = UserModel(
-      //     id: userCredential.user!.uid, name: name, email: email, image: null);
-      // Routes.instance
-      //     .pushAndRemoveUntil(widget: const Home(), context: context);
-
-      // _firestore.collection('users').doc(userModel.id).set(userModel.toJson());
       Navigator.of(context, rootNavigator: true).pop();
       showMessage('Password changed');
       Navigator.of(context).pop();

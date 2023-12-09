@@ -8,7 +8,7 @@ ThemeData themeData = ThemeData(
 
   ////////////////////////////////////////////////
   inputDecorationTheme: InputDecorationTheme(
-      border: outlineInputBorder,
+      // border: outlineInputBorder,
       errorBorder: outlineInputBorder,
       enabledBorder: outlineInputBorder,
       focusedBorder: outlineInputBorder,
@@ -48,10 +48,11 @@ ThemeData themeData = ThemeData(
 );
 
 OutlineInputBorder outlineInputBorder = const OutlineInputBorder(
-  borderSide: BorderSide(
-    color: Colors.grey,
-    //style: BorderStyle.solid,
-    width: 1,
-  ),
+  // borderSide: BorderSide(
+
+  //   color: Colors.grey,
+  //   //style: BorderStyle.solid,
+  //   width: 1,
+  // ),
   borderRadius: BorderRadius.all(Radius.circular(12.0)),
 );

@@ -1,4 +1,3 @@
-
 import 'package:buyers/constants/constants.dart';
 import 'package:buyers/constants/primary_button.dart';
 import 'package:buyers/constants/routes.dart';
@@ -11,7 +10,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
-
 
 class ProductDetails extends StatefulWidget {
   final ProductModel singleProduct;
@@ -92,7 +90,7 @@ class _ProductDetailsState extends State<ProductDetails> {
         padding: const EdgeInsets.fromLTRB(12.0, 12, 12, 30),
         children: [
           SizedBox(
-            height: 300,
+            height: 200,
             width: double.infinity,
             child: Image.network(
               widget.singleProduct.image,
@@ -141,11 +139,16 @@ class _ProductDetailsState extends State<ProductDetails> {
           const SizedBox(
             height: 12,
           ),
+          Text(
+            '${widget.singleProduct.quantity.toString()}   items Found',
+            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          ),
+          SizedBox(height: 12),
           Row(
             children: [
               CupertinoButton(
                 onPressed: () {
-                  if (quantity >= 1) {
+                  if (quantity > 1) {
                     setState(() {
                       quantity--;
                     });
@@ -159,9 +162,6 @@ class _ProductDetailsState extends State<ProductDetails> {
                   child: Icon(Icons.remove),
                 ),
               ),
-              const SizedBox(
-                width: 12,
-              ),
               Text(
                 quantity.toString(),
                 style: const TextStyle(
@@ -169,21 +169,21 @@ class _ProductDetailsState extends State<ProductDetails> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              const SizedBox(width: 12),
-              CupertinoButton(
-                onPressed: () {
-                  setState(() {
-                    quantity++;
-                  });
-                },
-                padding: EdgeInsets.zero,
-                child: const CircleAvatar(
-                  maxRadius: 14,
-                  foregroundColor: Colors.white,
-                  backgroundColor: Colors.blue,
-                  child: Icon(Icons.add),
+           //   if (quantity < widget.singleProduct.quantity)
+                CupertinoButton(
+                  onPressed: () {
+                    setState(() {
+                      quantity++;
+                    });
+                  },
+                  padding: EdgeInsets.zero,
+                  child: const CircleAvatar(
+                    maxRadius: 14,
+                    foregroundColor: Colors.white,
+                    backgroundColor: Colors.blue,
+                    child: Icon(Icons.add),
+                  ),
                 ),
-              ),
             ],
           ),
           const SizedBox(height: 50),
