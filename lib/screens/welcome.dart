@@ -20,37 +20,15 @@ class Welcome extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const TopTitles(
-                  title: 'Welcome',
-                  subtitle: 'Buy anything from our store with the app'),
-              // Center(
-              //   child: Image.asset(
-              //     AssetImages.instance.welcomeImage,
-              //     scale: 8,
-              //   ),
-              // ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  CupertinoButton(
-                    onPressed: () {},
-                    padding: EdgeInsets.zero,
-                    child: const Icon(
-                      Icons.facebook,
-                      size: 35,
-                      color: Colors.blue,
-                    ),
-                  ),
-                  // CupertinoButton(
-                  //   onPressed: () {},
-                  //   child: Image.asset(
-                  //     AssetImages.instance.googleLogo,
-                  //     scale: 80,
-                  //   ),
-                  // ),
-                ],
+              // const TopTitles(
+              //     title: 'Welcome',
+              //     subtitle: 'Buy anything from our store with the app'),
+              Center(
+                child: Image.asset(
+                  'assets/images/belkis3.jpg',
+                ),
               ),
-              const SizedBox(height: 20),
+
               PrimaryButton(
                 title: 'Sign In',
                 onPressed: () {

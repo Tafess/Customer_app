@@ -32,6 +32,7 @@ class StripeHelper {
       return true;
     } catch (err) {
       showMessage(err.toString());
+      print(err.toString());
       
       return false;
     }
@@ -44,6 +45,7 @@ class StripeHelper {
       });
     } catch (e) {
       showMessage('$e');
+      print(e.toString());
     }
   }
 

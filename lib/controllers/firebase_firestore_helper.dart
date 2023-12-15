@@ -154,8 +154,8 @@ class FirebaseFirestoreHelper {
     if (token != null) {
       await _firebaseFirestore
           .collection('sellers')
-          .doc(FirebaseAuth.instance.currentUser!.uid)
-          .update({'notificationToken': token});
+          .doc(FirebaseAuth.instance.currentUser!.uid);
+      // .update({'notificationToken': token});
     }
   }
 
@@ -171,5 +171,12 @@ class FirebaseFirestoreHelper {
         .collection('orders')
         .doc(orderModel.orderId)
         .update({'status': status});
+  }
+
+  Future<String> generateQRCode(String orderId) async {
+    // You can customize the QR code data as needed.
+    String qrCodeData = orderId;
+
+    return qrCodeData;
   }
 }

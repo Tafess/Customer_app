@@ -1,4 +1,4 @@
-import 'package:buyers/screens/account_screen.dart';
+import 'package:buyers/screens/custom_drawer.dart';
 import 'package:buyers/screens/cart_screen.dart';
 import 'package:buyers/screens/favorite_screen.dart';
 import 'package:buyers/screens/home.dart';
@@ -24,8 +24,8 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
         const Home(),
         const CartScreen(),
         const OrderScreen(),
-        const AccountScreen(),
-        const FavoriteScreen(),
+        // const AccountScreen(),
+        // const FavoriteScreen(),
 
         //  ProfileScreen(),
         //OrderScreen(),
@@ -37,35 +37,35 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
             inactiveIcon: const Icon(Icons.home_outlined, size: 20),
             title: 'Home',
             activeColorPrimary: Colors.blue,
-            inactiveColorPrimary: Colors.deepOrange,
+            inactiveColorPrimary: Colors.black54,
             inactiveColorSecondary: Colors.purple),
         PersistentBottomNavBarItem(
           icon: const Icon(Icons.shopping_cart),
           inactiveIcon: const Icon(Icons.shopping_cart_outlined, size: 20),
           title: 'Cart',
           activeColorPrimary: Colors.blue,
-          inactiveColorPrimary: Colors.deepOrange,
+          inactiveColorPrimary: Colors.black54,
         ),
         PersistentBottomNavBarItem(
             icon: const Icon(Icons.circle),
             inactiveIcon: const Icon(Icons.circle_outlined, size: 20),
             title: 'Orders',
             activeColorPrimary: Colors.blue,
-            inactiveColorPrimary: Colors.deepOrange),
-        PersistentBottomNavBarItem(
-          icon: const Icon(Icons.person),
-          inactiveIcon: const Icon(Icons.person_2_outlined, size: 20),
-          title: 'Profile',
-          activeColorPrimary: Colors.blue,
-          inactiveColorPrimary: Colors.deepOrange,
-        ),
-        PersistentBottomNavBarItem(
-          icon: Icon(Icons.settings_applications),
-          inactiveIcon: const Icon(Icons.settings, size: 20),
-          title: 'Settings',
-          activeColorPrimary: Colors.blue,
-          inactiveColorPrimary: Colors.deepOrange,
-        )
+            inactiveColorPrimary: Colors.black54),
+        // PersistentBottomNavBarItem(
+        //   icon: const Icon(Icons.person),
+        //   inactiveIcon: const Icon(Icons.person_2_outlined, size: 20),
+        //   title: 'Profile',
+        //   activeColorPrimary: Colors.blue,
+        //   inactiveColorPrimary: Colors.deepOrange,
+        // ),
+        // PersistentBottomNavBarItem(
+        //   icon: Icon(Icons.settings_applications),
+        //   inactiveIcon: const Icon(Icons.settings, size: 20),
+        //   title: 'Settings',
+        //   activeColorPrimary: Colors.blue,
+        //   inactiveColorPrimary: Colors.deepOrange,
+        // )
       ];
 
   @override

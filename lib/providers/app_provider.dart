@@ -88,7 +88,11 @@ class AppProvider with ChangeNotifier {
   double totalPrice() {
     double totalPrice = 0.0;
     for (var element in _cartProductList) {
-      totalPrice += element.price * element.quantity!;
+      if (element.discount == 0.0) {
+        totalPrice += element.price * element.quantity;
+      } else {
+        totalPrice += element.discount * element.quantity;
+      }
     }
 
     return totalPrice;
@@ -97,7 +101,11 @@ class AppProvider with ChangeNotifier {
   double totalPriceBuyProductList() {
     double totalPrice = 0.0;
     for (var element in _buyProductList) {
-      totalPrice += element.price * element.quantity!;
+      if (element.discount == 0.0) {
+        totalPrice += element.price * element.quantity;
+      } else {
+        totalPrice += element.discount * element.quantity;
+      }
     }
 
     return totalPrice;

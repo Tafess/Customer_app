@@ -7,9 +7,12 @@ import 'package:buyers/controllers/firebase_firestore_helper.dart';
 import 'package:buyers/models/catagory_model.dart';
 import 'package:buyers/models/product_model.dart';
 import 'package:buyers/providers/app_provider.dart';
+import 'package:buyers/screens/custom_drawer.dart';
 import 'package:buyers/screens/category_view.dart';
-import 'package:buyers/screens/check_out.dart';
 import 'package:buyers/screens/product_details.dart';
+import 'package:buyers/widgets/bottom_bar.dart';
+import 'package:buyers/widgets/single_category.dart';
+import 'package:buyers/widgets/single_product.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -78,6 +81,8 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
         title: const TopTitles(title: '........', subtitle: ''),
       ),
+      // bottomNavigationBar: CustomBottomBar(),
+      drawer: CustomDrawer(),
       body: isLoding
           ? Center(
               child: Container(
@@ -136,56 +141,8 @@ class _HomeState extends State<Home> {
                                 )
                               : SingleChildScrollView(
                                   scrollDirection: Axis.horizontal,
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: categoriesList
-                                        .map(
-                                          (category) => Padding(
-                                            padding: const EdgeInsets.only(
-                                              left: 8.0,
-                                            ),
-                                            child: Column(
-                                              children: [
-                                                CupertinoButton(
-                                                  padding: EdgeInsets.zero,
-                                                  onPressed: () {
-                                                    Routes.instance.push(
-                                                        widget: CategoryView(
-                                                            categoryModel:
-                                                                category),
-                                                        context: context);
-                                                  },
-                                                  child: CircleAvatar(
-                                                    backgroundColor:
-                                                        Colors.white,
-                                                    radius: 35,
-                                                    child: Column(children: [
-                                                      SizedBox(
-                                                        height: 40,
-                                                        width: 40,
-                                                        child: ClipOval(
-                                                          child: Image.network(
-                                                            category.image,
-                                                            fit: BoxFit.cover,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      Text(category.name,
-                                                          style:
-                                                              const TextStyle(
-                                                                  fontSize: 8,
-                                                                  color: Colors
-                                                                      .black)),
-                                                    ]),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        )
-                                        .toList(),
-                                  ),
+                                  child: SingleCategoryWidget(
+                                      categoriesList: categoriesList),
                                 ),
                           const SizedBox(
                             height: 10,
@@ -219,70 +176,8 @@ class _HomeState extends State<Home> {
                                           itemBuilder: (ctx, index) {
                                             ProductModel singleProduct =
                                                 searchList[index];
-                                            return Container(
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(20),
-                                                color: Colors.white,
-                                              ),
-                                              child: InkWell(
-                                                onTap: () {
-                                                  Routes.instance.push(
-                                                      widget: ProductDetails(
-                                                          singleProduct:
-                                                              singleProduct),
-                                                      context: context);
-                                                },
-                                                child: Column(children: [
-                                                  SizedBox(
-                                                    height: 50,
-                                                    width: double.infinity,
-                                                    child: ClipOval(
-                                                      child: Image.network(
-                                                        singleProduct.image,
-                                                        fit: BoxFit.cover,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  const SizedBox(
-                                                    height: 12,
-                                                  ),
-                                                  Text(
-                                                    singleProduct.name,
-                                                    style: const TextStyle(
-                                                      fontSize: 14,
-                                                    ),
-                                                  ),
-                                                  // Text(
-                                                  //   'ETB ${singleProduct.discount.toStringAsFixed(2)}',
-                                                  // ),
-                                                  Text(
-                                                    'ETB ${singleProduct.price.toStringAsFixed(2)}',
-                                                  ),
-                                                  const SizedBox(
-                                                    height: 6.0,
-                                                  ),
-                                                  SizedBox(
-                                                    height: 40,
-                                                    width: 100,
-                                                    child: PrimaryButton(
-                                                      onPressed: () {
-                                                        Routes.instance.push(
-                                                            widget: ProductDetails(
-                                                                singleProduct:
-                                                                    singleProduct),
-                                                            context: context);
-                                                        // Routes.instance.push(
-                                                        //     widget:
-                                                        //         ProductDetails,
-                                                        //     context: context);
-                                                      },
-                                                      title: 'Buy',
-                                                    ),
-                                                  ), // onPressed: () {}, child: Text('Buy'))
-                                                ]),
-                                              ),
-                                            );
+                                            return SingleProductWidget(
+                                                singleProduct: singleProduct);
                                           }),
                                     )
                                   : productModelList.isEmpty
@@ -300,133 +195,14 @@ class _HomeState extends State<Home> {
                                             gridDelegate:
                                                 const SliverGridDelegateWithFixedCrossAxisCount(
                                                     childAspectRatio: 0.7,
-                                                    mainAxisSpacing: 7,
-                                                    crossAxisSpacing: 6,
+                                                    mainAxisSpacing: 4,
+                                                    crossAxisSpacing: 10,
                                                     crossAxisCount: 2),
                                             itemBuilder: (ctx, index) {
                                               ProductModel singleProduct =
                                                   productModelList[index];
-                                              return InkWell(
-                                                onTap: () {
-                                                  Routes.instance.push(
-                                                      widget: ProductDetails(
-                                                          singleProduct:
-                                                              singleProduct),
-                                                      context: context);
-                                                },
-                                                child: Stack(
-                                                  alignment:
-                                                      Alignment.bottomRight,
-                                                  children: [
-                                                    Container(
-                                                      decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(6),
-                                                        color: Colors.white,
-                                                      ),
-                                                      child: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .fromLTRB(
-                                                                12, 12, 6, 6),
-                                                        child: Column(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .start,
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            SizedBox(
-                                                              height: 60,
-                                                              width: double
-                                                                  .infinity,
-                                                              child: Image.network(
-                                                                  singleProduct
-                                                                      .image,
-                                                                  fit: BoxFit
-                                                                      .cover),
-                                                            ),
-                                                            const SizedBox(
-                                                              height: 12,
-                                                            ),
-                                                            Text(
-                                                              singleProduct
-                                                                  .name,
-                                                              style: const TextStyle(
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold),
-                                                            ),
-                                                            if (singleProduct
-                                                                    .discount !=
-                                                                0.0)
-                                                              Text(
-                                                                  'Discount: ETB ${singleProduct.discount.toStringAsFixed(2)}'),
-                                                            Text(
-                                                              'Price: ETB ${singleProduct.price.toStringAsFixed(2)}',
-                                                              style: TextStyle(
-                                                                  decoration: singleProduct
-                                                                              .discount !=
-                                                                          0.0
-                                                                      ? TextDecoration
-                                                                          .lineThrough
-                                                                      : null),
-                                                            ),
-                                                            Text(
-                                                              'Description: ${singleProduct.description}',
-                                                              maxLines: 1,
-                                                              overflow:
-                                                                  TextOverflow
-                                                                      .ellipsis,
-                                                            ),
-                                                            Text(
-                                                                ' ${singleProduct.quantity} items found'),
-                                                            if (singleProduct
-                                                                    .size !=
-                                                                0.0)
-                                                              Text(
-                                                                  ' ${singleProduct.size} ${singleProduct.measurement} '),
-                                                            const SizedBox(
-                                                              height: 6.0,
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    //   Container(
-                                                    //     color: Colors
-                                                    //         .deepOrange,
-                                                    //     height: 30,
-                                                    //     width: 30,
-                                                    //     alignment: Alignment
-                                                    //         .center,
-                                                    //     child: IconButton(
-                                                    //         onPressed: () {
-                                                    //           Routes.instance.push(
-                                                    //               widget: ProductDetails(
-                                                    //                   singleProduct:
-                                                    //                       singleProduct),
-                                                    //               context:
-                                                    //                   context);
-                                                    //           Routes.instance.push(
-                                                    //               widget: CheckOutScreen(
-                                                    //                   singleProduct:
-                                                    //                       singleProduct),
-                                                    //               context:
-                                                    //                   context);
-                                                    //         },
-                                                    //         icon: Icon(
-                                                    //             Icons
-                                                    //                 .shopping_cart_checkout,
-                                                    //             color: Colors
-                                                    //                 .white)),
-                                                    //   ),
-                                                    // ],
-                                                  ],
-                                                ),
-                                              );
+                                              return SingleProductWidget(
+                                                  singleProduct: singleProduct);
                                             },
                                           ),
                                         ),

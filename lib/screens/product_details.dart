@@ -169,7 +169,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-           //   if (quantity < widget.singleProduct.quantity)
+              if (quantity < widget.singleProduct.quantity)
                 CupertinoButton(
                   onPressed: () {
                     setState(() {
@@ -187,7 +187,8 @@ class _ProductDetailsState extends State<ProductDetails> {
             ],
           ),
           const SizedBox(height: 50),
-          Text('Total price: ${widget.singleProduct.price * quantity}'),
+          Text(
+              'Total price: ${widget.singleProduct.discount == 0.0 ? widget.singleProduct.price * quantity : widget.singleProduct.discount * quantity}'),
           const SizedBox(height: 20),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,

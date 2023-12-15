@@ -1,4 +1,3 @@
-
 import 'package:buyers/constants/primary_button.dart';
 import 'package:buyers/constants/routes.dart';
 import 'package:buyers/controllers/firebase_firestore_helper.dart';
@@ -26,7 +25,6 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
     return Scaffold(
       backgroundColor: Colors.grey.shade200,
       appBar: AppBar(
-       
         foregroundColor: Colors.white,
         title: const Text('Checkout'),
         actions: const [
@@ -107,7 +105,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
             PrimaryButton(
               title: 'Continue',
               onPressed: () async {
-                appProvider.clearBuyProduct();
+                //appProvider.clearBuyProduct();
                 appProvider.addBuyProduct(widget.singleProduct);
 
                 bool value = await FirebaseFirestoreHelper.instance
@@ -116,12 +114,12 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                         context,
                         groupValue == 1 ? 'Cash on delivery' : 'payed');
 
-                appProvider.clearBuyProduct();
-
                 if (value) {
                   Future.delayed(const Duration(seconds: 1), () {
-                    Routes.instance
-                        .push(widget: const CustomBottomBar(), context: context);
+                    Routes.instance.push(
+                        widget: const CustomBottomBar(), context: context);
+                    appProvider.clearBuyProduct();
+                    appProvider.clearCart();
                   });
                 }
               },

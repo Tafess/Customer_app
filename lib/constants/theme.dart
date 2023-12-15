@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 
 ThemeData themeData = ThemeData(
-  scaffoldBackgroundColor: Colors.grey.shade200,
+  scaffoldBackgroundColor: Colors.white,
   primaryColor: Colors.blue,
   primarySwatch: Colors.green,
   canvasColor: Colors.red,
+  
 
   ////////////////////////////////////////////////
   inputDecorationTheme: InputDecorationTheme(
       // border: outlineInputBorder,
-      errorBorder: outlineInputBorder,
-      enabledBorder: outlineInputBorder,
-      focusedBorder: outlineInputBorder,
-      disabledBorder: outlineInputBorder,
+      // errorBorder: outlineInputBorder,
+      // enabledBorder: outlineInputBorder,
+      // focusedBorder: outlineInputBorder,
+      // disabledBorder: outlineInputBorder,
       prefixIconColor: Colors.blue,
       suffixIconColor: Colors.green,
       fillColor: Colors.white,
@@ -40,19 +41,26 @@ ThemeData themeData = ThemeData(
           fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
     ),
   ),
-  appBarTheme: const AppBarTheme(
-    backgroundColor: Colors.white,
-    elevation: 1,
+  appBarTheme: AppBarTheme(
+    backgroundColor: Colors.white70,
+    elevation: 0,
+    titleSpacing: 1,
+    titleTextStyle: TextStyle(
+        fontSize: 22, color: Colors.grey.shade700, fontWeight: FontWeight.bold),
     iconTheme: IconThemeData(color: Colors.blue),
   ),
 );
 
-OutlineInputBorder outlineInputBorder = const OutlineInputBorder(
-  // borderSide: BorderSide(
+// OutlineInputBorder outlineInputBorder = const OutlineInputBorder(
+//   // borderSide: BorderSide(
 
-  //   color: Colors.grey,
-  //   //style: BorderStyle.solid,
-  //   width: 1,
-  // ),
-  borderRadius: BorderRadius.all(Radius.circular(12.0)),
-);
+//   //   color: Colors.grey,
+//   //   //style: BorderStyle.solid,
+//   //   width: 1,
+//   // ),
+//   borderRadius: BorderRadius.all(Radius.circular(12.0)),
+// );
+
+
+
+

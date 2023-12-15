@@ -1,8 +1,8 @@
-
 import 'package:buyers/constants/constants.dart';
 import 'package:buyers/constants/primary_button.dart';
 import 'package:buyers/constants/routes.dart';
 import 'package:buyers/providers/app_provider.dart';
+import 'package:buyers/screens/custom_drawer.dart';
 import 'package:buyers/screens/cart_checkout.dart';
 import 'package:buyers/screens/single_cart.dart';
 import 'package:flutter/material.dart';
@@ -23,53 +23,57 @@ class _CartScreenState extends State<CartScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        
         foregroundColor: Colors.white,
         title: const Text('My cart'),
         actions: const [
           Icon(Icons.shopping_bag),
         ],
       ),
+      drawer: CustomDrawer(),
       bottomNavigationBar: Container(
           height: 150,
           child: Padding(
             padding: const EdgeInsets.all(12.0),
             child: Column(
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(
-                      'Total',
-                      style: TextStyle(
-                          fontSize: 20,
-                          color: Colors.blue,
-                          fontWeight: FontWeight.bold),
-                    ),
-                    Text(
-                      'ETB ${appProvider.totalPrice().toString()}',
-                      style: const TextStyle(
-                          fontSize: 20,
-                          color: Colors.blue,
-                          fontWeight: FontWeight.bold),
-                    ),
-                    const SizedBox(height: 20),
-                    PrimaryButton(
-                      title: 'Checkout',
-                      onPressed: () {
-                        appProvider.clearBuyProduct();
-                        appProvider.addBuyProductCartList();
-                        appProvider.clearCart();
-                        if (appProvider.getBuyproductList.isEmpty) {
-                          showMessage('Cart is empty');
-                        } else {
-                          Routes.instance.push(
-                              widget: const CartItemCheckout(),
-                              context: context);
-                        }
-                      },
-                    )
-                  ],
+                Expanded(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        'Total',
+                        style: TextStyle(
+                            fontSize: 20,
+                            color: Colors.blue,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        'ETB ${appProvider.totalPrice().toString()}',
+                        style: const TextStyle(
+                            fontSize: 20,
+                            color: Colors.blue,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(width: 50),
+                      Expanded(
+                        child: PrimaryButton(
+                          title: 'Checkout',
+                          onPressed: () {
+                            appProvider.clearBuyProduct();
+                            appProvider.addBuyProductCartList();
+                           // appProvider.clearCart();
+                            if (appProvider.getBuyproductList.isEmpty) {
+                              showMessage('Cart is empty');
+                            } else {
+                              Routes.instance.push(
+                                  widget: const CartItemCheckout(),
+                                  context: context);
+                            }
+                          },
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ],
             ),

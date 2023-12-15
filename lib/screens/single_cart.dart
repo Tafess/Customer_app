@@ -20,7 +20,7 @@ class _SIngleCartItemState extends State<SIngleCartItem> {
 
   @override
   void initState() {
-    quantity = widget.singleProduct.quantity ?? 1;
+    // quantity = widget.singleProduct.quantity ?? 1;
     setState(() {});
     super.initState();
   }
@@ -146,9 +146,18 @@ class _SIngleCartItemState extends State<SIngleCartItem> {
                                       )),
                                 ],
                               ),
-                              FittedBox(
-                                child: Text(
-                                    'Price: ETB ${(widget.singleProduct.price).toDouble()}'),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  FittedBox(
+                                    child: Text(
+                                        'Price: ETB ${(widget.singleProduct.discount == 0.0 ? widget.singleProduct.price : widget.singleProduct.discount).toDouble()}'),
+                                  ),
+                                  FittedBox(
+                                    child: Text(
+                                        'Total : ${widget.singleProduct.discount == 0.0 ? widget.singleProduct.price * quantity : widget.singleProduct.discount * quantity}'),
+                                  ),
+                                ],
                               ),
                             ],
                           ),
@@ -171,18 +180,6 @@ class _SIngleCartItemState extends State<SIngleCartItem> {
                     ),
                   ),
                 )
-                // SizedBox(
-                //   height: 100,
-                //   width: 100,
-                //   child: Image.network(
-                //       'https://i5.walmartimages.com/asr/40b98f1d-f659-4a50-9216-892be4413d68_1.1cf52cdfee8f28796ce5fa8f769d98c2.jpeg?odnWidth=1000&odnHeight=1000&odnBg=ffffff'),
-                // // ),
-                // SizedBox(
-                //   width: 10,
-                // ),
-                // Column(
-                //   children: [Text('Name')],
-                // )
               ],
             ),
           ],
