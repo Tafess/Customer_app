@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 
 ThemeData themeData = ThemeData(
@@ -5,7 +7,6 @@ ThemeData themeData = ThemeData(
   primaryColor: Colors.blue,
   primarySwatch: Colors.green,
   canvasColor: Colors.red,
-  
 
   ////////////////////////////////////////////////
   inputDecorationTheme: InputDecorationTheme(
@@ -18,7 +19,6 @@ ThemeData themeData = ThemeData(
       suffixIconColor: Colors.green,
       fillColor: Colors.white,
       filled: true),
-
   outlinedButtonTheme: OutlinedButtonThemeData(
     style: OutlinedButton.styleFrom(
       foregroundColor: Colors.red,
@@ -61,6 +61,31 @@ ThemeData themeData = ThemeData(
 //   borderRadius: BorderRadius.all(Radius.circular(12.0)),
 // );
 
+ThemeData lightMode = ThemeData(
+  brightness: Brightness.light,
+  colorScheme: ColorScheme.light(
+    background: Colors.grey.shade50,
+    primary: Colors.white70,
+    secondary: Colors.black,
+  ),
+  appBarTheme: AppBarTheme(
+    backgroundColor: Colors.grey.shade400,
+    foregroundColor: Colors.black,
+  ),
+);
 
-
+ThemeData darkMode = ThemeData(
+  brightness: Brightness.dark,
+  colorScheme: ColorScheme.dark(
+    background: Colors.grey.shade800,
+    primary: Colors.grey.shade700,
+    secondary: Colors.white,
+  ),
+  appBarTheme: AppBarTheme(
+      backgroundColor: Colors.grey.shade700, foregroundColor: Colors.white),
+  cardColor: Colors.grey.shade500,
+);
+//#212121
+//#263238
+//#424242
 

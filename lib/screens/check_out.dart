@@ -1,5 +1,5 @@
-import 'package:buyers/constants/primary_button.dart';
-import 'package:buyers/constants/routes.dart';
+import 'package:buyers/constants/custome_button.dart';
+import 'package:buyers/constants/custom_routes.dart';
 import 'package:buyers/controllers/firebase_firestore_helper.dart';
 import 'package:buyers/models/product_model.dart';
 import 'package:buyers/providers/app_provider.dart';
@@ -59,7 +59,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                   const Icon(Icons.money),
                   const SizedBox(width: 20),
                   const Text(
-                    'Cash on delivery',
+                    'Chapa',
                     style: TextStyle(
                         fontSize: 20,
                         color: Colors.blue,
@@ -102,17 +102,16 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
               ),
             ),
             const SizedBox(height: 20),
-            PrimaryButton(
+            CustomButton(
               title: 'Continue',
+              color: Colors.green,
               onPressed: () async {
-                //appProvider.clearBuyProduct();
+                appProvider.clearBuyProduct();
                 appProvider.addBuyProduct(widget.singleProduct);
 
                 bool value = await FirebaseFirestoreHelper.instance
-                    .uploadOrderedProductFirebase(
-                        appProvider.getBuyproductList,
-                        context,
-                        groupValue == 1 ? 'Cash on delivery' : 'payed');
+                    .uploadOrderedProductFirebase(appProvider.getBuyproductList,
+                        context, groupValue == 1 ? 'Chapa' : 'payed');
 
                 if (value) {
                   Future.delayed(const Duration(seconds: 1), () {

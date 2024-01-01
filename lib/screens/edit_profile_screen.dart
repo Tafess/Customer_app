@@ -1,7 +1,6 @@
 import 'dart:io';
 
-
-import 'package:buyers/constants/primary_button.dart';
+import 'package:buyers/constants/custome_button.dart';
 import 'package:buyers/models/user_model.dart';
 import 'package:buyers/providers/app_provider.dart';
 import 'package:flutter/cupertino.dart';
@@ -72,13 +71,14 @@ class _EditProfileState extends State<EditProfile> {
           ),
           const SizedBox(height: 12),
           SizedBox(
-              child: PrimaryButton(
+              child: CustomButton(
                   onPressed: () async {
                     UserModel userModel = appProvider.getUserInformation
                         .copyWith(name: name.text);
                     appProvider.updateUserInfoFirebase(
                         context, userModel, image);
                   },
+                  color: Colors.green,
                   title: 'Update'))
         ],
       ),

@@ -9,10 +9,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:get_storage/get_storage.dart';
 
 class FirebaseFirestoreHelper {
   static FirebaseFirestoreHelper instance = FirebaseFirestoreHelper();
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
+  final store = GetStorage();
+
   Future<List<CategoryModel>> getCategories() async {
     try {
       QuerySnapshot<Map<String, dynamic>> querySnapshot =
@@ -70,6 +73,7 @@ class FirebaseFirestoreHelper {
 
   Future<bool> uploadOrderedProductFirebase(
       List<ProductModel> list, BuildContext context, String payment) async {
+    String address = store.read('address');
     try {
       ShowLoderDialog(context);
       double totalPrice = 0.0;
@@ -103,6 +107,7 @@ class FirebaseFirestoreHelper {
         'userId': uid,
         'orderId': admin.id,
         'sellerId': sellerId,
+        'address': address,
       });
 
       documentReference.set({
@@ -113,6 +118,7 @@ class FirebaseFirestoreHelper {
         'userId': uid,
         'orderId': documentReference.id,
         'sellerId': sellerId,
+        'address': address,
       });
       showMessage('Ordered Successfully');
       Navigator.of(context, rootNavigator: true).pop();
@@ -174,7 +180,6 @@ class FirebaseFirestoreHelper {
   }
 
   Future<String> generateQRCode(String orderId) async {
-    // You can customize the QR code data as needed.
     String qrCodeData = orderId;
 
     return qrCodeData;

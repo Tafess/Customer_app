@@ -1,11 +1,11 @@
-
-import 'package:buyers/constants/primary_button.dart';
-import 'package:buyers/constants/routes.dart';
+import 'package:buyers/constants/custome_button.dart';
+import 'package:buyers/constants/custom_routes.dart';
 import 'package:buyers/controllers/firebase_firestore_helper.dart';
 import 'package:buyers/models/catagory_model.dart';
 import 'package:buyers/models/product_model.dart';
 import 'package:buyers/screens/product_details.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class CategoryView extends StatefulWidget {
   final CategoryModel categoryModel;
@@ -56,8 +56,8 @@ class _CategoryViewState extends State<CategoryView> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   productModelList.isEmpty
-                      ? const Center(
-                          child: Text('Best product is Empity'),
+                      ? Center(
+                          child: Text('noProduct'.tr),
                         )
                       : Padding(
                           padding: const EdgeInsets.all(12.0),
@@ -127,7 +127,7 @@ class _CategoryViewState extends State<CategoryView> {
                                       SizedBox(
                                         height: 40,
                                         width: 100,
-                                        child: PrimaryButton(
+                                        child: CustomButton(
                                           onPressed: () {
                                             Routes.instance.push(
                                                 widget: ProductDetails(
@@ -135,7 +135,8 @@ class _CategoryViewState extends State<CategoryView> {
                                                         singleProduct),
                                                 context: context);
                                           },
-                                          title: 'Buy',
+                                          color: Colors.green,
+                                          title: 'buy'.tr,
                                         ),
                                       ), // onPressed: () {}, child: Text('Buy'))
                                     ],

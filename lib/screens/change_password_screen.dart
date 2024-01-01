@@ -1,9 +1,9 @@
-
 import 'package:buyers/constants/constants.dart';
-import 'package:buyers/constants/primary_button.dart';
+import 'package:buyers/constants/custome_button.dart';
 import 'package:buyers/controllers/firebase_auth_helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ChangePasswordScreen extends StatefulWidget {
   const ChangePasswordScreen({super.key});
@@ -20,9 +20,8 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-       
         foregroundColor: Colors.white,
-        title: const Text('Change Password'),
+        title: Text('changePassword'.tr),
         actions: const [
           Icon(Icons.person),
         ],
@@ -36,7 +35,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
             decoration: InputDecoration(
               fillColor: Colors.white,
               filled: true,
-              hintText: 'New password',
+              hintText: 'newPassword'.tr,
               labelStyle: const TextStyle(
                   color: Colors.black,
                   fontSize: 20,
@@ -64,7 +63,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
             decoration: InputDecoration(
               fillColor: Colors.white,
               filled: true,
-              hintText: 'Conform password',
+              hintText: 'conformPassword'.tr,
               labelStyle: const TextStyle(
                   color: Colors.black,
                   fontSize: 20,
@@ -86,24 +85,23 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
             ),
           ),
           const SizedBox(height: 20),
-          PrimaryButton(
+          CustomButton(
               onPressed: () {
                 if (newPassword.text.isEmpty) {
-                  showMessage('Please enter a new password');
-                  
-
+                  showMessage('enterNewpassword'.tr);
                 } else if (conformPassword.text.isEmpty) {
-                  showMessage('Please enter confirmation password');
+                  showMessage('confirmPassword'.tr);
                 } else {
                   if (conformPassword.text == newPassword.text) {
                     FirebaseAuthHelper.instance
                         .changePassword(newPassword.text, context);
                   } else {
-                    showMessage('Conforim password is not match');
+                    showMessage('passwordMismach'.tr);
                   }
                 }
               },
-              title: 'Update Password'),
+              color: Colors.green,
+              title: 'updatePassword'.tr),
         ],
       ),
     );

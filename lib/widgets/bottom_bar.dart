@@ -33,25 +33,27 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
 
   List<PersistentBottomNavBarItem> _navBarsItems() => [
         PersistentBottomNavBarItem(
-            icon: const Icon(Icons.home),
-            inactiveIcon: const Icon(Icons.home_outlined, size: 20),
-            title: 'Home',
-            activeColorPrimary: Colors.blue,
-            inactiveColorPrimary: Colors.black54,
-            inactiveColorSecondary: Colors.purple),
+          icon: const Icon(Icons.home),
+          inactiveIcon: const Icon(Icons.home_outlined, size: 20),
+          title: 'Home',
+          //  activeColorPrimary: Theme.of(context).colorScheme.background,
+          // inactiveColorPrimary: Theme.of(context).colorScheme.secondary,
+          //  inactiveColorSecondary: Colors.purple
+        ),
         PersistentBottomNavBarItem(
           icon: const Icon(Icons.shopping_cart),
           inactiveIcon: const Icon(Icons.shopping_cart_outlined, size: 20),
           title: 'Cart',
-          activeColorPrimary: Colors.blue,
-          inactiveColorPrimary: Colors.black54,
+          //  activeColorPrimary: Colors.blue,
+          //   inactiveColorPrimary: Colors.black54,
         ),
         PersistentBottomNavBarItem(
-            icon: const Icon(Icons.circle),
-            inactiveIcon: const Icon(Icons.circle_outlined, size: 20),
-            title: 'Orders',
-            activeColorPrimary: Colors.blue,
-            inactiveColorPrimary: Colors.black54),
+          icon: const Icon(Icons.circle),
+          inactiveIcon: const Icon(Icons.circle_outlined, size: 20),
+          title: 'Orders',
+          //  activeColorPrimary: Colors.blue,
+          //  inactiveColorPrimary: Colors.black54
+        ),
         // PersistentBottomNavBarItem(
         //   icon: const Icon(Icons.person),
         //   inactiveIcon: const Icon(Icons.person_2_outlined, size: 20),
@@ -75,13 +77,12 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
           controller: _controller,
           screens: _buildScreens(),
           items: _navBarsItems(),
-          resizeToAvoidBottomInset: true,
+          resizeToAvoidBottomInset: false,
           navBarHeight: MediaQuery.of(context).viewInsets.bottom > 0
               ? 0.0
               : kBottomNavigationBarHeight,
           bottomScreenMargin: 0,
-
-          backgroundColor: Colors.white,
+          backgroundColor: Theme.of(context).colorScheme.secondary,
 
           hideNavigationBar: _hideNavBar,
           decoration: const NavBarDecoration(colorBehindNavBar: Colors.red),

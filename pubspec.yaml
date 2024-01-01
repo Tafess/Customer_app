@@ -44,9 +44,24 @@ dependencies:
   image_picker: ^1.0.4
   firebase_messaging: ^14.7.5
   flutter_stripe: ^9.6.0
-  http: 1.1.0
+  http: ^1.1.2
   flutter_native_splash: ^2.3.6
   qr_flutter: ^4.1.0
+  google_maps_flutter: ^2.5.0
+  location: ^5.0.3
+  geolocator: ^10.1.0
+  json_serializable: ^6.7.1
+  flutter_polyline_points: ^2.0.0
+  permission_handler: ^11.1.0
+  geocoding: ^2.1.1
+  get_storage: ^2.1.1
+  day_night_switcher: ^0.2.0+1
+  dio: ^5.4.0
+  flutter_localizations:
+    sdk: flutter
+  chapa_unofficial: ^0.0.3
+  intl: ^0.18.1
+  get: ^4.6.6
 
 dev_dependencies:
   flutter_test:
@@ -64,6 +79,7 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
+  generate: true
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

@@ -35,9 +35,10 @@ class _SIngleCartItemState extends State<SIngleCartItem> {
       child: Container(
         height: 150,
         decoration: BoxDecoration(
-            border: Border.all(color: Colors.grey, width: 1),
-            borderRadius: BorderRadius.circular(10),
-            color: Colors.white),
+          border: Border.all(color: Colors.grey, width: 1),
+          borderRadius: BorderRadius.circular(10),
+          color: Theme.of(context).colorScheme.background,
+        ),
         child: Column(
           children: [
             Row(
@@ -45,7 +46,7 @@ class _SIngleCartItemState extends State<SIngleCartItem> {
                 Expanded(
                   child: Container(
                     height: 140,
-                    color: Colors.grey.shade400,
+                    color: Theme.of(context).colorScheme.primary,
                     child: Image.network(widget.singleProduct.image),
                   ),
                 ),

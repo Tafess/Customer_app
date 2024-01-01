@@ -1,10 +1,10 @@
 // ignore_for_file: prefer_const_constructors, use_build_context_synchronously
 
 import 'package:buyers/constants/constants.dart';
-import 'package:buyers/constants/primary_button.dart';
-import 'package:buyers/constants/routes.dart';
+import 'package:buyers/constants/custom_routes.dart';
+import 'package:buyers/constants/custome_button.dart';
+import 'package:buyers/constants/custom_routes.dart';
 import 'package:buyers/constants/theme.dart';
-import 'package:buyers/constants/top_titles.dart';
 import 'package:buyers/controllers/firebase_auth_helper.dart';
 import 'package:buyers/screens/sign_up.dart';
 import 'package:buyers/widgets/bottom_bar.dart';
@@ -77,8 +77,10 @@ class _LoginState extends State<Login> {
               SizedBox(
                 height: 10,
               ),
-              PrimaryButton(
+              CustomButton(
                   title: 'Login',
+                                color: Colors.green,
+
                   onPressed: () async {
                     bool isValidate =
                         loginValidation(email.text, password.text);

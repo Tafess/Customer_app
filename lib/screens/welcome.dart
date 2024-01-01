@@ -1,10 +1,7 @@
-import 'package:buyers/constants/asset_images.dart';
-import 'package:buyers/constants/primary_button.dart';
-import 'package:buyers/constants/routes.dart';
-import 'package:buyers/constants/top_titles.dart';
+import 'package:buyers/constants/custome_button.dart';
+import 'package:buyers/constants/custom_routes.dart';
 import 'package:buyers/screens/login.dart';
 import 'package:buyers/screens/sign_up.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Welcome extends StatelessWidget {
@@ -20,17 +17,15 @@ class Welcome extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // const TopTitles(
-              //     title: 'Welcome',
-              //     subtitle: 'Buy anything from our store with the app'),
               Center(
                 child: Image.asset(
                   'assets/images/belkis3.jpg',
                 ),
               ),
 
-              PrimaryButton(
+              CustomButton(
                 title: 'Sign In',
+                color: Colors.green,
                 onPressed: () {
                   Routes.instance.push(widget: const Login(), context: context);
                 },
@@ -38,8 +33,9 @@ class Welcome extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              PrimaryButton(
+              CustomButton(
                 title: 'Sign Up',
+                color: Colors.blue,
                 onPressed: () {
                   Routes.instance
                       .push(widget: const SignUp(), context: context);

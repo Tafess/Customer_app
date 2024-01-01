@@ -1,5 +1,4 @@
-
-import 'package:buyers/constants/routes.dart';
+import 'package:buyers/constants/custom_routes.dart';
 import 'package:buyers/models/product_model.dart';
 import 'package:buyers/screens/product_details.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +29,7 @@ class SingleProductWidget extends StatelessWidget {
                 // border: Border.all(
                 //     color:
                 //         Colors.pink),
-                color: Colors.white,
+                color: Theme.of(context).colorScheme.primary,
               ),
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(12, 12, 6, 6),

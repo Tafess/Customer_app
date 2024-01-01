@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, use_build_context_synchronously
 
+import 'package:buyers/constants/theme.dart';
 import 'package:buyers/controllers/firebase_firestore_helper.dart';
 import 'package:buyers/models/order_model.dart';
 import 'package:buyers/screens/custom_drawer.dart';
@@ -84,11 +85,14 @@ class _OrderScreenState extends State<OrderScreen> {
                 itemBuilder: (context, index) {
                   OrderModel orderModel = snapshot.data![index];
                   return Padding(
-                    padding: const EdgeInsets.fromLTRB(8, 8, 1, 1),
-                    child: Card(
-                      elevation: 6,
-                      color: Colors.white,
-                      shadowColor: Colors.black,
+                    padding: const EdgeInsets.fromLTRB(12, 8, 1, 1),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(color: Colors.green, width: 2)),
+
+                      //shadowColor: Colors.black,
                       child: ExpansionTile(
                         tilePadding: EdgeInsets.zero,
                         //backgroundColor: Colors.white,
@@ -125,6 +129,8 @@ class _OrderScreenState extends State<OrderScreen> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
                                             orderModel.products[0].name,
@@ -133,7 +139,7 @@ class _OrderScreenState extends State<OrderScreen> {
                                                 color: Colors.black,
                                                 fontWeight: FontWeight.bold),
                                           ),
-                                          Spacer(),
+                                          // Spacer(),
                                           if (orderModel.products.length >
                                               1) ...[
                                             CircleAvatar(
@@ -147,6 +153,13 @@ class _OrderScreenState extends State<OrderScreen> {
                                               ),
                                             ),
                                           ],
+                                          if (orderModel.status == 'completed')
+                                            IconButton(
+                                                onPressed: () {},
+                                                icon: Icon(
+                                                  Icons.delete,
+                                                  color: Colors.red,
+                                                ))
                                         ],
                                       ),
                                       SizedBox(height: 4),
@@ -159,7 +172,7 @@ class _OrderScreenState extends State<OrderScreen> {
                                       SizedBox(height: 4),
                                       FittedBox(
                                         child: Text(
-                                          'Order Status: ${orderModel.status}',
+                                          ' ${orderModel.status}',
                                           style: TextStyle(
                                             fontSize: 16,
                                             fontWeight: FontWeight.bold,
@@ -211,7 +224,7 @@ class _OrderScreenState extends State<OrderScreen> {
                                                       BorderRadius.circular(
                                                           10.0), // Adjust the border radius as needed
                                                   side: const BorderSide(
-                                                      color: Colors.grey,
+                                                      color: Colors.white,
                                                       width: 1.0),
                                                 ),
                                               )),
@@ -232,17 +245,51 @@ class _OrderScreenState extends State<OrderScreen> {
                                               builder: (BuildContext context) {
                                                 return Container(
                                                   color: Colors.white,
-                                                  height: 450,
+                                                  //  height: 450,
                                                   width: MediaQuery.of(context)
                                                       .size
                                                       .width,
                                                   child: Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
                                                             .center,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.start,
                                                     mainAxisSize:
                                                         MainAxisSize.min,
                                                     children: [
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .end,
+                                                        children: [
+                                                          Container(
+                                                            width: 40,
+                                                            color: Colors.red,
+                                                            child: TextButton(
+                                                              style: TextButton
+                                                                  .styleFrom(
+                                                                padding:
+                                                                    EdgeInsets
+                                                                        .zero,
+                                                              ),
+                                                              onPressed: () {
+                                                                Navigator.of(
+                                                                        context)
+                                                                    .pop();
+                                                              },
+                                                              child: Text(
+                                                                'X',
+                                                                style: TextStyle(
+                                                                    color: Colors
+                                                                        .white,
+                                                                    fontSize:
+                                                                        30),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
                                                       Container(
                                                         color: Colors.white,
                                                         width: 250,
@@ -256,32 +303,14 @@ class _OrderScreenState extends State<OrderScreen> {
                                                       ),
                                                       SizedBox(height: 10),
                                                       Text(
-                                                          'Scan this QR code for contactless check.'),
+                                                          'Scan this QR code for delivery  conformation.',
+                                                          style: themeData
+                                                              .textTheme
+                                                              .bodyLarge),
                                                       SizedBox(height: 10),
                                                       Container(
-                                                        color: Colors.red,
-                                                        child: Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
-                                                          children: [
-                                                            TextButton(
-                                                              onPressed: () {
-                                                                Navigator.of(
-                                                                        context)
-                                                                    .pop();
-                                                              },
-                                                              child: Text(
-                                                                'Close',
-                                                                style: TextStyle(
-                                                                    color: Colors
-                                                                        .white,
-                                                                    fontSize:
-                                                                        24),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
+                                                        color: Colors.green,
+                                                        height: 40,
                                                       ),
                                                       SizedBox(height: 20)
                                                     ],
@@ -291,7 +320,7 @@ class _OrderScreenState extends State<OrderScreen> {
                                             );
                                           },
                                           child: Text(
-                                            'Contactless Check',
+                                            'Conform Delivery',
                                             style: TextStyle(
                                                 color: Colors.white,
                                                 fontWeight: FontWeight.bold),

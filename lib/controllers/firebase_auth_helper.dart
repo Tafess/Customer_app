@@ -1,7 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:buyers/constants/constants.dart';
-import 'package:buyers/constants/routes.dart';
+import 'package:buyers/constants/custom_routes.dart';
 import 'package:buyers/models/user_model.dart';
 import 'package:buyers/screens/home.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';

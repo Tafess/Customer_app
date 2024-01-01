@@ -1,20 +1,18 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:buyers/constants/primary_button.dart';
-import 'package:buyers/constants/routes.dart';
 import 'package:buyers/constants/top_titles.dart';
 import 'package:buyers/controllers/firebase_firestore_helper.dart';
+import 'package:buyers/main.dart';
 import 'package:buyers/models/catagory_model.dart';
 import 'package:buyers/models/product_model.dart';
 import 'package:buyers/providers/app_provider.dart';
+import 'package:buyers/providers/theme_provider.dart';
 import 'package:buyers/screens/custom_drawer.dart';
-import 'package:buyers/screens/category_view.dart';
-import 'package:buyers/screens/product_details.dart';
-import 'package:buyers/widgets/bottom_bar.dart';
 import 'package:buyers/widgets/single_category.dart';
 import 'package:buyers/widgets/single_product.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_utils/get_utils.dart';
 import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
@@ -75,11 +73,50 @@ class _HomeState extends State<Home> {
     });
   }
 
+  final List<Map<String, Object>> locales = [
+    {'name': 'English', 'locale': Locale('en', 'US')},
+    {'name': 'አማርኛ', 'locale': Locale('am', 'ET')},
+    {'name': 'Afaan Oromo ', 'locale': Locale('om', 'ET')},
+  ];
+  void updateLanguage(Locale local) {
+    Get.back();
+    Get.updateLocale(local);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
-        title: const TopTitles(title: '........', subtitle: ''),
+        title: Text('homePage'.tr),
+        actions: [
+          Consumer<ThemeProvider>(
+            builder: (context, themeProvider, child) {
+              bool isLightModeEnabled = themeProvider.isLightModeEnabled;
+              return IconButton(
+                onPressed: () {
+                  themeProvider.toggleTheme();
+                },
+                icon: Icon(isLightModeEnabled
+                    ? Icons.dark_mode
+                    : Icons.dark_mode_outlined),
+              );
+            },
+          ),
+          PopupMenuButton<Map<String, Object>>(
+            icon: Icon(Icons.language),
+            itemBuilder: (BuildContext context) => locales.map((locale) {
+              return PopupMenuItem(
+                value: locale,
+                child: GestureDetector(
+                    onTap: () {
+                      updateLanguage(locale['locale'] as Locale);
+                    },
+                    child: Text(locale['name'] as String)),
+              );
+            }).toList(),
+          ),
+        ],
       ),
       // bottomNavigationBar: CustomBottomBar(),
       drawer: CustomDrawer(),
@@ -109,13 +146,13 @@ class _HomeState extends State<Home> {
                               onChanged: (String value) {
                                 searchProduct(value);
                               },
-                              decoration: const InputDecoration(
+                              decoration: InputDecoration(
                                 border: OutlineInputBorder(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(8.0)),
                                 ),
                                 hintStyle: TextStyle(color: Colors.grey),
-                                hintText: 'Search products ...',
+                                hintText: 'search'.tr,
                                 prefixIcon: Icon(Icons.search),
                               ),
                             ),
@@ -127,8 +164,8 @@ class _HomeState extends State<Home> {
                               color: Colors.grey,
                             ),
                           ),
-                          const Text(
-                            'Categories',
+                          Text(
+                            'categories'.tr,
                             style: TextStyle(
                               fontSize: 20.0,
                               fontWeight: FontWeight.bold,
@@ -136,8 +173,8 @@ class _HomeState extends State<Home> {
                             ),
                           ),
                           categoriesList.isEmpty
-                              ? const Center(
-                                  child: Text('Category is Empty'),
+                              ? Center(
+                                  child: Text('emptyCategory'.tr),
                                 )
                               : SingleChildScrollView(
                                   scrollDirection: Axis.horizontal,
@@ -147,16 +184,16 @@ class _HomeState extends State<Home> {
                           const SizedBox(
                             height: 10,
                           ),
-                          const Text(
-                            'Products',
+                          Text(
+                            'products'.tr,
                             style: TextStyle(
                                 fontSize: 20.0,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.blue),
                           ),
                           isSearched()
-                              ? const Center(
-                                  child: Text('No such product found'),
+                              ? Center(
+                                  child: Text('noSuchProduct'.tr),
                                 )
                               : searchList.isNotEmpty
                                   ? Padding(
@@ -181,8 +218,8 @@ class _HomeState extends State<Home> {
                                           }),
                                     )
                                   : productModelList.isEmpty
-                                      ? const Center(
-                                          child: Text('No product found'),
+                                      ? Center(
+                                          child: Text('noProduct'.tr),
                                         )
                                       : Padding(
                                           padding: const EdgeInsets.all(12.0),

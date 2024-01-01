@@ -1,6 +1,7 @@
 import 'package:buyers/constants/constants.dart';
-import 'package:buyers/constants/primary_button.dart';
-import 'package:buyers/constants/routes.dart';
+import 'package:buyers/constants/custom_routes.dart';
+import 'package:buyers/constants/custome_button.dart';
+
 import 'package:buyers/models/product_model.dart';
 import 'package:buyers/providers/app_provider.dart';
 import 'package:buyers/screens/cart_screen.dart';
@@ -212,7 +213,7 @@ class _ProductDetailsState extends State<ProductDetails> {
               SizedBox(
                 height: 40,
                 width: 100,
-                child: PrimaryButton(
+                child: CustomButton(
                   onPressed: () {
                     ProductModel productModel =
                         widget.singleProduct.copyWith(quantity: quantity);
@@ -222,6 +223,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                         ),
                         context: context);
                   },
+                  color: Colors.green,
                   title: 'BUY',
                 ),
               ),

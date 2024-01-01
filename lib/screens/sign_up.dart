@@ -1,8 +1,8 @@
 // ignore_for_file: prefer_const_constructors, use_build_context_synchronously
 
 import 'package:buyers/constants/constants.dart';
-import 'package:buyers/constants/primary_button.dart';
-import 'package:buyers/constants/routes.dart';
+import 'package:buyers/constants/custome_button.dart';
+import 'package:buyers/constants/custom_routes.dart';
 import 'package:buyers/constants/top_titles.dart';
 import 'package:buyers/controllers/firebase_auth_helper.dart';
 import 'package:buyers/screens/login.dart';
@@ -113,8 +113,10 @@ class _SignUpState extends State<SignUp> {
               SizedBox(
                 height: 50,
               ),
-              PrimaryButton(
+              CustomButton(
                 title: 'Register',
+                              color: Colors.green,
+
                 onPressed: () async {
                   bool isValidate = signValidation(
                       email.text, password.text, name.text, phone.text);

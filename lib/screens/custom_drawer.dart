@@ -1,12 +1,13 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:buyers/constants/routes.dart';
+import 'package:buyers/constants/custom_routes.dart';
+import 'package:buyers/main.dart';
 import 'package:buyers/providers/app_provider.dart';
+import 'package:buyers/providers/theme_provider.dart';
 import 'package:buyers/screens/change_password_screen.dart';
-import 'package:buyers/screens/favorite_screen.dart';
+import 'package:buyers/screens/google_map.dart';
 import 'package:buyers/screens/home.dart';
 import 'package:buyers/screens/order_screen.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -19,7 +20,7 @@ class CustomDrawer extends StatelessWidget {
       width: 240,
       child: Container(
         width: 200,
-        color: Colors.white30.withOpacity(0.9),
+        color: Theme.of(context).colorScheme.background,
         child: SingleChildScrollView(
           child: Column(
             children: [
@@ -46,6 +47,29 @@ class CustomDrawer extends StatelessWidget {
                 ),
               ),
               ListTile(
+                leading: const Icon(Icons.light_mode),
+                title: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('Theme'),
+                    Consumer<ThemeProvider>(
+                      builder: (context, themeProvider, child) {
+                        bool isLightModeEnabled =
+                            themeProvider.isLightModeEnabled;
+                        return IconButton(
+                          onPressed: () {
+                            themeProvider.toggleTheme();
+                          },
+                          icon: Icon(isLightModeEnabled
+                              ? Icons.dark_mode
+                              : Icons.dark_mode_outlined),
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              ),
+              ListTile(
                 onTap: () {
                   Routes.instance.push(
                     widget: Home(),
@@ -68,7 +92,7 @@ class CustomDrawer extends StatelessWidget {
               ListTile(
                 onTap: () {
                   Routes.instance.push(
-                    widget: FavoriteScreen(),
+                    widget: Home(),
                     context: context,
                   );
                 },

@@ -1,4 +1,3 @@
-
 import 'package:buyers/providers/app_provider.dart';
 import 'package:buyers/widgets/single_favorite_widget.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +12,6 @@ class FavoriteScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-       
         foregroundColor: Colors.white,
         title: const Text('Favorites'),
         actions: const [

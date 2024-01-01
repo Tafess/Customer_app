@@ -1,5 +1,5 @@
 
-import 'package:buyers/constants/routes.dart';
+import 'package:buyers/constants/custom_routes.dart';
 import 'package:buyers/models/catagory_model.dart';
 import 'package:buyers/screens/category_view.dart';
 import 'package:flutter/cupertino.dart';

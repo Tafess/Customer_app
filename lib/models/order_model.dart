@@ -8,6 +8,7 @@ class OrderModel {
   String orderId;
   String userId;
   String sellerId;
+  String address;
 
   OrderModel({
     required this.totalprice,
@@ -17,6 +18,7 @@ class OrderModel {
     required this.status,
     required this.userId,
     required this.sellerId,
+    required this.address,
   });
 
   factory OrderModel.fromJson(Map<String, dynamic> json) {
@@ -30,6 +32,7 @@ class OrderModel {
       payment: json['payment'] ?? "",
       userId: json['userId'] ?? "",
       sellerId: json['sellerId'] ?? "",
+      address: json['address'] ?? "",
     );
   }
 }

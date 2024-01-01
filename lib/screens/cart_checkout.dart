@@ -1,13 +1,14 @@
 // ignore_for_file: use_build_context_synchronously
 
-
-import 'package:buyers/constants/primary_button.dart';
-import 'package:buyers/constants/routes.dart';
+import 'package:buyers/constants/custome_button.dart';
+import 'package:buyers/constants/custom_routes.dart';
 import 'package:buyers/controllers/firebase_firestore_helper.dart';
 import 'package:buyers/providers/app_provider.dart';
+import 'package:buyers/payment/chapa_payment.dart';
 import 'package:buyers/stripe_helper.dart';
 import 'package:buyers/widgets/bottom_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 class CartItemCheckout extends StatefulWidget {
@@ -27,9 +28,8 @@ class _CartItemCheckoutState extends State<CartItemCheckout> {
     return Scaffold(
       backgroundColor: Colors.grey.shade200,
       appBar: AppBar(
-       
         foregroundColor: Colors.white,
-        title: const Text('Checkout'),
+        title: Text('checkout'.tr),
         actions: const [
           Icon(Icons.person),
         ],
@@ -62,7 +62,7 @@ class _CartItemCheckoutState extends State<CartItemCheckout> {
                   const Icon(Icons.money),
                   const SizedBox(width: 20),
                   const Text(
-                    'Cash on delivery',
+                    'Pay With Chapa',
                     style: TextStyle(
                         fontSize: 20,
                         color: Colors.blue,
@@ -105,47 +105,54 @@ class _CartItemCheckoutState extends State<CartItemCheckout> {
               ),
             ),
             const SizedBox(height: 20),
-            PrimaryButton(
-              title: 'Continue',
+            CustomButton(
+              title: 'continue'.tr,
+              color: Colors.blue.shade300,
               onPressed: () async {
                 if (groupValue == 1) {
-                  bool value = await FirebaseFirestoreHelper.instance
-                      .uploadOrderedProductFirebase(
-                          appProvider.getBuyproductList,
-                          context,
-                          'Cash on delivery');
+                  Routes.instance.push(
+                      widget: ChapaPayment(
+                        title: 'Balkis',
+                      ),
+                      context: context);
+                  // bool value = await FirebaseFirestoreHelper.instance
+                  //     .uploadOrderedProductFirebase(
+                  //         appProvider.getBuyproductList,
+                  //         context,
+                  //         'Pay With Chapa');
 
                   appProvider.clearBuyProduct();
+                  appProvider.clearCart();
 
-                  if (value) {
-                    Future.delayed(const Duration(seconds: 1), () {
-                      Routes.instance.push(
-                          widget: const CustomBottomBar(), context: context);
-                    });
-                  }
-                } else {
-                  int value = double.parse(
-                          appProvider.totalPriceBuyProductList().toString())
-                      .round()
-                      .toInt();
-                  String totalPrice = (value * 100).toString();
+                  //   if (value) {
+                  //     Future.delayed(const Duration(seconds: 1), () {
+                  //       Routes.instance.push(
+                  //           widget: const CustomBottomBar(), context: context);
+                  //     });
+                  //   }
+                  // } else {
+                  //   int value = double.parse(
+                  //           appProvider.totalPriceBuyProductList().toString())
+                  //       .round()
+                  //       .toInt();
+                  //   String totalPrice = (value * 100).toString();
 
-                  bool isSuccefullPayment = await StripeHelper.instance
-                      .makePayment(totalPrice.toString());
-                  if (isSuccefullPayment) {
-                    bool value = await FirebaseFirestoreHelper.instance
-                        .uploadOrderedProductFirebase(
-                            appProvider.getBuyproductList, context, 'payed');
+                  //   bool isSuccefullPayment = await StripeHelper.instance
+                  //       .makePayment(totalPrice.toString());
+                  //   if (isSuccefullPayment) {
+                  //     bool value = await FirebaseFirestoreHelper.instance
+                  //         .uploadOrderedProductFirebase(
+                  //             appProvider.getBuyproductList, context, 'payed');
 
-                    appProvider.clearBuyProduct();
+                  //     appProvider.clearBuyProduct();
 
-                    if (value) {
-                      Future.delayed(const Duration(seconds: 1), () {
-                        Routes.instance.push(
-                            widget: const CustomBottomBar(), context: context);
-                      });
-                    }
-                  }
+                  //     if (value) {
+                  //       Future.delayed(const Duration(seconds: 1), () {
+                  //         Routes.instance.push(
+                  //             widget: const CustomBottomBar(), context: context);
+                  //       });
+                  //     }
+                  //   }
                 }
               },
             )
