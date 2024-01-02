@@ -25,7 +25,7 @@ class _CartScreenState extends State<CartScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        foregroundColor: Colors.white,
+      //  foregroundColor: Colors.white,
         title: Text('cart'.tr),
         actions: const [
           Icon(Icons.shopping_bag),
@@ -47,21 +47,21 @@ class _CartScreenState extends State<CartScreen> {
                             'total'.tr,
                             style: TextStyle(
                                 fontSize: 20,
-                                color: Colors.blue,
+                               // color: Colors.blue,
                                 fontWeight: FontWeight.bold),
                           ),
                           Text(
                             'ETB ${appProvider.totalPrice().toString()}',
                             style: const TextStyle(
                                 fontSize: 20,
-                                color: Colors.blue,
+                              //  color: Colors.blue,
                                 fontWeight: FontWeight.bold),
                           ),
                           const SizedBox(width: 50),
                           Expanded(
                             child: CustomButton(
                               title: 'checkout'.tr,
-                              color: Colors.green,
+                           //   color: Colors.green,
                               onPressed: () {
                                 appProvider.clearBuyProduct();
                                 appProvider.addBuyProductCartList();

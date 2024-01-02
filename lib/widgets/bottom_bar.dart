@@ -4,6 +4,7 @@ import 'package:buyers/screens/favorite_screen.dart';
 import 'package:buyers/screens/home.dart';
 import 'package:buyers/screens/order_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:get/utils.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 class CustomBottomBar extends StatefulWidget {
@@ -35,7 +36,7 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
         PersistentBottomNavBarItem(
           icon: const Icon(Icons.home),
           inactiveIcon: const Icon(Icons.home_outlined, size: 20),
-          title: 'Home',
+          title: 'home'.tr,
           //  activeColorPrimary: Theme.of(context).colorScheme.background,
           // inactiveColorPrimary: Theme.of(context).colorScheme.secondary,
           //  inactiveColorSecondary: Colors.purple
@@ -43,14 +44,14 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
         PersistentBottomNavBarItem(
           icon: const Icon(Icons.shopping_cart),
           inactiveIcon: const Icon(Icons.shopping_cart_outlined, size: 20),
-          title: 'Cart',
+          title: 'cart'.tr,
           //  activeColorPrimary: Colors.blue,
           //   inactiveColorPrimary: Colors.black54,
         ),
         PersistentBottomNavBarItem(
           icon: const Icon(Icons.circle),
           inactiveIcon: const Icon(Icons.circle_outlined, size: 20),
-          title: 'Orders',
+          title: 'orders'.tr,
           //  activeColorPrimary: Colors.blue,
           //  inactiveColorPrimary: Colors.black54
         ),
@@ -85,7 +86,7 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
           backgroundColor: Theme.of(context).colorScheme.secondary,
 
           hideNavigationBar: _hideNavBar,
-          decoration: const NavBarDecoration(colorBehindNavBar: Colors.red),
+          decoration: const NavBarDecoration(),
           itemAnimationProperties: const ItemAnimationProperties(
             duration: Duration(milliseconds: 10),
             curve: Curves.bounceIn,

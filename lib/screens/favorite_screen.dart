@@ -1,6 +1,7 @@
 import 'package:buyers/providers/app_provider.dart';
 import 'package:buyers/widgets/single_favorite_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:get/utils.dart';
 import 'package:provider/provider.dart';
 
 class FavoriteScreen extends StatelessWidget {
@@ -12,18 +13,18 @@ class FavoriteScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        foregroundColor: Colors.white,
-        title: const Text('Favorites'),
+        // foregroundColor: Colors.white,
+        title: Text('favorites'.tr),
         actions: const [
           Icon(
             Icons.favorite,
-            color: Colors.white,
+            // color: Colors.white,
           )
         ],
       ),
       body: appProvider.getFavoriteProductList.isEmpty
-          ? const Center(
-              child: Text('Favorite is empty'),
+          ? Center(
+              child: Text('emptyFavorite'.tr),
             )
           : ListView.builder(
               itemCount: appProvider.getFavoriteProductList.length,

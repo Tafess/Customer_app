@@ -2,14 +2,14 @@
 
 import 'package:buyers/constants/constants.dart';
 import 'package:buyers/constants/custom_routes.dart';
+import 'package:buyers/constants/custom_text.dart';
 import 'package:buyers/constants/custome_button.dart';
-import 'package:buyers/constants/custom_routes.dart';
-import 'package:buyers/constants/theme.dart';
 import 'package:buyers/controllers/firebase_auth_helper.dart';
 import 'package:buyers/screens/sign_up.dart';
 import 'package:buyers/widgets/bottom_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/utils.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -25,99 +25,93 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(),
+      // backgroundColor: Colors.white,
+      appBar: AppBar(),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: SingleChildScrollView(
-          child: Column(
-            children: [
-              //Icon(Icons.arrow_back),
-              //TopTitles(title: 'Login', subtitle: 'Welcome back '),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Text(
-                    'Login',
-                    style: themeData.textTheme.displayLarge,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 25),
+            child: Column(
+              children: [
+                text(title: 'login'.tr, size: 30, color: Colors.blue),
+                Container(
+                    height: 200,
+                    child: Image.asset('assets/images/buyers.jpg')),
+                SizedBox(height: 20),
+                
+                SizedBox(height: 20),
+                TextFormField(
+                  controller: email,
+                  decoration: InputDecoration(
+                    hintText: 'email'.tr,
+                    prefixIcon: Icon(Icons.email_outlined),
                   ),
-                  Icon(Icons.login)
-                ],
-              ),
-              Image.asset('assets/images/buyers.jpg'),
-
-              TextFormField(
-                controller: email,
-                decoration: InputDecoration(
-                  hintText: 'E-mail ',
-                  prefixIcon: Icon(Icons.email_outlined),
                 ),
-              ),
-
-              TextFormField(
-                controller: password,
-                obscureText: isShowPassword,
-                decoration: InputDecoration(
-                  hintText: 'Password',
-                  prefixIcon: Icon(
-                    Icons.lock,
-                    color: Colors.blue,
-                  ),
-                  suffixIcon: CupertinoButton(
-                    onPressed: () {
-                      setState(() {
-                        isShowPassword = !isShowPassword;
-                      });
-                    },
-                    child: Icon(
-                      Icons.visibility,
+                SizedBox(height: 12),
+                TextFormField(
+                  controller: password,
+                  obscureText: isShowPassword,
+                  decoration: InputDecoration(
+                    hintText: 'password'.tr,
+                    prefixIcon: Icon(
+                      Icons.lock,
+                      color: Colors.blue,
+                    ),
+                    suffixIcon: CupertinoButton(
+                      onPressed: () {
+                        setState(() {
+                          isShowPassword = !isShowPassword;
+                        });
+                      },
+                      child: Icon(
+                        isShowPassword
+                            ? Icons.visibility
+                            : Icons.visibility_off,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              CustomButton(
-                  title: 'Login',
-                                color: Colors.green,
-
-                  onPressed: () async {
-                    bool isValidate =
-                        loginValidation(email.text, password.text);
-                    if (isValidate) {
-                      bool islogined = await FirebaseAuthHelper.instance
-                          .login(email.text, password.text, context);
-                      if (islogined) {
-                        Routes.instance.pushAndRemoveUntil(
-                            widget: CustomBottomBar(), context: context);
-                      }
-                    }
-                  }),
-              SizedBox(
-                height: 20,
-              ),
-              const Center(
-                child: Text('Do not Have An Account'),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Center(
-                child: CupertinoButton(
-                  onPressed: () {
-                    Routes.instance
-                        .push(widget: const SignUp(), context: context);
-                  },
-                  child: Text(
-                    'Create Account',
-                    style: TextStyle(
-                        color: Theme.of(context).primaryColor,
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold),
-                  ),
+                SizedBox(
+                  height: 10,
                 ),
-              ),
-            ],
+                CustomButton(
+                    title: 'login'.tr,
+                    color: Colors.green,
+                    onPressed: () async {
+                      bool isValidate =
+                          loginValidation(email.text, password.text);
+                      if (isValidate) {
+                        bool islogined = await FirebaseAuthHelper.instance
+                            .login(email.text, password.text, context);
+                        if (islogined) {
+                          Routes.instance.pushAndRemoveUntil(
+                              widget: CustomBottomBar(), context: context);
+                        }
+                      }
+                    }),
+                SizedBox(
+                  height: 20,
+                ),
+                Center(
+                  child: Text('noAccount'.tr),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Center(
+                  child: CupertinoButton(
+                      onPressed: () {
+                        Routes.instance
+                            .push(widget: const SignUp(), context: context);
+                      },
+                      child: text(
+                          title: 'createAccount'.tr,
+                          size: 20,
+                          color: Colors.blue)),
+                ),
+              ],
+            ),
           ),
         ),
       ),

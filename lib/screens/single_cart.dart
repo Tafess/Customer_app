@@ -5,6 +5,7 @@ import 'package:buyers/models/product_model.dart';
 import 'package:buyers/providers/app_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/utils.dart';
 import 'package:provider/provider.dart';
 
 class SIngleCartItem extends StatefulWidget {
@@ -70,8 +71,9 @@ class _SIngleCartItemState extends State<SIngleCartItem> {
                                     child: Text(
                                       widget.singleProduct.name,
                                       style: const TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.black),
+                                        fontWeight: FontWeight.bold,
+                                        //  color: Colors.black
+                                      ),
                                     ),
                                   ),
                                   Row(
@@ -128,22 +130,22 @@ class _SIngleCartItemState extends State<SIngleCartItem> {
                                             .contains(widget.singleProduct)) {
                                           appProvider.addToFavoriteproduct(
                                               widget.singleProduct);
-                                          showMessage(
-                                              'Product added to favorites');
+                                          showMessage('addedToFavorits'.tr);
                                         } else {
                                           appProvider.removeFavoriteproduct(
                                               widget.singleProduct);
                                           showMessage(
-                                              'Product removed from favorites');
+                                              'removedFormFavorites'.tr);
                                         }
                                       },
                                       child: Text(
                                         appProvider.getFavoriteProductList
                                                 .contains(widget.singleProduct)
-                                            ? 'Remove to Wishlist'
-                                            : 'Add to Wishlist',
+                                            ? 'removeWishList'.tr
+                                            : 'addToWishList'.tr,
                                         style: const TextStyle(
-                                            color: Colors.red, fontSize: 14),
+                                            // color: Colors.red,
+                                            fontSize: 14),
                                       )),
                                 ],
                               ),
@@ -164,17 +166,17 @@ class _SIngleCartItemState extends State<SIngleCartItem> {
                           ),
                           CupertinoButton(
                               child: const CircleAvatar(
-                                backgroundColor: Colors.white,
+                                //   backgroundColor: Colors.white,
                                 maxRadius: 14,
                                 child: Icon(
                                   Icons.delete,
-                                  color: Colors.red,
+                                  // color: Colors.red,
                                 ),
                               ),
                               onPressed: () {
                                 appProvider
                                     .removeCartproduct(widget.singleProduct);
-                                showMessage('Product Removed from cart');
+                                showMessage('removedFromCart'.tr);
                               }),
                         ],
                       ),

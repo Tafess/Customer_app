@@ -10,6 +10,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:get/utils.dart';
 import 'package:provider/provider.dart';
 
 class ProductDetails extends StatefulWidget {
@@ -115,10 +116,10 @@ class _ProductDetailsState extends State<ProductDetails> {
                   });
                   if (widget.singleProduct.isFavorite) {
                     appProvider.addToFavoriteproduct(widget.singleProduct);
-                    showMessage('Product added to favorites');
+                    showMessage('addedToFavorites'.tr);
                   } else {
                     appProvider.removeFavoriteproduct(widget.singleProduct);
-                    showMessage('Product removed from favorites');
+                    showMessage('removedFromFavorites'.tr);
                   }
                 },
                 icon: Icon(
@@ -181,7 +182,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                   child: const CircleAvatar(
                     maxRadius: 14,
                     foregroundColor: Colors.white,
-                    backgroundColor: Colors.blue,
+                    backgroundColor: Colors.green,
                     child: Icon(Icons.add),
                   ),
                 ),
@@ -191,29 +192,25 @@ class _ProductDetailsState extends State<ProductDetails> {
           Text(
               'Total price: ${widget.singleProduct.discount == 0.0 ? widget.singleProduct.price * quantity : widget.singleProduct.discount * quantity}'),
           const SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              OutlinedButton(
-                style: ButtonStyle(
-                    shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10)))),
-                onPressed: () {
-                  AppProvider appProvider = Provider.of(context, listen: false);
-                  ProductModel productModel =
-                      widget.singleProduct.copyWith(quantity: quantity);
-                  appProvider.addToCartproduct(productModel);
-                  showMessage('product added to cart');
-                },
-                child: const Text('ADD TO CART'),
-              ),
-              const SizedBox(
-                width: 12,
-              ),
-              SizedBox(
-                height: 40,
-                width: 100,
-                child: CustomButton(
+          Flexible(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CustomButton(
+                  onPressed: () {
+                    AppProvider appProvider =
+                        Provider.of(context, listen: false);
+                    ProductModel productModel =
+                        widget.singleProduct.copyWith(quantity: quantity);
+                    appProvider.addToCartproduct(productModel);
+                    showMessage('addedToCart'.tr);
+                  },
+                  title: 'addToCart'.tr,
+                ),
+                const SizedBox(
+                  width: 12,
+                ),
+                CustomButton(
                   onPressed: () {
                     ProductModel productModel =
                         widget.singleProduct.copyWith(quantity: quantity);
@@ -223,11 +220,11 @@ class _ProductDetailsState extends State<ProductDetails> {
                         ),
                         context: context);
                   },
-                  color: Colors.green,
-                  title: 'BUY',
+                  // color: Colors.green,
+                  title: 'buy'.tr,
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
           const SizedBox(
             height: 50,

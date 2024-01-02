@@ -6,6 +6,7 @@ import 'package:buyers/models/order_model.dart';
 import 'package:buyers/screens/custom_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:get/utils.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class OrderScreen extends StatefulWidget {
@@ -55,8 +56,8 @@ class _OrderScreenState extends State<OrderScreen> {
         appBar: _showAppBar
             ? AppBar(
                 centerTitle: true,
-                foregroundColor: Colors.black,
-                title: const Text('Orders'),
+                //foregroundColor: Colors.black,
+                title: Text('orders'.tr),
                 actions: const [
                   Icon(Icons.person),
                 ],
@@ -74,8 +75,8 @@ class _OrderScreenState extends State<OrderScreen> {
               if (snapshot.data!.isEmpty ||
                   snapshot.data == null ||
                   !snapshot.hasData) {
-                return const Center(
-                  child: Text('No order found'),
+                return Center(
+                  child: Text('noOrder'.tr),
                 );
               }
               return ListView.builder(
@@ -88,7 +89,7 @@ class _OrderScreenState extends State<OrderScreen> {
                     padding: const EdgeInsets.fromLTRB(12, 8, 1, 1),
                     child: Container(
                       decoration: BoxDecoration(
-                          color: Colors.white,
+                          // color: Colors.white,
                           borderRadius: BorderRadius.circular(10),
                           border: Border.all(color: Colors.green, width: 2)),
 
@@ -111,7 +112,7 @@ class _OrderScreenState extends State<OrderScreen> {
                               child: Container(
                                 height: 100,
                                 width: 80,
-                                color: Colors.white,
+                                // color: Colors.white,
                                 child: Image.network(
                                   orderModel.products[0].image,
                                   fit: BoxFit.cover,
@@ -135,21 +136,22 @@ class _OrderScreenState extends State<OrderScreen> {
                                           Text(
                                             orderModel.products[0].name,
                                             style: const TextStyle(
-                                                fontSize: 12,
-                                                color: Colors.black,
+                                                fontSize: 14,
+                                                //   color: Colors.black,
                                                 fontWeight: FontWeight.bold),
                                           ),
                                           // Spacer(),
                                           if (orderModel.products.length >
                                               1) ...[
                                             CircleAvatar(
-                                              backgroundColor: Colors.black45,
+                                              // backgroundColor: Colors.black45,
                                               radius: 12,
                                               child: Text(
                                                 orderModel.products[0].quantity
                                                     .toString(),
                                                 style: TextStyle(
-                                                    color: Colors.white),
+                                                    //   color: Colors.white
+                                                    ),
                                               ),
                                             ),
                                           ],
@@ -165,7 +167,7 @@ class _OrderScreenState extends State<OrderScreen> {
                                       SizedBox(height: 4),
                                       FittedBox(
                                         child: Text(
-                                          'Total price: ETB ${orderModel.totalprice.toString()}',
+                                          'total Price ETB ${orderModel.totalprice.toString()}',
                                           style: TextStyle(fontSize: 12),
                                         ),
                                       ),
@@ -244,7 +246,7 @@ class _OrderScreenState extends State<OrderScreen> {
                                               ),
                                               builder: (BuildContext context) {
                                                 return Container(
-                                                  color: Colors.white,
+                                                  //  color: Colors.white,
                                                   //  height: 450,
                                                   width: MediaQuery.of(context)
                                                       .size
@@ -303,10 +305,11 @@ class _OrderScreenState extends State<OrderScreen> {
                                                       ),
                                                       SizedBox(height: 10),
                                                       Text(
-                                                          'Scan this QR code for delivery  conformation.',
-                                                          style: themeData
-                                                              .textTheme
-                                                              .bodyLarge),
+                                                        'scanQrCode'.tr,
+                                                        // style: themeData
+                                                        //     .textTheme
+                                                        //     .bodyLarge
+                                                      ),
                                                       SizedBox(height: 10),
                                                       Container(
                                                         color: Colors.green,
@@ -320,7 +323,7 @@ class _OrderScreenState extends State<OrderScreen> {
                                             );
                                           },
                                           child: Text(
-                                            'Conform Delivery',
+                                            'conformDelivery'.tr,
                                             style: TextStyle(
                                                 color: Colors.white,
                                                 fontWeight: FontWeight.bold),
@@ -335,7 +338,7 @@ class _OrderScreenState extends State<OrderScreen> {
                         ),
                         children: orderModel.products.length > 1
                             ? [
-                                Text('Details'),
+                                Text('details'.tr),
                                 Divider(color: Colors.grey),
                                 ...orderModel.products.map((singleProduct) {
                                   return Row(

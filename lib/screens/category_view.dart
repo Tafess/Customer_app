@@ -79,7 +79,7 @@ class _CategoryViewState extends State<CategoryView> {
                                 child: Container(
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(20),
-                                    color: Colors.white,
+                                  //  color: Colors.white,
                                   ),
                                   child: Column(
                                     children: [
@@ -135,7 +135,7 @@ class _CategoryViewState extends State<CategoryView> {
                                                         singleProduct),
                                                 context: context);
                                           },
-                                          color: Colors.green,
+                                       //   color: Colors.green,
                                           title: 'buy'.tr,
                                         ),
                                       ), // onPressed: () {}, child: Text('Buy'))

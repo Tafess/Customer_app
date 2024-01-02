@@ -5,6 +5,7 @@ import 'package:buyers/models/user_model.dart';
 import 'package:buyers/providers/app_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/utils.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
@@ -34,7 +35,7 @@ class _EditProfileState extends State<EditProfile> {
       context,
     );
     return Scaffold(
-      appBar: AppBar(title: const Text('Profile Setting')),
+      appBar: AppBar(title: Text('profileSettings'.tr)),
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
         children: [
@@ -44,7 +45,7 @@ class _EditProfileState extends State<EditProfile> {
                     takePicture();
                   },
                   child: const CircleAvatar(
-                      backgroundColor: Colors.grey,
+                      //  backgroundColor: Colors.grey,
                       radius: 50,
                       child: Icon(Icons.camera_alt)),
                 )
@@ -57,7 +58,7 @@ class _EditProfileState extends State<EditProfile> {
           const SizedBox(height: 12),
           TextFormField(
             decoration: InputDecoration(
-                fillColor: Colors.white,
+                // fillColor: Colors.white,
                 filled: true,
                 hintText: appProvider.getUserInformation.name),
           ),
@@ -65,7 +66,7 @@ class _EditProfileState extends State<EditProfile> {
           TextFormField(
             controller: name,
             decoration: InputDecoration(
-                fillColor: Colors.white,
+                //fillColor: Colors.white,
                 filled: true,
                 hintText: appProvider.getUserInformation.email),
           ),
@@ -78,8 +79,8 @@ class _EditProfileState extends State<EditProfile> {
                     appProvider.updateUserInfoFirebase(
                         context, userModel, image);
                   },
-                  color: Colors.green,
-                  title: 'Update'))
+                  // color: Colors.green,
+                  title: 'update'.tr))
         ],
       ),
     );

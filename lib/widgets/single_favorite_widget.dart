@@ -1,9 +1,9 @@
-
 import 'package:buyers/constants/constants.dart';
 import 'package:buyers/models/product_model.dart';
 import 'package:buyers/providers/app_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/utils.dart';
 import 'package:provider/provider.dart';
 
 class SingleFavoriteWidget extends StatefulWidget {
@@ -15,9 +15,6 @@ class SingleFavoriteWidget extends StatefulWidget {
 }
 
 class _SingleFavoriteWidgetState extends State<SingleFavoriteWidget> {
-
-  
-  
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -35,7 +32,7 @@ class _SingleFavoriteWidgetState extends State<SingleFavoriteWidget> {
                 Expanded(
                   child: Container(
                     height: 140,
-                    color: Colors.blue,
+                    //color: Colors.blue,
                     child: Image.network(widget.singleProduct.image),
                   ),
                 ),
@@ -58,7 +55,9 @@ class _SingleFavoriteWidgetState extends State<SingleFavoriteWidget> {
                                   Text(
                                     widget.singleProduct.name,
                                     style: const TextStyle(
-                                        fontSize: 16, color: Colors.black),
+                                      fontSize: 16,
+                                      // color: Colors.black
+                                    ),
                                   ),
                                   CupertinoButton(
                                       padding: EdgeInsets.zero,
@@ -67,9 +66,9 @@ class _SingleFavoriteWidgetState extends State<SingleFavoriteWidget> {
                                             Provider.of(context, listen: false);
                                         appProvider.removeFavoriteproduct(
                                             widget.singleProduct);
-                                        showMessage('Removed to wishlst');
+                                        showMessage('removedFromFavorites'.tr);
                                       },
-                                      child: const Text('Remove from wishlist'))
+                                      child: const Text('removeWishList'))
                                 ],
                               ),
                               Text(

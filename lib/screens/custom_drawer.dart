@@ -9,6 +9,7 @@ import 'package:buyers/screens/google_map.dart';
 import 'package:buyers/screens/home.dart';
 import 'package:buyers/screens/order_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 class CustomDrawer extends StatelessWidget {
@@ -31,7 +32,7 @@ class CustomDrawer extends StatelessWidget {
                         appProvider.getUserInformation.image ?? ''),
                     fit: BoxFit.cover,
                   ),
-                  color: Colors.blue.shade400.withOpacity(0.9),
+              //    color: Colors.blue.shade400.withOpacity(0.9),
                 ),
                 accountName: Text(
                   appProvider.getUserInformation.name ?? '',
@@ -51,7 +52,7 @@ class CustomDrawer extends StatelessWidget {
                 title: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('Theme'),
+                    Text('theme'.tr),
                     Consumer<ThemeProvider>(
                       builder: (context, themeProvider, child) {
                         bool isLightModeEnabled =
@@ -77,7 +78,7 @@ class CustomDrawer extends StatelessWidget {
                   );
                 },
                 leading: const Icon(Icons.home),
-                title: const Text('Home'),
+                title: Text('home'.tr),
               ),
               ListTile(
                 onTap: () {
@@ -87,7 +88,7 @@ class CustomDrawer extends StatelessWidget {
                   );
                 },
                 leading: const Icon(Icons.shopping_bag),
-                title: const Text('Orders'),
+                title: Text('orders'.tr),
               ),
               ListTile(
                 onTap: () {
@@ -97,21 +98,21 @@ class CustomDrawer extends StatelessWidget {
                   );
                 },
                 leading: const Icon(Icons.settings),
-                title: const Text('Settings'),
+                title: Text('settings'.tr),
               ),
               ListTile(
                 onTap: () {
                   // Handle About Us
                 },
                 leading: const Icon(Icons.info_outline),
-                title: const Text('About us'),
+                title: Text('about'.tr),
               ),
               ListTile(
                 onTap: () {
                   // Handle Support
                 },
                 leading: const Icon(Icons.support),
-                title: const Text('Support'),
+                title: Text('support'.tr),
               ),
               ListTile(
                 onTap: () {
@@ -121,7 +122,7 @@ class CustomDrawer extends StatelessWidget {
                   );
                 },
                 leading: const Icon(Icons.change_circle),
-                title: const Text('Change password'),
+                title: Text('changePassword'.tr),
               ),
               ListTile(
                 onTap: () {
@@ -129,7 +130,7 @@ class CustomDrawer extends StatelessWidget {
                   Navigator.pop(context); // Close the drawer after signing out
                 },
                 leading: const Icon(Icons.logout),
-                title: const Text('Logout'),
+                title: Text('logout'.tr),
               ),
               //Spacer(),
               // const Text('Version 1.0.0'),

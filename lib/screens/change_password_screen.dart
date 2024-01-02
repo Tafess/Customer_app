@@ -20,7 +20,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        foregroundColor: Colors.white,
+      //  foregroundColor: Colors.white,
         title: Text('changePassword'.tr),
         actions: const [
           Icon(Icons.person),
@@ -33,16 +33,16 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
             controller: newPassword,
             obscureText: isShowPassword,
             decoration: InputDecoration(
-              fillColor: Colors.white,
+            //  fillColor: Colors.white,
               filled: true,
               hintText: 'newPassword'.tr,
               labelStyle: const TextStyle(
-                  color: Colors.black,
+                //  color: Colors.black,
                   fontSize: 20,
                   fontWeight: FontWeight.bold),
               prefixIcon: const Icon(
                 Icons.lock,
-                color: Colors.blue,
+              //  color: Colors.blue,
               ),
               suffixIcon: CupertinoButton(
                 onPressed: () {
@@ -61,16 +61,16 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
             controller: conformPassword,
             obscureText: isShowPassword,
             decoration: InputDecoration(
-              fillColor: Colors.white,
+            //  fillColor: Colors.white,
               filled: true,
               hintText: 'conformPassword'.tr,
               labelStyle: const TextStyle(
-                  color: Colors.black,
+              //    color: Colors.black,
                   fontSize: 20,
                   fontWeight: FontWeight.bold),
               prefixIcon: const Icon(
                 Icons.lock,
-                color: Colors.blue,
+             //   color: Colors.blue,
               ),
               suffixIcon: CupertinoButton(
                 onPressed: () {
@@ -88,7 +88,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
           CustomButton(
               onPressed: () {
                 if (newPassword.text.isEmpty) {
-                  showMessage('enterNewpassword'.tr);
+                  showMessage('enterNewPassword'.tr);
                 } else if (conformPassword.text.isEmpty) {
                   showMessage('confirmPassword'.tr);
                 } else {
@@ -100,7 +100,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                   }
                 }
               },
-              color: Colors.green,
+             // color: Colors.green,
               title: 'updatePassword'.tr),
         ],
       ),

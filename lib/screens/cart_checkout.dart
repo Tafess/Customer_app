@@ -26,9 +26,9 @@ class _CartItemCheckoutState extends State<CartItemCheckout> {
       context,
     );
     return Scaffold(
-      backgroundColor: Colors.grey.shade200,
+      // backgroundColor: Colors.grey.shade200,
       appBar: AppBar(
-        foregroundColor: Colors.white,
+        // foregroundColor: Colors.white,
         title: Text('checkout'.tr),
         actions: const [
           Icon(Icons.person),
@@ -45,7 +45,7 @@ class _CartItemCheckoutState extends State<CartItemCheckout> {
               width: double.infinity,
               height: 100,
               decoration: BoxDecoration(
-                color: Colors.white,
+                //color: Colors.white,
                 borderRadius: BorderRadius.circular(10),
                 border: Border.all(color: Colors.grey),
               ),
@@ -65,7 +65,7 @@ class _CartItemCheckoutState extends State<CartItemCheckout> {
                     'Pay With Chapa',
                     style: TextStyle(
                         fontSize: 20,
-                        color: Colors.blue,
+                        // color: Colors.blue,
                         fontWeight: FontWeight.bold),
                   )
                 ],
@@ -78,7 +78,7 @@ class _CartItemCheckoutState extends State<CartItemCheckout> {
               width: double.infinity,
               height: 100,
               decoration: BoxDecoration(
-                color: Colors.white,
+                //   color: Colors.white,
                 borderRadius: BorderRadius.circular(10),
                 border: Border.all(color: Colors.grey),
               ),
@@ -98,7 +98,7 @@ class _CartItemCheckoutState extends State<CartItemCheckout> {
                     'Pay online',
                     style: TextStyle(
                         fontSize: 20,
-                        color: Colors.blue,
+                        // color: Colors.blue,
                         fontWeight: FontWeight.bold),
                   ),
                 ],
@@ -107,7 +107,7 @@ class _CartItemCheckoutState extends State<CartItemCheckout> {
             const SizedBox(height: 20),
             CustomButton(
               title: 'continue'.tr,
-              color: Colors.blue.shade300,
+              //   color: Colors.blue.shade300,
               onPressed: () async {
                 if (groupValue == 1) {
                   Routes.instance.push(

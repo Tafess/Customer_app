@@ -19,15 +19,18 @@ class CustomButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: height ?? 40,
-      width: width ?? MediaQuery.of(context).size.width,
       child: ElevatedButton(
         onPressed: onPressed,
         style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all(color ?? Colors.black45),
+          // backgroundColor: MaterialStateProperty.all(
+          //     // color ?? Colors.black45
+          //     ),
           shape: MaterialStateProperty.all(
             RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10.0),
-              side: BorderSide(color: color ?? Colors.black12, width: 1.0),
+              side: BorderSide(
+                  //color: color ?? Colors.black12,
+                  width: 1.0),
             ),
           ),
         ),

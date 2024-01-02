@@ -5,6 +5,7 @@ import 'package:buyers/models/product_model.dart';
 import 'package:buyers/providers/app_provider.dart';
 import 'package:buyers/widgets/bottom_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:get/utils.dart';
 import 'package:provider/provider.dart';
 
 class CheckOutScreen extends StatefulWidget {
@@ -25,8 +26,8 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
     return Scaffold(
       backgroundColor: Colors.grey.shade200,
       appBar: AppBar(
-        foregroundColor: Colors.white,
-        title: const Text('Checkout'),
+        // foregroundColor: Colors.white,
+        title: Text('checkout'.tr),
         actions: const [
           Icon(Icons.person),
         ],
@@ -42,7 +43,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
               width: double.infinity,
               height: 100,
               decoration: BoxDecoration(
-                color: Colors.white,
+                // color: Colors.white,
                 borderRadius: BorderRadius.circular(10),
                 border: Border.all(color: Colors.grey),
               ),
@@ -62,7 +63,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                     'Chapa',
                     style: TextStyle(
                         fontSize: 20,
-                        color: Colors.blue,
+                        //        color: Colors.blue,
                         fontWeight: FontWeight.bold),
                   )
                 ],
@@ -75,7 +76,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
               width: double.infinity,
               height: 100,
               decoration: BoxDecoration(
-                color: Colors.white,
+                // color: Colors.white,
                 borderRadius: BorderRadius.circular(10),
                 border: Border.all(color: Colors.grey),
               ),
@@ -95,7 +96,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                     'Pay online',
                     style: TextStyle(
                         fontSize: 20,
-                        color: Colors.blue,
+                        //   color: Colors.blue,
                         fontWeight: FontWeight.bold),
                   ),
                 ],
@@ -103,8 +104,8 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
             ),
             const SizedBox(height: 20),
             CustomButton(
-              title: 'Continue',
-              color: Colors.green,
+              title: 'continue'.tr,
+              //  color: Colors.green,
               onPressed: () async {
                 appProvider.clearBuyProduct();
                 appProvider.addBuyProduct(widget.singleProduct);

@@ -66,7 +66,7 @@ class SingleProductWidget extends StatelessWidget {
                             Text(
                               '${(((singleProduct.price - singleProduct.discount) / (singleProduct.price)) * 100).toStringAsFixed(0)} %  off',
                               style: TextStyle(
-                                  color: Colors.green.shade700,
+                                  // color: Colors.green.shade700,
                                   fontWeight: FontWeight.bold),
                             )
                           ],

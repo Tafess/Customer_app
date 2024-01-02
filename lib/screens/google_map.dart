@@ -6,6 +6,7 @@ import 'package:buyers/constants/custom_routes.dart';
 import 'package:buyers/screens/cart_checkout.dart';
 import 'package:buyers/screens/cart_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:get/utils.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:geocoding/geocoding.dart' as geocoding;
@@ -213,7 +214,7 @@ class _MapScreenState extends State<MapScreen> {
                         alignment: Alignment.center,
                         child: CircleAvatar(
                           radius: 60,
-                          backgroundColor: Colors.black38,
+                          // backgroundColor: Colors.black38,
                           child: Icon(
                             Icons.location_on,
                             size: 40,
@@ -270,8 +271,8 @@ class _MapScreenState extends State<MapScreen> {
                           children: [
                             Flexible(
                               child: CustomButton(
-                                color: Colors.green,
-                                title: 'Set address',
+                                //  color: Colors.green,
+                                title: 'setAddress'.tr,
                                 onPressed: () {
                                   String subLocality =
                                       '${_placeMark!.subLocality},';
@@ -329,7 +330,7 @@ class _MapScreenState extends State<MapScreen> {
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               Text(
-                'Your Delivery Address:',
+                'deliveryAddress'.tr,
                 style: TextStyle(
                   fontSize: 18.0,
                   fontWeight: FontWeight.bold,
@@ -349,7 +350,7 @@ class _MapScreenState extends State<MapScreen> {
                       child: CustomButton(
                         color: Colors.green,
                         width: 130,
-                        title: 'Confirm',
+                        title: 'conform'.tr,
                         onPressed: () {
                           Routes.instance.push(
                               widget: CartItemCheckout(), context: context);
@@ -360,7 +361,7 @@ class _MapScreenState extends State<MapScreen> {
                       child: CustomButton(
                         width: 130,
                         color: Colors.deepOrange.shade300,
-                        title: 'Change',
+                        title: 'change'.tr,
                         onPressed: () {
                           Navigator.of(context).pop();
                         },

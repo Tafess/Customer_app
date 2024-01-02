@@ -1,8 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:buyers/constants/top_titles.dart';
 import 'package:buyers/controllers/firebase_firestore_helper.dart';
-import 'package:buyers/main.dart';
 import 'package:buyers/models/catagory_model.dart';
 import 'package:buyers/models/product_model.dart';
 import 'package:buyers/providers/app_provider.dart';
@@ -12,7 +10,6 @@ import 'package:buyers/widgets/single_category.dart';
 import 'package:buyers/widgets/single_product.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_utils/get_utils.dart';
 import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
@@ -161,15 +158,15 @@ class _HomeState extends State<Home> {
                             height: 10.0,
                             width: double.infinity,
                             child: Divider(
-                              color: Colors.grey,
-                            ),
+                                //  color: Colors.grey,
+                                ),
                           ),
                           Text(
                             'categories'.tr,
                             style: TextStyle(
                               fontSize: 20.0,
                               fontWeight: FontWeight.bold,
-                              color: Colors.blue,
+                              //  color: Colors.blue,
                             ),
                           ),
                           categoriesList.isEmpty
@@ -187,9 +184,10 @@ class _HomeState extends State<Home> {
                           Text(
                             'products'.tr,
                             style: TextStyle(
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.blue),
+                              fontSize: 20.0,
+                              fontWeight: FontWeight.bold,
+                              // color: Colors.blue
+                            ),
                           ),
                           isSearched()
                               ? Center(
@@ -199,23 +197,24 @@ class _HomeState extends State<Home> {
                                   ? Padding(
                                       padding: const EdgeInsets.all(12.0),
                                       child: GridView.builder(
-                                          padding:
-                                              const EdgeInsets.only(bottom: 20),
-                                          shrinkWrap: true,
-                                          primary: false,
-                                          itemCount: searchList.length,
-                                          gridDelegate:
-                                              const SliverGridDelegateWithFixedCrossAxisCount(
-                                                  childAspectRatio: 0.8,
-                                                  mainAxisSpacing: 7,
-                                                  crossAxisSpacing: 20,
-                                                  crossAxisCount: 2),
-                                          itemBuilder: (ctx, index) {
-                                            ProductModel singleProduct =
-                                                searchList[index];
-                                            return SingleProductWidget(
-                                                singleProduct: singleProduct);
-                                          }),
+                                        padding:
+                                            const EdgeInsets.only(bottom: 20),
+                                        shrinkWrap: true,
+                                        primary: false,
+                                        itemCount: searchList.length,
+                                        gridDelegate:
+                                            const SliverGridDelegateWithFixedCrossAxisCount(
+                                                childAspectRatio: 0.8,
+                                                mainAxisSpacing: 7,
+                                                crossAxisSpacing: 20,
+                                                crossAxisCount: 2),
+                                        itemBuilder: (ctx, index) {
+                                          ProductModel singleProduct =
+                                              searchList[index];
+                                          return SingleProductWidget(
+                                              singleProduct: singleProduct);
+                                        },
+                                      ),
                                     )
                                   : productModelList.isEmpty
                                       ? Center(
@@ -245,7 +244,7 @@ class _HomeState extends State<Home> {
                                         ),
                         ],
                       ),
-                    ),
+                    )
                   ],
                 ),
               ),
