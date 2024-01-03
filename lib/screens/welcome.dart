@@ -19,7 +19,7 @@ class Welcome extends StatelessWidget {
       child: Scaffold(
         //  backgroundColor: Colors.white,
         body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 70),
+          padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 40),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             //  mainAxisAlignment: MainAxisAlignment.center,
@@ -30,7 +30,7 @@ class Welcome extends StatelessWidget {
               SizedBox(height: 20),
               Center(
                 child: Container(
-                  height: 250,
+                  height: 200,
                   child: Image.asset(
                     'assets/images/belkis3.jpg',
                   ),

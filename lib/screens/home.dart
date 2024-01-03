@@ -8,6 +8,7 @@ import 'package:buyers/providers/theme_provider.dart';
 import 'package:buyers/screens/custom_drawer.dart';
 import 'package:buyers/widgets/single_category.dart';
 import 'package:buyers/widgets/single_product.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
@@ -87,6 +88,11 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
         title: Text('homePage'.tr),
         actions: [
+          IconButton(
+              onPressed: () {
+                print(FirebaseAuth.instance.currentUser!.uid);
+              },
+              icon: Icon(Icons.add)),
           Consumer<ThemeProvider>(
             builder: (context, themeProvider, child) {
               bool isLightModeEnabled = themeProvider.isLightModeEnabled;

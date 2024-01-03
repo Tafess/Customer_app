@@ -17,22 +17,21 @@ ThemeData lightMode = ThemeData(
   ),
   inputDecorationTheme: InputDecorationTheme(
     focusedBorder: OutlineInputBorder(
-      borderSide: BorderSide(color: Colors.blue),
+      borderSide: BorderSide(color: Colors.grey.shade300),
     ),
     enabledBorder: OutlineInputBorder(
-      borderSide: BorderSide(color: Colors.grey.shade300),
+      borderSide: BorderSide(color: Colors.blue),
     ),
   ),
   iconTheme: IconThemeData(color: Colors.black),
   dividerTheme: DividerThemeData(color: Colors.grey.shade300),
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
-      backgroundColor: Colors.blue, // Custom color for elevated button
-    ),
+        backgroundColor: Colors.green.shade400, foregroundColor: Colors.white),
   ),
   bottomAppBarTheme: BottomAppBarTheme(color: Colors.grey.shade600),
   bottomNavigationBarTheme: BottomNavigationBarThemeData(
-    selectedItemColor: Colors.blue,
+    selectedItemColor: Colors.red,
     unselectedItemColor: Colors.grey,
   ),
   buttonTheme: ButtonThemeData(
@@ -114,7 +113,7 @@ ThemeData lightMode = ThemeData(
   listTileTheme: ListTileThemeData(
     tileColor: Colors.white,
     selectedTileColor: Colors.blue.withOpacity(0.2),
-    iconColor: Colors.black,
+    iconColor: Colors.blue.shade700,
     textColor: Colors.black,
   ),
   checkboxTheme: CheckboxThemeData(
@@ -166,7 +165,7 @@ ThemeData lightMode = ThemeData(
   colorScheme: ColorScheme.light(
     background: Colors.grey.shade50,
     primary: Colors.white70,
-    secondary: Colors.black,
+    secondary: Colors.grey.shade700,
   ).copyWith(background: Colors.grey.shade50),
 );
 
@@ -195,7 +194,8 @@ ThemeData darkMode = ThemeData(
   dividerTheme: DividerThemeData(color: Colors.grey.shade600),
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
-      backgroundColor: Colors.blue,
+      backgroundColor: Colors.blue.shade300,
+      foregroundColor: Colors.white,
     ),
   ),
   // ignore: deprecated_member_use
@@ -339,6 +339,6 @@ ThemeData darkMode = ThemeData(
   colorScheme: ColorScheme.dark(
     background: Colors.grey.shade800,
     primary: Colors.grey.shade700,
-    secondary: Colors.white,
+    secondary: Colors.grey.shade200,
   ).copyWith(background: Colors.grey.shade800),
 );

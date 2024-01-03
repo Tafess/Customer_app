@@ -1,6 +1,4 @@
-import 'package:buyers/screens/custom_drawer.dart';
 import 'package:buyers/screens/cart_screen.dart';
-import 'package:buyers/screens/favorite_screen.dart';
 import 'package:buyers/screens/home.dart';
 import 'package:buyers/screens/order_screen.dart';
 import 'package:flutter/material.dart';
@@ -25,11 +23,6 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
         const Home(),
         const CartScreen(),
         const OrderScreen(),
-        // const AccountScreen(),
-        // const FavoriteScreen(),
-
-        //  ProfileScreen(),
-        //OrderScreen(),
       ];
 
   List<PersistentBottomNavBarItem> _navBarsItems() => [
@@ -37,38 +30,19 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
           icon: const Icon(Icons.home),
           inactiveIcon: const Icon(Icons.home_outlined, size: 20),
           title: 'home'.tr,
-          //  activeColorPrimary: Theme.of(context).colorScheme.background,
-          // inactiveColorPrimary: Theme.of(context).colorScheme.secondary,
-          //  inactiveColorSecondary: Colors.purple
+          // activeColorPrimary: Theme.of(context).secondaryHeaderColor,
+          //inactiveColorPrimary: Theme.of(context).canvasColor,
         ),
         PersistentBottomNavBarItem(
           icon: const Icon(Icons.shopping_cart),
           inactiveIcon: const Icon(Icons.shopping_cart_outlined, size: 20),
           title: 'cart'.tr,
-          //  activeColorPrimary: Colors.blue,
-          //   inactiveColorPrimary: Colors.black54,
         ),
         PersistentBottomNavBarItem(
           icon: const Icon(Icons.circle),
           inactiveIcon: const Icon(Icons.circle_outlined, size: 20),
           title: 'orders'.tr,
-          //  activeColorPrimary: Colors.blue,
-          //  inactiveColorPrimary: Colors.black54
         ),
-        // PersistentBottomNavBarItem(
-        //   icon: const Icon(Icons.person),
-        //   inactiveIcon: const Icon(Icons.person_2_outlined, size: 20),
-        //   title: 'Profile',
-        //   activeColorPrimary: Colors.blue,
-        //   inactiveColorPrimary: Colors.deepOrange,
-        // ),
-        // PersistentBottomNavBarItem(
-        //   icon: Icon(Icons.settings_applications),
-        //   inactiveIcon: const Icon(Icons.settings, size: 20),
-        //   title: 'Settings',
-        //   activeColorPrimary: Colors.blue,
-        //   inactiveColorPrimary: Colors.deepOrange,
-        // )
       ];
 
   @override
@@ -84,7 +58,6 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
               : kBottomNavigationBarHeight,
           bottomScreenMargin: 0,
           backgroundColor: Theme.of(context).colorScheme.secondary,
-
           hideNavigationBar: _hideNavBar,
           decoration: const NavBarDecoration(),
           itemAnimationProperties: const ItemAnimationProperties(
@@ -94,8 +67,7 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
           screenTransitionAnimation: const ScreenTransitionAnimation(
             animateTabTransition: true,
           ),
-          navBarStyle:
-              NavBarStyle.style9, // Choose the nav bar style with this property
+          navBarStyle: NavBarStyle.style9,
         ),
       );
 }

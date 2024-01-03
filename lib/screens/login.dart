@@ -5,6 +5,7 @@ import 'package:buyers/constants/custom_routes.dart';
 import 'package:buyers/constants/custom_text.dart';
 import 'package:buyers/constants/custome_button.dart';
 import 'package:buyers/controllers/firebase_auth_helper.dart';
+import 'package:buyers/screens/phone_auth_screen.dart';
 import 'package:buyers/screens/sign_up.dart';
 import 'package:buyers/widgets/bottom_bar.dart';
 import 'package:flutter/cupertino.dart';
@@ -19,6 +20,7 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  final FirebaseAuthHelper _authHelper = FirebaseAuthHelper();
   bool isShowPassword = false;
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
@@ -39,7 +41,67 @@ class _LoginState extends State<Login> {
                     height: 200,
                     child: Image.asset('assets/images/buyers.jpg')),
                 SizedBox(height: 20),
-                
+                Container(
+                  color: Colors.white,
+                  child: Flexible(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          color: Colors.grey,
+                          child: CupertinoButton(
+                            onPressed: () {
+                              bool isLoagin = _authHelper.signInWithGoogle();
+                              if (isLoagin) {
+                                Routes.instance.pushAndRemoveUntil(
+                                    widget: CustomBottomBar(),
+                                    context: context);
+                              }
+                            },
+                            child: Row(
+                              children: [
+                                Image.asset(
+                                  'assets/icons/google1.png',
+                                  width: 30,
+                                  height: 30,
+                                ),
+                                FittedBox(
+                                    child: text(
+                                  title: 'Google sign in',
+                                  size: 16,
+                                )),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Container(
+                          color: Colors.green,
+                          child: CupertinoButton(
+                            onPressed: () {
+                              // bool isLoagin = _authHelper.signInWithGoogle();
+                              // if (isLoagin) {
+                              Routes.instance.pushAndRemoveUntil(
+                                  widget: PhoneAuthScreen(), context: context);
+                              //}
+                            },
+                            child: Row(
+                              children: [
+                                Image.asset(
+                                  'assets/icons/phone.png',
+                                  width: 30,
+                                  height: 30,
+                                ),
+                                FittedBox(
+                                    child:
+                                        text(title: 'Phone sign in', size: 16)),
+                              ],
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
                 SizedBox(height: 20),
                 TextFormField(
                   controller: email,
@@ -82,8 +144,8 @@ class _LoginState extends State<Login> {
                       bool isValidate =
                           loginValidation(email.text, password.text);
                       if (isValidate) {
-                        bool islogined = await FirebaseAuthHelper.instance
-                            .login(email.text, password.text, context);
+                        bool islogined = await _authHelper.login(
+                            email.text, password.text, context);
                         if (islogined) {
                           Routes.instance.pushAndRemoveUntil(
                               widget: CustomBottomBar(), context: context);
