@@ -14,25 +14,33 @@ import 'package:get_storage/get_storage.dart';
 class FirebaseFirestoreHelper {
   static FirebaseFirestoreHelper instance = FirebaseFirestoreHelper();
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
-  String userId = FirebaseAuth.instance.currentUser!.uid;
   final store = GetStorage();
 //---------------------------get user information-------------------------------------
-  Future<UserModel> UserInformation(String userId) async {
-    CollectionReference customersCollection =
-        FirebaseFirestore.instance.collection('customers');
+  Future<UserModel?> getUserInfo() async {
+    User? user = FirebaseAuth.instance.currentUser;
 
-    DocumentSnapshot userSnapshot = await customersCollection.doc(userId).get();
+    if (user != null) {
+      String userId = user.uid;
 
-    if (userSnapshot.exists) {
-      return UserModel.fromJson(userSnapshot.data() as Map<String, dynamic>);
-    } else {
-      return UserModel(
-        id: userId,
-        name: 'Create your account',
-        email: 'default@email.com',
-        phoneNumber: '+z ,000 000 000',
-      );
+      CollectionReference customersCollection =
+          FirebaseFirestore.instance.collection('customers');
+
+      DocumentSnapshot userSnapshot =
+          await customersCollection.doc(userId).get();
+
+      if (userSnapshot.exists) {
+        return UserModel.fromJson(userSnapshot.data() as Map<String, dynamic>);
+      } else {
+        return UserModel(
+          id: userId,
+          name: 'Create your account',
+          email: 'default@email.com',
+          phoneNumber: '+z ,000 000 000',
+        );
+      }
     }
+
+    return null; // Return null if user is null
   }
 
 //----------------------get categories------------------------------------------
@@ -110,6 +118,18 @@ class FirebaseFirestoreHelper {
     String longitude = store.read('longitude');
     String phoneNumber = store.read('phoneNumber');
     DateTime orderDate = DateTime.now();
+    int calculateTotalQuantity(List<ProductModel> products) {
+      int totalQuantity = 0;
+
+      for (ProductModel product in products) {
+        totalQuantity += product.quantity ?? 0;
+      }
+
+      return totalQuantity;
+    }
+
+    int totalOrderedQuantity = calculateTotalQuantity(list);
+
     try {
       ShowLoderDialog(context);
       double totalPrice = 0.0;
@@ -117,7 +137,7 @@ class FirebaseFirestoreHelper {
         totalPrice += element.price * element.quantity;
       }
       DocumentReference documentReference = _firebaseFirestore
-          .collection('orders')
+          .collection('orderssssss')
           .doc(FirebaseAuth.instance.currentUser!.uid);
 
       QuerySnapshot<Map<String, dynamic>> querySnapshot =
@@ -144,9 +164,11 @@ class FirebaseFirestoreHelper {
         'deliveryId': '',
         'deliveryName': '',
         'deliveryPhone': '',
+      }).then((value) {
+        _updateProductInCollection('products', productId, totalOrderedQuantity);
+        //  _updateProductInCollectionGroup('products', productId, totalOrderedQuantity);
       });
       showMessage('Ordered Successfully');
-      Navigator.of(context, rootNavigator: true).pop();
 
       return true;
     } catch (e) {
@@ -236,24 +258,31 @@ class FirebaseFirestoreHelper {
   //------------------------get user orders----------------------------------------
 
   Future<List<OrderModel>> getOrders() async {
-    try {
-      QuerySnapshot<Map<String, dynamic>> querySnapshot =
-          await _firebaseFirestore
-              .collection('orders')
-              .where('userId', isEqualTo: userId)
-              .get();
+    User? user = FirebaseAuth.instance.currentUser;
 
-      List<OrderModel> orderList = querySnapshot.docs
-          .map((element) => OrderModel.fromJson(element.data()))
-          .toList();
+    if (user != null) {
+      String userId = user.uid;
 
-      return orderList;
-    } catch (error) {
-      showMessage(error.toString());
-      print(error.toString());
+      try {
+        QuerySnapshot<Map<String, dynamic>> querySnapshot =
+            await _firebaseFirestore
+                .collection('orders')
+                .where('userId', isEqualTo: userId)
+                .get();
 
-      return [];
+        List<OrderModel> orderList = querySnapshot.docs
+            .map((element) => OrderModel.fromJson(element.data()))
+            .toList();
+
+        return orderList;
+      } catch (error) {
+        showMessage(error.toString());
+        print(error.toString());
+        return [];
+      }
     }
+
+    return []; // Return an empty list if user is null
   }
 
   // Future<List<OrderModel>> getUserOrder() async {
@@ -313,29 +342,94 @@ class FirebaseFirestoreHelper {
     return qrCodeData;
   }
 
-  Future<void> updateProduct(String productId, int quantity) async {
+  //-----------------------------------------------------------------------------------
+
+  Future<void> updateProduct(
+      String collectionName, String productId, int quantity) async {
     try {
-      QuerySnapshot<Map<String, dynamic>> querySnapshot =
-          await _firebaseFirestore
-              .collectionGroup('products')
-              .where('productId', isEqualTo: productId)
-              .get();
-      if (querySnapshot.docs.isNotEmpty) {
-        DocumentReference productRef =
-            _firebaseFirestore.doc(querySnapshot.docs.first.reference.path);
-
-        Map<String, dynamic> productInfo = querySnapshot.docs.first.data();
-        int oldQuantity = productInfo['quantity'] ?? 0;
-
-        int newQuantity = oldQuantity - quantity;
-        await productRef.update({'quantity': newQuantity});
-        print('Product quantity updated successfully.');
+      if (collectionName == 'products') {
+        await _updateProductInCollection(collectionName, productId, quantity);
       } else {
-        print('Product not found');
+        await _updateProductInCollectionGroup(
+            collectionName, productId, quantity);
       }
+
+      print('Product quantity updated successfully.');
     } catch (e) {
       print('Error updating product: $e');
       showMessage('Error updating product: $e');
+    }
+  }
+
+  Future<void> _updateProductInCollection(
+      String collectionName, String productId, int quantity) async {
+    try {
+      QuerySnapshot<Map<String, dynamic>> querySnapshot =
+          await _firebaseFirestore
+              .collection(collectionName)
+              .where('productId', isEqualTo: productId)
+              .get();
+
+      if (querySnapshot.docs.isNotEmpty) {
+        for (QueryDocumentSnapshot<Map<String, dynamic>> document
+            in querySnapshot.docs) {
+          DocumentReference productRef =
+              _firebaseFirestore.doc(document.reference.path);
+
+          Map<String, dynamic> productInfo = document.data();
+          int oldQuantity = productInfo['quantity'] ?? 0;
+
+          int newQuantity = oldQuantity - quantity;
+          if (newQuantity >= 0) {
+            await productRef.update({'quantity': newQuantity});
+          } else {
+            showMessage(
+                'Some error occurred while updating product quantity in $collectionName collection');
+          }
+        }
+      } else {
+        print('Product not found in $collectionName collection');
+      }
+    } catch (e) {
+      print('Error updating product in $collectionName collection: $e');
+      showMessage('Error updating product in $collectionName collection: $e');
+    }
+  }
+
+  Future<void> _updateProductInCollectionGroup(
+      String collectionGroupName, String productId, int quantity) async {
+    try {
+      QuerySnapshot<Map<String, dynamic>> querySnapshot =
+          await _firebaseFirestore
+              .collectionGroup(collectionGroupName)
+              .where('productId', isEqualTo: productId)
+              .get();
+
+      if (querySnapshot.docs.isNotEmpty) {
+        for (QueryDocumentSnapshot<Map<String, dynamic>> document
+            in querySnapshot.docs) {
+          DocumentReference productRef =
+              _firebaseFirestore.doc(document.reference.path);
+
+          Map<String, dynamic> productInfo = document.data();
+          int oldQuantity = productInfo['quantity'] ?? 0;
+
+          int newQuantity = oldQuantity - quantity;
+          if (newQuantity >= 0) {
+            await productRef.update({'quantity': newQuantity});
+          } else {
+            showMessage(
+                'Some error occurred while updating product quantity in $collectionGroupName collection group');
+          }
+        }
+      } else {
+        print('Product not found in $collectionGroupName collection group');
+      }
+    } catch (e) {
+      print(
+          'Error updating product in $collectionGroupName collection group: $e');
+      showMessage(
+          'Error updating product in $collectionGroupName collection group: $e');
     }
   }
 }

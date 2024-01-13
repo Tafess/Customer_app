@@ -84,6 +84,17 @@ class AppProvider with ChangeNotifier {
   }
 
   /////       Total price  ///////////
+  ///
+  ///
+  int calculateTotalQuantity(List<ProductModel> products) {
+  int totalQuantity = 0;
+
+  for (ProductModel product in products) {
+    totalQuantity += product.quantity ?? 0;
+  }
+
+  return totalQuantity;
+}
 
   double totalPrice() {
     double totalPrice = 0.0;

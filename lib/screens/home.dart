@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, sized_box_for_whitespace
 
 import 'package:buyers/constants/custom_routes.dart';
 import 'package:buyers/controllers/firebase_firestore_helper.dart';

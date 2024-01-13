@@ -43,61 +43,59 @@ class _LoginState extends State<Login> {
                 SizedBox(height: 20),
                 Container(
                   color: Colors.white,
-                  child: Flexible(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          color: Colors.grey,
-                          child: CupertinoButton(
-                            onPressed: () {
-                              _authHelper.signInWithGoogle();
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        color: Colors.grey,
+                        child: CupertinoButton(
+                          onPressed: () {
+                            _authHelper.signInWithGoogle();
 
-                              Routes.instance.pushAndRemoveUntil(
-                                  widget: CustomBottomBar(), context: context);
-                            },
-                            child: Row(
-                              children: [
-                                Image.asset(
-                                  'assets/icons/google1.png',
-                                  width: 30,
-                                  height: 30,
-                                ),
-                                FittedBox(
-                                    child: text(
-                                  title: 'Google sign in',
-                                  size: 16,
-                                )),
-                              ],
-                            ),
+                            Routes.instance.pushAndRemoveUntil(
+                                widget: CustomBottomBar(), context: context);
+                          },
+                          child: Row(
+                            children: [
+                              Image.asset(
+                                'assets/icons/google1.png',
+                                width: 30,
+                                height: 30,
+                              ),
+                              FittedBox(
+                                  child: text(
+                                title: 'Google sign in',
+                                size: 16,
+                              )),
+                            ],
                           ),
                         ),
-                        Container(
-                          color: Colors.green,
-                          child: CupertinoButton(
-                            onPressed: () {
-                              // bool isLoagin = _authHelper.signInWithGoogle();
-                              // if (isLoagin) {
-                              Routes.instance.pushAndRemoveUntil(
-                                  widget: PhoneAuthScreen(), context: context);
-                              //}
-                            },
-                            child: Row(
-                              children: [
-                                Image.asset(
-                                  'assets/icons/phone.png',
-                                  width: 30,
-                                  height: 30,
-                                ),
-                                FittedBox(
-                                    child:
-                                        text(title: 'Phone sign in', size: 16)),
-                              ],
-                            ),
+                      ),
+                      Container(
+                        color: Colors.green,
+                        child: CupertinoButton(
+                          onPressed: () {
+                            // bool isLoagin = _authHelper.signInWithGoogle();
+                            // if (isLoagin) {
+                            Routes.instance.pushAndRemoveUntil(
+                                widget: PhoneAuthScreen(), context: context);
+                            //}
+                          },
+                          child: Row(
+                            children: [
+                              Image.asset(
+                                'assets/icons/phone.png',
+                                width: 30,
+                                height: 30,
+                              ),
+                              FittedBox(
+                                  child:
+                                      text(title: 'Phone sign in', size: 16)),
+                            ],
                           ),
-                        )
-                      ],
-                    ),
+                        ),
+                      )
+                    ],
                   ),
                 ),
                 SizedBox(height: 20),

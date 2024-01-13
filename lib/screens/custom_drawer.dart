@@ -22,17 +22,16 @@ class CustomDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).listTileTheme;
-    String? userId = FirebaseAuth.instance.currentUser?.uid;
+    User? currentUser = FirebaseAuth.instance.currentUser;
+    String? userId = currentUser?.uid;
 
     return Drawer(
       width: 240,
       child: Container(
         color: theme.tileColor,
         child: SingleChildScrollView(
-          child: FutureBuilder<UserModel>(
-            future: userId != null
-                ? _firestoreHelper.UserInformation(userId)
-                : null,
+          child: FutureBuilder<UserModel?>(
+            future: userId != null ? _firestoreHelper.getUserInfo() : null,
             builder: (context, snapshot) {
               if (userId == null) {
                 return Column(
@@ -147,7 +146,9 @@ class CustomDrawer extends StatelessWidget {
 
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Container(
-                    height: 40, width: 40, child: Center(child: CircularProgressIndicator()));
+                    height: 40,
+                    width: 40,
+                    child: Center(child: CircularProgressIndicator()));
               } else if (snapshot.hasError) {
                 return Text('Error: ${snapshot.error}');
               } else {

@@ -210,54 +210,53 @@ class _ProductDetailsState extends State<ProductDetails> {
             ],
           ),
           const SizedBox(height: 20),
-          Flexible(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                CustomButton(
-                  onPressed: () {
-                    AppProvider appProvider =
-                        Provider.of(context, listen: false);
-
-                    // Check if the product is already in the cart
-                    if (appProvider.isInCart(widget.singleProduct.id)) {
-                      showMessage('alreadyInCart'.tr);
-                    } else {
-                      ProductModel productModel =
-                          widget.singleProduct.copyWith(quantity: quantity);
-                      appProvider.addToCartproduct(productModel);
-                      showMessage('addedToCart'.tr);
-                    }
-                  },
-                  title: 'addToCart'.tr,
-                ),
-                const SizedBox(
-                  width: 12,
-                ),
-                CustomButton(
-                  onPressed: () {
-                    if (userId != null) {
-                      ProductModel productModel =
-                          widget.singleProduct.copyWith(quantity: quantity);
-                      Routes.instance.push(
-                          widget: CheckOutScreen(
-                            singleProduct: productModel,
-                          ),
-                          context: context);
-                    } else {
-                      customSnackbar(
-                          context: context,
-                          message:
-                              'Please sign in before procede to the next step',
-                          backgroundColor: Colors.red);
-                      Routes.instance.push(widget: Login(), context: context);
-                    }
-                  },
-                  // color: Colors.green,
-                  title: 'buy'.tr,
-                ),
-              ],
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CustomButton(
+                onPressed: () {
+                  AppProvider appProvider =
+                      Provider.of(context, listen: false);
+          
+                  // Check if the product is already in the cart
+                  if (appProvider.isInCart(widget.singleProduct.id)) {
+                    showMessage('alreadyInCart'.tr);
+                  } else {
+                    ProductModel productModel =
+                        widget.singleProduct.copyWith(quantity: quantity);
+                    appProvider.addToCartproduct(productModel);
+                    showMessage('addedToCart'.tr);
+                  }
+                },
+                title: 'addToCart'.tr,
+              ),
+              const SizedBox(
+                width: 12,
+              ),
+              CustomButton(
+                onPressed: () {
+                  if (userId != null) {
+                    ProductModel productModel =
+                        widget.singleProduct.copyWith(quantity: quantity);
+                    //Routes.instance.push(widget: MapScreen(), context: context);
+                    Routes.instance.push(
+                        widget: CheckOutScreen(
+                          singleProduct: productModel,
+                        ),
+                        context: context);
+                  } else {
+                    customSnackbar(
+                        context: context,
+                        message:
+                            'Please sign in before procede to the next step',
+                        backgroundColor: Colors.red);
+                    Routes.instance.push(widget: Login(), context: context);
+                  }
+                },
+                // color: Colors.green,
+                title: 'buy'.tr,
+              ),
+            ],
           ),
           const SizedBox(
             height: 50,

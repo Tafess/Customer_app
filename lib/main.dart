@@ -5,6 +5,7 @@ import 'package:buyers/firebase_options.dart';
 import 'package:buyers/local_strings.dart';
 import 'package:buyers/providers/app_provider.dart';
 import 'package:buyers/providers/theme_provider.dart';
+import 'package:buyers/screens/cart_screen.dart';
 import 'package:buyers/widgets/bottom_bar.dart';
 import 'package:buyers/widgets/language_choice.dart';
 import 'package:chapa_unofficial/chapa_unofficial.dart';
@@ -12,6 +13,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_app_check/firebase_app_check.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,6 +23,11 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
+  );
+  await FirebaseAppCheck.instance.activate(
+    //  webRecaptchaSiteKey: 'recaptcha-v3-site-key',
+    // Set androidProvider to `AndroidProvider.debug`
+    androidProvider: AndroidProvider.debug,
   );
   runApp(ChangeNotifierProvider(
       create: (context) => ThemeProvider(), child: const MyApp()));
@@ -39,6 +46,7 @@ class MyApp extends StatelessWidget {
         locale: Locale('en', 'US'),
         title: 'Belkis ',
         theme: Provider.of<ThemeProvider>(context).themeData,
+        routes: {'/checkoutPage': (context) => const CartScreen()},
         home: StreamBuilder(
             stream: FirebaseAuthHelper.instance.getAuthChange,
             builder: (context, snapshot) {

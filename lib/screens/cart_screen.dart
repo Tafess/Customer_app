@@ -6,16 +6,15 @@ import 'package:buyers/constants/custom_text.dart';
 import 'package:buyers/constants/custome_button.dart';
 import 'package:buyers/constants/custom_routes.dart';
 import 'package:buyers/controllers/firebase_firestore_helper.dart';
-import 'package:buyers/models/user_model.dart';
 import 'package:buyers/providers/app_provider.dart';
 import 'package:buyers/screens/custom_drawer.dart';
-import 'package:buyers/screens/cart_checkout.dart';
 import 'package:buyers/screens/google_map.dart';
 import 'package:buyers/screens/login.dart';
-import 'package:buyers/screens/single_cart.dart';
+import 'package:buyers/widgets/single_cart.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:provider/provider.dart';
 
 class CartScreen extends StatefulWidget {
@@ -29,6 +28,7 @@ class _CartScreenState extends State<CartScreen> {
   final FirebaseFirestoreHelper _firestoreHelper = FirebaseFirestoreHelper();
   final userId = FirebaseAuth.instance.currentUser;
   int quantity = 1;
+  final store = GetStorage();
   @override
   Widget build(BuildContext context) {
     AppProvider appProvider = Provider.of(context);
@@ -77,15 +77,21 @@ class _CartScreenState extends State<CartScreen> {
                               title: 'continue'.tr,
                               onPressed: () {
                                 if (userId != null) {
-                                  appProvider.clearBuyProduct();
-                                  appProvider.addBuyProductCartList();
-                                  // appProvider.clearCart();
-                                  if (appProvider.getBuyproductList.isEmpty) {
-                                    showMessage('Cart is empty');
-                                  } else {
-                                    Routes.instance.push(
-                                        widget: MapScreen(), context: context);
-                                  }
+                                  store.write('totalPrice',
+                                      appProvider.totalPrice().toString());
+                                  store.write('quantity', quantity);
+
+                                  
+                                  Routes.instance.push(
+                                      widget: MapScreen(), context: context);
+                                  // appProvider.clearBuyProduct();
+                                  // appProvider.addBuyProductCartList();
+                                  // // appProvider.clearCart();
+                                  // if (appProvider.getBuyproductList.isEmpty) {
+                                  //   showMessage('Cart is empty');
+                                  // } else {
+
+                                  // }
                                 } else {
                                   customSnackbar(
                                       context: context,

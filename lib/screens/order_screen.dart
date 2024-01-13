@@ -113,7 +113,7 @@ class _OrderScreenState extends State<OrderScreen> {
                                 width: 80,
                                 // color: Colors.white,
                                 child: Image.network(
-                                  orderModel.products[0].image,
+                                  orderModel.products![0].image,
                                   fit: BoxFit.cover,
                                 ),
                               ),
@@ -133,20 +133,20 @@ class _OrderScreenState extends State<OrderScreen> {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
-                                            orderModel.products[0].name,
+                                            orderModel.products![0].name,
                                             style: const TextStyle(
                                                 fontSize: 14,
                                                 //   color: Colors.black,
                                                 fontWeight: FontWeight.bold),
                                           ),
                                           // Spacer(),
-                                          if (orderModel.products.length >
+                                          if (orderModel.products!.length >
                                               1) ...[
                                             CircleAvatar(
                                               // backgroundColor: Colors.black45,
                                               radius: 12,
                                               child: Text(
-                                                orderModel.products[0].quantity
+                                                orderModel.products![0].quantity
                                                     .toString(),
                                                 style: TextStyle(
                                                     //   color: Colors.white
@@ -316,11 +316,11 @@ class _OrderScreenState extends State<OrderScreen> {
                             )
                           ],
                         ),
-                        children: orderModel.products.length > 1
+                        children: orderModel.products!.length > 1
                             ? [
                                 Text('details'.tr),
                                 Divider(color: Colors.grey),
-                                ...orderModel.products.map((singleProduct) {
+                                ...orderModel.products!.map((singleProduct) {
                                   return Row(
                                     children: [
                                       Expanded(
@@ -373,7 +373,7 @@ class _OrderScreenState extends State<OrderScreen> {
                                             ),
                                             SizedBox(height: 4),
                                             Text(
-                                              orderModel.products[0].status,
+                                              orderModel.products![0].status,
                                               style: TextStyle(
                                                   fontSize: 12,
                                                   color: const Color.fromRGBO(

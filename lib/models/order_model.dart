@@ -1,35 +1,35 @@
 import 'package:buyers/models/product_model.dart';
 
 class OrderModel {
-  String payment;
-  String status;
-  List<ProductModel> products;
-  double totalprice;
+  String? payment;
+  String? status;
+  List<ProductModel>? products;
+  double? totalprice;
   String orderId;
-  String userId;
-  String sellerId;
+  String? userId;
+  String? sellerId;
   String? address;
   String? phoneNumber;
   double? latitude;
   double? longitude;
-  DateTime orderDate;
+  DateTime? orderDate;
   String? deliveryId;
   String? deliveryName;
   String? deliveryPhone;
 
   OrderModel({
-    required this.totalprice,
+     this.totalprice,
     required this.orderId,
-    required this.payment,
-    required this.products,
-    required this.status,
-    required this.userId,
-    required this.sellerId,
+     this.payment,
+     this.products,
+     this.status,
+     this.userId,
+     this.sellerId,
     this.address,
     this.phoneNumber,
     this.latitude,
     this.longitude,
-    required this.orderDate,
+     this.orderDate,
     this.deliveryId,
     this.deliveryName,
     this.deliveryPhone,
