@@ -163,10 +163,11 @@ ThemeData lightMode = ThemeData(
     }),
   ),
   colorScheme: ColorScheme.light(
-    background: Colors.grey.shade50,
-    primary: Colors.white70,
-    secondary: Colors.grey.shade700,
-  ).copyWith(background: Colors.grey.shade50),
+          background: Colors.grey.shade50,
+          primary: Colors.white,
+          secondary: Colors.black45,
+          onBackground: Colors.white)
+      .copyWith(background: Colors.grey.shade50),
 );
 
 ThemeData darkMode = ThemeData(
@@ -337,8 +338,13 @@ ThemeData darkMode = ThemeData(
     }),
   ),
   colorScheme: ColorScheme.dark(
-    background: Colors.grey.shade800,
-    primary: Colors.grey.shade700,
-    secondary: Colors.grey.shade200,
-  ).copyWith(background: Colors.grey.shade800),
+          background: backgroundDark,
+          primary: primaryDark,
+          secondary: Colors.white,
+          onBackground: Colors.blue)
+      .copyWith(background: Colors.grey.shade800),
 );
+
+Color backgroundDark = Color(424769);
+Color primaryDark = Colors.blueGrey.shade900;
+Color secondaryDark = Color(0x3D3B40);

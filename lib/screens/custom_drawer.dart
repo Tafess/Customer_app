@@ -3,54 +3,156 @@
 
 import 'package:buyers/constants/conformation_dialog.dart';
 import 'package:buyers/constants/custom_routes.dart';
+import 'package:buyers/constants/custom_text.dart';
+import 'package:buyers/controllers/firebase_firestore_helper.dart';
 import 'package:buyers/models/user_model.dart';
-import 'package:buyers/providers/app_provider.dart';
 import 'package:buyers/providers/theme_provider.dart';
 import 'package:buyers/screens/change_password_screen.dart';
 import 'package:buyers/screens/home.dart';
 import 'package:buyers/screens/order_screen.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:buyers/screens/sign_up.dart';
+import 'package:buyers/screens/support_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 class CustomDrawer extends StatelessWidget {
-  Future<UserModel> getUserInformation(String userId) async {
-    CollectionReference usersCollection =
-        FirebaseFirestore.instance.collection('users');
-
-    DocumentSnapshot userSnapshot = await usersCollection.doc(userId).get();
-
-    if (userSnapshot.exists) {
-      return UserModel.fromJson(userSnapshot.data() as Map<String, dynamic>);
-    } else {
-      return UserModel(
-        id: userId,
-        name: 'Default Name',
-        email: 'default@email.com',
-        phoneNumber: '1234567890',
-      );
-    }
-  }
-
+  final FirebaseFirestoreHelper _firestoreHelper = FirebaseFirestoreHelper();
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).listTileTheme;
+    String? userId = FirebaseAuth.instance.currentUser?.uid;
+
     return Drawer(
       width: 240,
       child: Container(
         color: theme.tileColor,
         child: SingleChildScrollView(
           child: FutureBuilder<UserModel>(
-            future: getUserInformation(FirebaseAuth.instance.currentUser!.uid),
+            future: userId != null
+                ? _firestoreHelper.UserInformation(userId)
+                : null,
             builder: (context, snapshot) {
+              if (userId == null) {
+                return Column(
+                  children: [
+                    UserAccountsDrawerHeader(
+                        decoration: BoxDecoration(
+                          color: Colors.blue.withOpacity(0.9),
+                        ),
+                        accountName: text(title: ''),
+                        accountEmail: text(title: '')),
+                    ListTile(
+                      leading: const Icon(Icons.light_mode),
+                      title: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text('theme'.tr),
+                          Consumer<ThemeProvider>(
+                            builder: (context, themeProvider, child) {
+                              bool isLightModeEnabled =
+                                  themeProvider.isLightModeEnabled;
+                              return IconButton(
+                                onPressed: () {
+                                  themeProvider.toggleTheme();
+                                },
+                                icon: Icon(isLightModeEnabled
+                                    ? Icons.dark_mode
+                                    : Icons.dark_mode_outlined),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                      selectedTileColor: theme.selectedTileColor,
+                      iconColor: theme.iconColor,
+                      textColor: theme.textColor,
+                    ),
+                    ListTile(
+                      onTap: () {
+                        Routes.instance.push(
+                          widget: Home(),
+                          context: context,
+                        );
+                      },
+                      leading: const Icon(Icons.home),
+                      title: Text('home'.tr),
+                      selectedTileColor: theme.selectedTileColor,
+                      iconColor: theme.iconColor,
+                      textColor: theme.textColor,
+                    ),
+                    ListTile(
+                      onTap: () {
+                        Routes.instance.push(
+                          widget: OrderScreen(),
+                          context: context,
+                        );
+                      },
+                      leading: const Icon(Icons.shopping_bag),
+                      title: Text('orders'.tr),
+                      selectedTileColor: theme.selectedTileColor,
+                      iconColor: theme.iconColor,
+                      textColor: theme.textColor,
+                    ),
+                    ListTile(
+                      onTap: () {
+                        Routes.instance.push(
+                          widget: Home(),
+                          context: context,
+                        );
+                      },
+                      leading: const Icon(Icons.settings),
+                      title: Text('settings'.tr),
+                      selectedTileColor: theme.selectedTileColor,
+                      iconColor: theme.iconColor,
+                      textColor: theme.textColor,
+                    ),
+                    ListTile(
+                      onTap: () {
+                        // Handle About Us
+                      },
+                      leading: const Icon(Icons.info_outline),
+                      title: Text('about'.tr),
+                      selectedTileColor: theme.selectedTileColor,
+                      iconColor: theme.iconColor,
+                      textColor: theme.textColor,
+                    ),
+                    ListTile(
+                      onTap: () {
+                        Routes.instance
+                            .push(widget: SupportScreen(), context: context);
+                      },
+                      leading: const Icon(Icons.support),
+                      title: Text('support'.tr),
+                      selectedTileColor: theme.selectedTileColor,
+                      iconColor: theme.iconColor,
+                      textColor: theme.textColor,
+                    ),
+                    ListTile(
+                      onTap: () {
+                        Routes.instance
+                            .push(widget: SignUp(), context: context);
+                      },
+                      leading: const Icon(Icons.logout),
+                      title: Text('createAccount'.tr),
+                      selectedTileColor: theme.selectedTileColor,
+                      iconColor: theme.iconColor,
+                      textColor: theme.textColor,
+                    ),
+                    const SizedBox(height: 60),
+                  ],
+                );
+              }
+
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return CircularProgressIndicator();
+                return Container(
+                    height: 40, width: 40, child: Center(child: CircularProgressIndicator()));
               } else if (snapshot.hasError) {
                 return Text('Error: ${snapshot.error}');
               } else {
                 UserModel userInformation = snapshot.data!;
+
                 return Column(
                   children: [
                     UserAccountsDrawerHeader(
@@ -153,7 +255,8 @@ class CustomDrawer extends StatelessWidget {
                     ),
                     ListTile(
                       onTap: () {
-                        // Handle Support
+                        Routes.instance
+                            .push(widget: SupportScreen(), context: context);
                       },
                       leading: const Icon(Icons.support),
                       title: Text('support'.tr),
@@ -174,30 +277,31 @@ class CustomDrawer extends StatelessWidget {
                       iconColor: theme.iconColor,
                       textColor: theme.textColor,
                     ),
-                    ListTile(
-                      onTap: () {
-                        ConfirmationDialog.show(
-                            context, 'Are you shur to logout', [
-                          'Yes',
-                          'No'
-                        ], [
-                          () {
-                            FirebaseAuth.instance.signOut();
-                            Navigator.of(context).pop();
-                          },
-                          () {
-                            Navigator.pop(context);
-                          }
-                        ]);
+                    if (userId != null)
+                      ListTile(
+                        onTap: () {
+                          ConfirmationDialog.show(
+                              context, 'Are you sure to logout', [
+                            'yes'.tr,
+                            'no'.tr
+                          ], [
+                            () {
+                              FirebaseAuth.instance.signOut();
+                              Navigator.of(context).pop();
+                            },
+                            () {
+                              Navigator.pop(context);
+                            }
+                          ]);
 
-                        // Close the drawer after signing out
-                      },
-                      leading: const Icon(Icons.logout),
-                      title: Text('logout'.tr),
-                      selectedTileColor: theme.selectedTileColor,
-                      iconColor: theme.iconColor,
-                      textColor: theme.textColor,
-                    ),
+                          // Close the drawer after signing out
+                        },
+                        leading: const Icon(Icons.login),
+                        title: Text('logout'.tr),
+                        selectedTileColor: theme.selectedTileColor,
+                        iconColor: theme.iconColor,
+                        textColor: theme.textColor,
+                      ),
                     const SizedBox(height: 60),
                   ],
                 );
@@ -209,6 +313,7 @@ class CustomDrawer extends StatelessWidget {
     );
   }
 }
+
 
 // class CustomDrawer extends StatelessWidget {
 //   @override

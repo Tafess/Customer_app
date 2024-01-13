@@ -18,6 +18,7 @@ class CustomBottomBar extends StatefulWidget {
 class _CustomBottomBarState extends State<CustomBottomBar> {
   final PersistentTabController _controller = PersistentTabController();
   final bool _hideNavBar = false;
+  
 
   List<Widget> _buildScreens() => [
         const Home(),
@@ -30,18 +31,20 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
           icon: const Icon(Icons.home),
           inactiveIcon: const Icon(Icons.home_outlined, size: 20),
           title: 'home'.tr,
-          // activeColorPrimary: Theme.of(context).secondaryHeaderColor,
+          activeColorPrimary: Theme.of(context).colorScheme.onBackground,
           //inactiveColorPrimary: Theme.of(context).canvasColor,
         ),
         PersistentBottomNavBarItem(
           icon: const Icon(Icons.shopping_cart),
           inactiveIcon: const Icon(Icons.shopping_cart_outlined, size: 20),
           title: 'cart'.tr,
+          activeColorPrimary: Theme.of(context).colorScheme.onBackground,
         ),
         PersistentBottomNavBarItem(
           icon: const Icon(Icons.circle),
           inactiveIcon: const Icon(Icons.circle_outlined, size: 20),
           title: 'orders'.tr,
+          activeColorPrimary: Theme.of(context).colorScheme.onBackground,
         ),
       ];
 

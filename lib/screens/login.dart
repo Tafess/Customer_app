@@ -33,7 +33,7 @@ class _LoginState extends State<Login> {
         padding: const EdgeInsets.all(20.0),
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 25),
+            padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 25),
             child: Column(
               children: [
                 text(title: 'login'.tr, size: 30, color: Colors.blue),
@@ -51,12 +51,10 @@ class _LoginState extends State<Login> {
                           color: Colors.grey,
                           child: CupertinoButton(
                             onPressed: () {
-                              bool isLoagin = _authHelper.signInWithGoogle();
-                              if (isLoagin) {
-                                Routes.instance.pushAndRemoveUntil(
-                                    widget: CustomBottomBar(),
-                                    context: context);
-                              }
+                              _authHelper.signInWithGoogle();
+
+                              Routes.instance.pushAndRemoveUntil(
+                                  widget: CustomBottomBar(), context: context);
                             },
                             child: Row(
                               children: [
@@ -134,9 +132,7 @@ class _LoginState extends State<Login> {
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: 10,
-                ),
+                SizedBox(height: 10),
                 CustomButton(
                     title: 'login'.tr,
                     color: Colors.green,
@@ -162,15 +158,17 @@ class _LoginState extends State<Login> {
                   height: 20,
                 ),
                 Center(
-                  child: CupertinoButton(
-                      onPressed: () {
-                        Routes.instance
-                            .push(widget: const SignUp(), context: context);
-                      },
-                      child: text(
-                          title: 'createAccount'.tr,
-                          size: 20,
-                          color: Colors.blue)),
+                  child: Card(
+                    child: CupertinoButton(
+                        onPressed: () {
+                          Routes.instance
+                              .push(widget: const SignUp(), context: context);
+                        },
+                        child: text(
+                            title: 'createAccount'.tr,
+                            size: 20,
+                            color: Colors.blue.shade900)),
+                  ),
                 ),
               ],
             ),

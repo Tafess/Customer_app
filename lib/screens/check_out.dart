@@ -93,11 +93,8 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                   const Icon(Icons.money),
                   const SizedBox(width: 20),
                   const Text(
-                    'Pay online',
-                    style: TextStyle(
-                        fontSize: 20,
-                        //   color: Colors.blue,
-                        fontWeight: FontWeight.bold),
+                    'Pay',
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                 ],
               ),
@@ -105,21 +102,20 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
             const SizedBox(height: 20),
             CustomButton(
               title: 'continue'.tr,
-              //  color: Colors.green,
               onPressed: () async {
                 appProvider.clearBuyProduct();
                 appProvider.addBuyProduct(widget.singleProduct);
 
                 bool value = await FirebaseFirestoreHelper.instance
-                    .uploadOrderedProductFirebase(appProvider.getBuyproductList,
-                        context, groupValue == 1 ? 'Chapa' : 'payed');
+                    .uploadOrders(appProvider.getBuyproductList, context,
+                        groupValue == 1 ? 'Chapa' : 'payed');
 
                 if (value) {
                   Future.delayed(const Duration(seconds: 1), () {
                     Routes.instance.push(
                         widget: const CustomBottomBar(), context: context);
-                    appProvider.clearBuyProduct();
-                    appProvider.clearCart();
+                    //appProvider.clearBuyProduct();
+                    //appProvider.clearCart();
                   });
                 }
               },

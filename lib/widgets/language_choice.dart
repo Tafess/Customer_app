@@ -85,12 +85,15 @@ class _LanguageDialogState extends State<LanguageDialog>
                   child: Text(
                     locale['name'] as String,
                     textAlign: TextAlign.center,
+                    style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ),
               ),
               onTap: () {
                 updateLanguage(locale['locale'] as Locale);
-                Routes.instance.push(widget: const Welcome(), context: context);
+
+                Routes.instance.pushAndRemoveUntil(
+                    widget: const Welcome(), context: context);
               },
             );
           }).toList(),

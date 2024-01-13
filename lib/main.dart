@@ -5,7 +5,6 @@ import 'package:buyers/firebase_options.dart';
 import 'package:buyers/local_strings.dart';
 import 'package:buyers/providers/app_provider.dart';
 import 'package:buyers/providers/theme_provider.dart';
-import 'package:buyers/screens/welcome.dart';
 import 'package:buyers/widgets/bottom_bar.dart';
 import 'package:buyers/widgets/language_choice.dart';
 import 'package:chapa_unofficial/chapa_unofficial.dart';
@@ -46,7 +45,7 @@ class MyApp extends StatelessWidget {
               if (snapshot.hasData) {
                 return CustomBottomBar();
               } else {
-                return  LanguageDialog();
+                return LanguageDialog();
               }
             }),
       ),

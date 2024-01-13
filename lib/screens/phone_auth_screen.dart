@@ -91,6 +91,12 @@
 //   }
 // }
 
+// ignore_for_file: prefer_const_constructors
+
+import 'package:buyers/constants/custom_routes.dart';
+import 'package:buyers/constants/custom_text.dart';
+import 'package:buyers/constants/custome_button.dart';
+import 'package:buyers/screens/login.dart';
 import 'package:buyers/screens/pin_input_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -110,50 +116,82 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Phone Authentication"),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: InternationalPhoneNumberInput(
-                onInputChanged: (PhoneNumber number) {
-                  setState(() {
-                    phoneNumber = number;
-                  });
-                },
-                onInputValidated: (bool value) {
-                  // Handle phone number validation if needed.
-                },
-                selectorConfig: SelectorConfig(
-                    selectorType: PhoneInputSelectorType.DIALOG,
-                    useBottomSheetSafeArea: true),
-                ignoreBlank: false,
-                autoValidateMode: AutovalidateMode.onUserInteraction,
-                selectorTextStyle: TextStyle(color: Colors.black),
-                initialValue: PhoneNumber(isoCode: initialCountry),
-                textFieldController: _otpController,
-                formatInput: false,
-                keyboardType: TextInputType.numberWithOptions(
-                    signed: true, decimal: true),
-                inputDecoration: InputDecoration(
-                  hintText: "Enter your phone number",
-                ),
-              ),
-            ),
-            ElevatedButton(
-              onPressed: () async {
-                await _verifyPhoneNumber(phoneNumber!.phoneNumber!);
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: IconButton(
+              onPressed: () {
+                Routes.instance.push(widget: Login(), context: context);
               },
-              child: Text("Send OTP"),
+              icon: Icon(Icons.arrow_back)),
+        ),
+        body: Center(
+          child: SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                FittedBox(
+                    child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                  child: text(
+                      title: 'Sign in with your Phone number',
+                      size: 28,
+                      color: Colors.blue),
+                )),
+                Image.asset(
+                  'assets/icons/phone.png',
+                  width: 150,
+                  height: 150,
+                ),
+                SizedBox(height: 40),
+                text(
+                    title:
+                        ' Enter your phone number in the field bellow\nWe will send 6 digit sms message to your phone'),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: InternationalPhoneNumberInput(
+                    onInputChanged: (PhoneNumber number) {
+                      setState(() {
+                        phoneNumber = number;
+                      });
+                    },
+                    onInputValidated: (bool value) {
+                      // Handle phone number validation if needed.
+                    },
+                    selectorConfig: SelectorConfig(
+                        selectorType: PhoneInputSelectorType.DIALOG,
+                        useBottomSheetSafeArea: true),
+                    ignoreBlank: false,
+                    autoValidateMode: AutovalidateMode.onUserInteraction,
+                    selectorTextStyle: TextStyle(color: Colors.black),
+                    initialValue: PhoneNumber(isoCode: initialCountry),
+                    textFieldController: _otpController,
+                    formatInput: false,
+                    keyboardType: TextInputType.numberWithOptions(
+                        signed: true, decimal: true),
+                    inputDecoration: InputDecoration(
+                      hintText: "Enter your phone number",
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 40, vertical: 30),
+                  child: Container(
+                    width: double.infinity,
+                    child: CustomButton(
+                      onPressed: () async {
+                        await _verifyPhoneNumber(phoneNumber!.phoneNumber!);
+                      },
+                      title: 'SEND SMS',
+                    ),
+                  ),
+                ),
+                SizedBox(height: 20),
+               
+              ],
             ),
-            SizedBox(height: 20),
-            // ... rest of the code
-          ],
+          ),
         ),
       ),
     );
@@ -174,13 +212,9 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
             this.verificationId = verificationId;
           });
           // After receiving the verificationId, navigate to the PIN input screen
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) =>
-                  CustomPinInput(verificationId: verificationId),
-            ),
-          );
+          Routes.instance.push(
+              widget: CustomPinInput(verificationId: verificationId),
+              context: context);
         },
         codeAutoRetrievalTimeout: (String verificationId) {
           print("Auto retrieval timeout");
@@ -189,9 +223,8 @@ class _PhoneAuthScreenState extends State<PhoneAuthScreen> {
       );
     } catch (e) {
       print("Failed to verify phone number: $e");
-      // Handle the failure, such as showing an error message
+      
     }
   }
 
-  // ... rest of the code
 }

@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'dart:async';
+import 'package:buyers/constants/custom_snackbar.dart';
+import 'package:buyers/constants/custom_text.dart';
 import 'package:buyers/constants/google_api_key.dart';
 import 'package:buyers/constants/custom_routes.dart';
 import 'package:buyers/screens/cart_checkout.dart';
@@ -23,8 +25,7 @@ class MapScreen extends StatefulWidget {
 }
 
 class _MapScreenState extends State<MapScreen> {
-  //  final store = GetStorage();
-  //   String address = store.read('address');
+  final TextEditingController phoneController = TextEditingController();
   Completer<GoogleMapController> _controller = Completer();
   LocationData? _currentPosition;
   LatLng? _latLong;
@@ -178,81 +179,35 @@ class _MapScreenState extends State<MapScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Stack(
-              children: [
-                Container(
-                  height: MediaQuery.of(context).size.height * .65,
-                  decoration: const BoxDecoration(
-                      border: Border(bottom: BorderSide(color: Colors.grey))),
-                  child: Stack(
-                    children: [
-                      GoogleMap(
-                        myLocationEnabled: true,
-                        myLocationButtonEnabled: true,
-                        compassEnabled: false,
-                        mapType: MapType.terrain,
-                        initialCameraPosition: CameraPosition(
-                          target: LatLng(9.422967, 42.037149),
-                          zoom: 13,
-                        ),
-                        onMapCreated: (GoogleMapController controller) {
-                          _controller.complete(controller);
-                        },
-                        onCameraMove: (CameraPosition position) {
-                          setState(() {
-                            _latLong = position.target;
-                          });
-                        },
-                        onCameraIdle: () {
-                          getUserAddress();
-                        },
-                      ),
-                      Align(
-                        alignment: Alignment.center,
-                        child: CircleAvatar(
-                          radius: 60,
-                          // backgroundColor: Colors.black38,
-                          child: Icon(
-                            Icons.location_on,
-                            size: 40,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Flexible(
-                child: Column(
-                  children: [
-                    Column(
+        body: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                color: Colors.black12,
+                child: Padding(
+                  padding: const EdgeInsets.all(3.0),
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.vertical,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         _placeMark != null
                             ? Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    _placeMark!.subLocality ??
-                                        _placeMark!.locality!,
+                                    _placeMark!.name ?? _placeMark!.locality!,
                                     style: TextStyle(
-                                      fontSize: 20,
+                                      fontSize: 16,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  SizedBox(
-                                    height: 8,
-                                  ),
+                                  SizedBox(height: 8),
                                   Row(
                                     children: [
-                                      Text(
-                                        '${_placeMark!.locality!} ',
-                                      ),
+                                      Text('${_placeMark!.locality!} '),
                                       Text(_placeMark!.subAdministrativeArea !=
                                               null
                                           ? '${_placeMark!.subAdministrativeArea!}, '
@@ -260,22 +215,34 @@ class _MapScreenState extends State<MapScreen> {
                                     ],
                                   ),
                                   Text(
-                                      '${_placeMark!.administrativeArea!}, ${_placeMark!.country!}, ${_placeMark!.postalCode!}')
+                                      '${_placeMark!.administrativeArea!}, ${_placeMark!.country!}, ${_placeMark!.postalCode!}'),
                                 ],
                               )
                             : Container(),
-                        SizedBox(
-                          height: 10,
-                        ),
+                        SizedBox(height: 10),
                         Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Flexible(
-                              child: CustomButton(
-                                //  color: Colors.green,
-                                title: 'setAddress'.tr,
-                                onPressed: () {
-                                  String subLocality =
-                                      '${_placeMark!.subLocality},';
+                            Expanded(
+                              child: TextFormField(
+                                controller: phoneController,
+                                decoration: InputDecoration(
+                                  hintText: 'phoneNumber'.tr,
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: 10),
+                            CustomButton(
+                              width: 120,
+                              title: 'setAddress'.tr,
+                              onPressed: () {
+                                if (phoneController.text.isEmpty) {
+                                  customSnackbar(
+                                    context: context,
+                                    message: 'Please put your phone address',
+                                  );
+                                } else {
+                                  String name = '${_placeMark!.name},';
                                   String locality = '${_placeMark!.locality},';
                                   String adminArea =
                                       '${_placeMark!.administrativeArea},';
@@ -284,29 +251,85 @@ class _MapScreenState extends State<MapScreen> {
                                   String country = '${_placeMark!.country},';
                                   String pin = '${_placeMark!.postalCode},';
                                   String address =
-                                      '$subLocality, $locality, $adminArea, $subAdminArea, $country,$pin,';
+                                      '$name, $locality, $subAdminArea,$adminArea, $country,$pin,';
+                                  double latitude = _currentPosition!.latitude!;
+                                  double longitude =
+                                      _currentPosition!.longitude!;
                                   store.write('address', address);
+                                  store.write('latitude', latitude.toString());
+                                  store.write(
+                                      'longitude', longitude.toString());
+                                  store.write(
+                                      'phoneNumber', phoneController.text);
 
                                   _fetchAndDisplayRoute(
-                                    LatLng(_currentPosition!.latitude!,
-                                        _currentPosition!.longitude!),
+                                    LatLng(
+                                      _currentPosition!.latitude!,
+                                      _currentPosition!.longitude!,
+                                    ),
                                     _latLong!,
                                   );
 
                                   _showBottomSheet(context);
-                                },
-                              ),
+                                }
+                              },
                             ),
                           ],
                         ),
                         SizedBox(height: 30),
                       ],
-                    )
-                  ],
+                    ),
+                  ),
                 ),
               ),
-            )
-          ],
+              Stack(
+                children: [
+                  Container(
+                    height: MediaQuery.of(context).size.height * .70,
+                    decoration: const BoxDecoration(
+                        border: Border(bottom: BorderSide(color: Colors.grey))),
+                    child: Stack(
+                      children: [
+                        GoogleMap(
+                          myLocationEnabled: true,
+                          myLocationButtonEnabled: true,
+                          compassEnabled: false,
+                          mapType: MapType.terrain,
+                          initialCameraPosition: CameraPosition(
+                            target: LatLng(9.422967, 42.037149),
+                            zoom: 13,
+                          ),
+                          onMapCreated: (GoogleMapController controller) {
+                            _controller.complete(controller);
+                          },
+                          onCameraMove: (CameraPosition position) {
+                            setState(() {
+                              _latLong = position.target;
+                            });
+                          },
+                          onCameraIdle: () {
+                            getUserAddress();
+                          },
+                        ),
+                        Align(
+                          alignment: Alignment.center,
+                          child: CircleAvatar(
+                            radius: 60,
+                            backgroundColor: Colors.transparent,
+                            child: Icon(
+                              Icons.location_on,
+                              size: 40,
+                              color: Colors.red,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -327,6 +350,8 @@ class _MapScreenState extends State<MapScreen> {
         return Container(
           padding: EdgeInsets.all(16.0),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               Text(
@@ -336,10 +361,31 @@ class _MapScreenState extends State<MapScreen> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 16.0),
-              Text(
-                store.read('address') ?? '',
-                style: TextStyle(fontSize: 16.0),
+              SizedBox(height: 10.0),
+              text(title: 'Phone Number: ${phoneController.text}'),
+              FittedBox(
+                child: Text(
+                  store.read('address'.toString()) ?? '',
+                  style: TextStyle(fontSize: 16.0),
+                ),
+              ),
+              Row(
+                children: [
+                  text(title: 'Latitude :  '),
+                  Text(
+                    store.read('latitude'.toString()) ?? '',
+                    style: TextStyle(fontSize: 16.0),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  text(title: 'Longitude :  '),
+                  Text(
+                    store.read('longitude') ?? '',
+                    style: TextStyle(fontSize: 16.0),
+                  ),
+                ],
               ),
               SizedBox(height: 16.0),
               Flexible(

@@ -28,9 +28,9 @@ class CustomButton extends StatelessWidget {
           shape: MaterialStateProperty.all(
             RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10.0),
-              side: BorderSide(
-                  //color: color ?? Colors.black12,
-                  width: 1.0),
+              // side: BorderSide(
+              //     //color: color ?? Colors.black12,
+              //     width: 1.0),
             ),
           ),
         ),

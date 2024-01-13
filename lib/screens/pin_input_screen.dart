@@ -32,8 +32,13 @@ class _CustomPinInputState extends State<CustomPinInput> {
         children: [
           text(
             title: 'Authentication',
-            size: 24,
+            size: 40,
+            color: Colors.blue,
           ),
+          SizedBox(height: 20),
+          text(
+              title:
+                  ' We sent 6 digit  pin to your phone number \nEnter in the fields bellow when you enter the correct pin \n    you can authomatically sing in !!!'),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 50.0, vertical: 20),
             child: PinCodeTextField(

@@ -1,11 +1,13 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:buyers/constants/custom_routes.dart';
 import 'package:buyers/controllers/firebase_firestore_helper.dart';
 import 'package:buyers/models/catagory_model.dart';
 import 'package:buyers/models/product_model.dart';
 import 'package:buyers/providers/app_provider.dart';
 import 'package:buyers/providers/theme_provider.dart';
 import 'package:buyers/screens/custom_drawer.dart';
+import 'package:buyers/screens/favorite_screen.dart';
 import 'package:buyers/widgets/single_category.dart';
 import 'package:buyers/widgets/single_product.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -28,7 +30,7 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     AppProvider appProvider = Provider.of<AppProvider>(context, listen: false);
-    appProvider.getUserInfoFirebase();
+    //  appProvider.getUserInfoFirebase();
     getCategoyList();
     // getBestProducts();
     super.initState();
@@ -40,7 +42,7 @@ class _HomeState extends State<Home> {
     });
     FirebaseFirestoreHelper.instance.updateTokenFromFirebase();
     categoriesList = await FirebaseFirestoreHelper.instance.getCategories();
-    productModelList = await FirebaseFirestoreHelper.instance.getBestProducts();
+    productModelList = await FirebaseFirestoreHelper.instance.getProducts();
     productModelList.shuffle();
     if (mounted) {
       setState(() {
@@ -64,7 +66,7 @@ class _HomeState extends State<Home> {
       isLoding = true;
     });
 
-    productModelList = await FirebaseFirestoreHelper.instance.getBestProducts();
+    // productModelList = await FirebaseFirestoreHelper.instance.getProducts();
 
     setState(() {
       isLoding = false;
@@ -77,7 +79,7 @@ class _HomeState extends State<Home> {
     {'name': 'Afaan Oromo ', 'locale': Locale('om', 'ET')},
   ];
   void updateLanguage(Locale local) {
-    Get.back();
+    //  Get.back();
     Get.updateLocale(local);
   }
 
@@ -90,9 +92,13 @@ class _HomeState extends State<Home> {
         actions: [
           IconButton(
               onPressed: () {
-                print(FirebaseAuth.instance.currentUser!.uid);
+                Routes.instance
+                    .push(widget: FavoriteScreen(), context: context);
               },
-              icon: Icon(Icons.add)),
+              icon: Icon(
+                Icons.favorite,
+                color: const Color.fromARGB(255, 236, 106, 66),
+              )),
           Consumer<ThemeProvider>(
             builder: (context, themeProvider, child) {
               bool isLightModeEnabled = themeProvider.isLightModeEnabled;
@@ -114,6 +120,7 @@ class _HomeState extends State<Home> {
                 child: GestureDetector(
                     onTap: () {
                       updateLanguage(locale['locale'] as Locale);
+                      Navigator.pop(context);
                     },
                     child: Text(locale['name'] as String)),
               );

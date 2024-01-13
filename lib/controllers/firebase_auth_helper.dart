@@ -61,7 +61,10 @@ class FirebaseAuthHelper {
       Routes.instance
           .pushAndRemoveUntil(widget: const Home(), context: context);
 
-      _firestore.collection('users').doc(userModel.id).set(userModel.toJson());
+      _firestore
+          .collection('customers')
+          .doc(userModel.id)
+          .set(userModel.toJson());
       Navigator.of(context).pop();
       return true;
     } on FirebaseAuthException catch (error) {

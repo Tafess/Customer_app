@@ -5,23 +5,28 @@ import 'package:flutter/material.dart';
 void customSnackbar(
     {BuildContext? context,
     Color? backgroundColor,
-    color,
+    messageColor,
+    closTextColor,
     String? message,
+    closLabel,
+    Duration? duration,
     String? label,
-    double? margin,
-    Padding? padding}) {
+    double? margin}) {
   ScaffoldMessenger.of(context!).showSnackBar(SnackBar(
-    backgroundColor: backgroundColor ?? Colors.black54,
-    closeIconColor: color ?? Colors.white,
+    backgroundColor: backgroundColor ?? Colors.red,
+    closeIconColor: messageColor ?? Colors.white,
+
+    // showCloseIcon: true,
+
     dismissDirection: DismissDirection.horizontal,
     behavior: SnackBarBehavior.floating,
-    margin: EdgeInsets.symmetric(horizontal: margin!, vertical: margin!),
-    content: Text(message!),
-    duration: Duration(seconds: 5),
+    margin: EdgeInsets.all(margin ?? 25),
+    content: Text(message ?? ''),
+    duration: duration ?? Duration(seconds: 5),
     action: SnackBarAction(
-        label: label ?? 'Ok',
-        onPressed: () {
-          Navigator.of(context).pop();
-        }),
+        label: closLabel ?? 'Ok',
+        textColor: closTextColor ?? Colors.white,
+        backgroundColor: backgroundColor ?? Colors.red,
+        onPressed: () {}),
   ));
 }

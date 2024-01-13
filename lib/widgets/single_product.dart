@@ -1,7 +1,9 @@
 import 'package:buyers/constants/custom_routes.dart';
+import 'package:buyers/constants/custom_text.dart';
 import 'package:buyers/models/product_model.dart';
 import 'package:buyers/screens/product_details.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class SingleProductWidget extends StatelessWidget {
   const SingleProductWidget({
@@ -34,7 +36,7 @@ class SingleProductWidget extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(12, 12, 6, 6),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
@@ -58,33 +60,52 @@ class SingleProductWidget extends StatelessWidget {
                         child: Row(
                           children: [
                             Text(
-                              'ETB ${singleProduct.discount.toStringAsFixed(2)}',
+                              ' ${singleProduct.discount.toStringAsFixed(2)}',
                               // style:
                               //     themeData.textTheme.bodySmall
                             ),
                             const SizedBox(width: 10),
                             Text(
-                              '${(((singleProduct.price - singleProduct.discount) / (singleProduct.price)) * 100).toStringAsFixed(0)} %  off',
+                              '${(((singleProduct.price - singleProduct.discount) / (singleProduct.price)) * 100).toStringAsFixed(0)} %  ',
                               style: TextStyle(
                                   // color: Colors.green.shade700,
                                   fontWeight: FontWeight.bold),
-                            )
+                            ),
+                            text(title: 'offset'.tr),
                           ],
                         ),
                       ),
-                    Text(
-                      'Price: ETB ${singleProduct.price.toStringAsFixed(2)}',
-                      style: TextStyle(
-                          decoration: singleProduct.discount != 0.0
-                              ? TextDecoration.lineThrough
-                              : null),
+                    Row(
+                      children: [
+                        text(title: 'price'.tr),
+                        Text(
+                          ' ${singleProduct.price.toStringAsFixed(2)}  ',
+                          style: TextStyle(
+                              decoration: singleProduct.discount != 0.0
+                                  ? TextDecoration.lineThrough
+                                  : null),
+                        ),
+                        text(title: 'etb'.tr),
+                      ],
                     ),
-                    Text(
-                      'Description: ${singleProduct.description}',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
+                    Row(
+                      children: [
+                        text(title: 'descriptions'.tr),
+                        Flexible(
+                          child: Text(
+                            ' ${singleProduct.description}',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ],
                     ),
-                    Text(' ${singleProduct.quantity} items found'),
+                    Row(
+                      children: [
+                        text(title: 'availableItems'.tr),
+                        Text('    ${singleProduct.quantity}'),
+                      ],
+                    ),
                     if (singleProduct.size != 0.0)
                       // Text(
                       //     ' ${singleProduct.size} ${singleProduct.measurement} '),

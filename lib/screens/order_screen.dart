@@ -1,6 +1,5 @@
 // ignore_for_file: prefer_const_constructors, use_build_context_synchronously
 
-import 'package:buyers/constants/theme.dart';
 import 'package:buyers/controllers/firebase_firestore_helper.dart';
 import 'package:buyers/models/order_model.dart';
 import 'package:buyers/screens/custom_drawer.dart';
@@ -65,7 +64,7 @@ class _OrderScreenState extends State<OrderScreen> {
             : null,
         drawer: CustomDrawer(),
         body: FutureBuilder(
-            future: FirebaseFirestoreHelper.instance.getUserOrder(),
+            future: FirebaseFirestoreHelper.instance.getOrders(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(
@@ -194,25 +193,6 @@ class _OrderScreenState extends State<OrderScreen> {
                                         ),
                                       ),
                                       SizedBox(height: 4),
-                                      // if (orderModel.status == 'pending' ||
-                                      //     orderModel.status == 'delivery')
-                                      // ElevatedButton(
-                                      //   onPressed: () async {
-                                      //     await FirebaseFirestoreHelper
-                                      //         .instance
-                                      //         .updateOrder(
-                                      //             orderModel, 'canceled');
-                                      //     orderModel.status = 'canceled';
-                                      //     setState(() {});
-                                      //   },
-                                      //   child: Text(
-                                      //     'Cancel',
-                                      //     style: TextStyle(
-                                      //         color: Colors.white,
-                                      //         fontWeight: FontWeight.bold),
-                                      //   ),
-                                      // ),
-
                                       SizedBox(height: 12),
                                       if (orderModel.status == 'delivery')
                                         ElevatedButton(

@@ -158,7 +158,7 @@ class _SignUpState extends State<SignUp> {
                             phoneNumber!.phoneNumber.toString();
 
                         await _firestore
-                            .collection('users')
+                            .collection('customers')
                             .doc(email.text)
                             .set({
                           'name': name.text,
@@ -213,14 +213,16 @@ class _SignUpState extends State<SignUp> {
                 Center(child: text(title: 'haveAccount'.tr)),
                 SizedBox(height: 20),
                 Center(
-                  child: CupertinoButton(
-                    onPressed: () {
-                      Routes.instance.push(widget: Login(), context: context);
-                    },
-                    child: text(
-                      title: 'login'.tr,
-                      size: 20,
-                      color: Colors.blue,
+                  child: Card(
+                    child: CupertinoButton(
+                      onPressed: () {
+                        Routes.instance.push(widget: Login(), context: context);
+                      },
+                      child: text(
+                          title: 'login'.tr,
+                          size: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.blue.shade900),
                     ),
                   ),
                 ),

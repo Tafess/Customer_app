@@ -1,11 +1,9 @@
 import 'package:buyers/constants/custom_text.dart';
 import 'package:buyers/constants/custome_button.dart';
 import 'package:buyers/constants/custom_routes.dart';
-import 'package:buyers/screens/home.dart';
 import 'package:buyers/screens/login.dart';
 import 'package:buyers/screens/sign_up.dart';
 import 'package:buyers/widgets/bottom_bar.dart';
-import 'package:buyers/widgets/language_choice.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/utils.dart';

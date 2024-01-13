@@ -1,3 +1,4 @@
+import 'package:buyers/constants/custom_text.dart';
 import 'package:buyers/constants/custome_button.dart';
 import 'package:buyers/constants/custom_routes.dart';
 import 'package:buyers/controllers/firebase_firestore_helper.dart';
@@ -79,68 +80,160 @@ class _CategoryViewState extends State<CategoryView> {
                                 child: Container(
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(20),
-                                  //  color: Colors.white,
+                                    //  color: Colors.white,
                                   ),
-                                  child: Column(
-                                    children: [
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(top: 10.0),
-                                        child: InkWell(
-                                          onTap: () {
-                                            Routes.instance.push(
-                                                widget: ProductDetails(
-                                                    singleProduct:
-                                                        singleProduct),
-                                                context: context);
-                                          },
-                                          child: SizedBox(
-                                            height: 100,
-                                            width: double.infinity,
-                                            child: ClipOval(
-                                              child: Image.network(
-                                                singleProduct.image,
-                                                fit: BoxFit.cover,
-                                              ),
+                                  child: Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(12, 12, 6, 6),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          singleProduct.name,
+                                          style: const TextStyle(
+                                              overflow: TextOverflow.ellipsis,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        Divider(),
+                                        SizedBox(
+                                          height: 60,
+                                          width: double.infinity,
+                                          child: Image.network(
+                                              singleProduct.image,
+                                              fit: BoxFit.cover),
+                                        ),
+                                        const SizedBox(
+                                          height: 6,
+                                        ),
+                                        if (singleProduct.discount != 0.0)
+                                          FittedBox(
+                                            child: Row(
+                                              children: [
+                                                Text(
+                                                  ' ${singleProduct.discount.toStringAsFixed(2)}',
+                                                  // style:
+                                                  //     themeData.textTheme.bodySmall
+                                                ),
+                                                const SizedBox(width: 10),
+                                                Text(
+                                                  '${(((singleProduct.price - singleProduct.discount) / (singleProduct.price)) * 100).toStringAsFixed(0)} %  ',
+                                                  style: TextStyle(
+                                                      // color: Colors.green.shade700,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                                text(title: 'offset'.tr),
+                                              ],
                                             ),
                                           ),
+                                        Row(
+                                          children: [
+                                            text(title: 'price'.tr),
+                                            Text(
+                                              ' ${singleProduct.price.toStringAsFixed(2)}  ',
+                                              style: TextStyle(
+                                                  decoration:
+                                                      singleProduct.discount !=
+                                                              0.0
+                                                          ? TextDecoration
+                                                              .lineThrough
+                                                          : null),
+                                            ),
+                                            text(title: 'etb'.tr),
+                                          ],
                                         ),
-                                      ),
-                                      const SizedBox(
-                                        height: 12,
-                                      ),
-                                      Text(
-                                        singleProduct.name,
-                                        style: const TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      Text(
-                                        'ETB:  ${singleProduct.price.toStringAsFixed(2)}',
-                                        style: const TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      const SizedBox(
-                                        height: 6.0,
-                                      ),
-                                      SizedBox(
-                                        height: 40,
-                                        width: 100,
-                                        child: CustomButton(
-                                          onPressed: () {
-                                            Routes.instance.push(
-                                                widget: ProductDetails(
-                                                    singleProduct:
-                                                        singleProduct),
-                                                context: context);
-                                          },
-                                       //   color: Colors.green,
-                                          title: 'buy'.tr,
+                                        Row(
+                                          children: [
+                                            text(title: 'descriptions'.tr),
+                                            Flexible(
+                                              child: Text(
+                                                ' ${singleProduct.description}',
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                            ),
+                                          ],
                                         ),
-                                      ), // onPressed: () {}, child: Text('Buy'))
-                                    ],
+                                        Row(
+                                          children: [
+                                            text(title: 'availableItems'.tr),
+                                            Text(
+                                                '    ${singleProduct.quantity}'),
+                                          ],
+                                        ),
+                                        if (singleProduct.size != 0.0)
+                                          // Text(
+                                          //     ' ${singleProduct.size} ${singleProduct.measurement} '),
+                                          const SizedBox(
+                                            height: 6.0,
+                                          ),
+                                      ],
+                                    ),
                                   ),
+
+                                  //  Column(
+                                  //   children: [
+                                  //     Padding(
+                                  //       padding:
+                                  //           const EdgeInsets.only(top: 10.0),
+                                  //       child: InkWell(
+                                  //         onTap: () {
+                                  //           Routes.instance.push(
+                                  //               widget: ProductDetails(
+                                  //                   singleProduct:
+                                  //                       singleProduct),
+                                  //               context: context);
+                                  //         },
+                                  //         child: SizedBox(
+                                  //           height: 100,
+                                  //           width: double.infinity,
+                                  //           child: ClipOval(
+                                  //             child: Image.network(
+                                  //               singleProduct.image,
+                                  //               fit: BoxFit.cover,
+                                  //             ),
+                                  //           ),
+                                  //         ),
+                                  //       ),
+                                  //     ),
+                                  //     const SizedBox(
+                                  //       height: 12,
+                                  //     ),
+                                  //     Text(
+                                  //       singleProduct.name,
+                                  //       style: const TextStyle(
+                                  //           fontSize: 18,
+                                  //           fontWeight: FontWeight.bold),
+                                  //     ),
+                                  //     Text(
+                                  //       'ETB:  ${singleProduct.price.toStringAsFixed(2)}',
+                                  //       style: const TextStyle(
+                                  //           fontSize: 18,
+                                  //           fontWeight: FontWeight.bold),
+                                  //     ),
+                                  //     const SizedBox(
+                                  //       height: 6.0,
+                                  //     ),
+                                  //     SizedBox(
+                                  //       height: 40,
+                                  //       width: 100,
+                                  //       child: CustomButton(
+                                  //         onPressed: () {
+                                  //           Routes.instance.push(
+                                  //               widget: ProductDetails(
+                                  //                   singleProduct:
+                                  //                       singleProduct),
+                                  //               context: context);
+                                  //         },
+                                  //      //   color: Colors.green,
+                                  //         title: 'buy'.tr,
+                                  //       ),
+                                  //     ), // onPressed: () {}, child: Text('Buy'))
+                                  //   ],
+                                  // ),
                                 ),
                               );
                             },

@@ -1,11 +1,19 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:buyers/constants/constants.dart';
+import 'package:buyers/constants/custom_snackbar.dart';
+import 'package:buyers/constants/custom_text.dart';
 import 'package:buyers/constants/custome_button.dart';
 import 'package:buyers/constants/custom_routes.dart';
+import 'package:buyers/controllers/firebase_firestore_helper.dart';
+import 'package:buyers/models/user_model.dart';
 import 'package:buyers/providers/app_provider.dart';
 import 'package:buyers/screens/custom_drawer.dart';
 import 'package:buyers/screens/cart_checkout.dart';
 import 'package:buyers/screens/google_map.dart';
+import 'package:buyers/screens/login.dart';
 import 'package:buyers/screens/single_cart.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
@@ -18,6 +26,8 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
+  final FirebaseFirestoreHelper _firestoreHelper = FirebaseFirestoreHelper();
+  final userId = FirebaseAuth.instance.currentUser;
   int quantity = 1;
   @override
   Widget build(BuildContext context) {
@@ -25,7 +35,6 @@ class _CartScreenState extends State<CartScreen> {
 
     return Scaffold(
       appBar: AppBar(
-      //  foregroundColor: Colors.white,
         title: Text('cart'.tr),
         actions: const [
           Icon(Icons.shopping_bag),
@@ -47,31 +56,48 @@ class _CartScreenState extends State<CartScreen> {
                             'total'.tr,
                             style: TextStyle(
                                 fontSize: 20,
-                               // color: Colors.blue,
+                                // color: Colors.blue,
                                 fontWeight: FontWeight.bold),
                           ),
-                          Text(
-                            'ETB ${appProvider.totalPrice().toString()}',
-                            style: const TextStyle(
-                                fontSize: 20,
-                              //  color: Colors.blue,
-                                fontWeight: FontWeight.bold),
+                          Row(
+                            children: [
+                              Text(
+                                '  ${appProvider.totalPrice().toString()}  ',
+                                style: const TextStyle(
+                                    fontSize: 20,
+                                    //  color: Colors.blue,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              text(title: 'etb'.tr),
+                            ],
                           ),
                           const SizedBox(width: 50),
                           Expanded(
                             child: CustomButton(
-                              title: 'checkout'.tr,
-                           //   color: Colors.green,
+                              title: 'continue'.tr,
                               onPressed: () {
-                                appProvider.clearBuyProduct();
-                                appProvider.addBuyProductCartList();
-                                // appProvider.clearCart();
-                                if (appProvider.getBuyproductList.isEmpty) {
-                                  showMessage('Cart is empty');
+                                if (userId != null) {
+                                  appProvider.clearBuyProduct();
+                                  appProvider.addBuyProductCartList();
+                                  // appProvider.clearCart();
+                                  if (appProvider.getBuyproductList.isEmpty) {
+                                    showMessage('Cart is empty');
+                                  } else {
+                                    Routes.instance.push(
+                                        widget: MapScreen(), context: context);
+                                  }
                                 } else {
-                                  Routes.instance.push(
-                                      widget: const MapScreen(),
-                                      context: context);
+                                  customSnackbar(
+                                      context: context,
+                                      duration: Duration(seconds: 5),
+                                      message:
+                                          'Please  sign in befor procede to next step',
+                                      backgroundColor: Colors.red,
+                                      messageColor: Colors.white,
+                                      closLabel: 'OK',
+                                      closTextColor: Colors.white);
+                                  Routes.instance
+                                      .push(widget: Login(), context: context);
                                 }
                               },
                             ),

@@ -49,6 +49,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.4.2"
+  arifpay_flutter_sdk:
+    dependency: "direct main"
+    description:
+      name: arifpay_flutter_sdk
+      sha256: a10f5c8428bc90ae59b4047d36b5db0d96c25ae40da93ccaa722ffa747dd65f1
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.1"
   async:
     dependency: transitive
     description:
@@ -853,6 +861,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.2.0"
+  logger:
+    dependency: transitive
+    description:
+      name: logger
+      sha256: "6bbb9d6f7056729537a4309bda2e74e18e5d9f14302489cc1e93f33b3fe32cac"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.2+1"
   logging:
     dependency: transitive
     description:

@@ -61,7 +61,7 @@ class AppProvider with ChangeNotifier {
       ShowLoderDialog(context);
       _userModel = userModel;
       FirebaseFirestore.instance
-          .collection('users')
+          .collection('customers')
           .doc(_userModel!.id)
           .set(_userModel!.toJson());
       Navigator.of(context, rootNavigator: true).pop();
@@ -72,7 +72,7 @@ class AppProvider with ChangeNotifier {
           await FirebaseStorageHelper.instance.uploadUserImage(file);
       _userModel = userModel.copyWith(image: imageUrl);
       await FirebaseFirestore.instance
-          .collection('users')
+          .collection('customers')
           .doc(_userModel!.id)
           .set(_userModel!.toJson());
 
@@ -109,6 +109,10 @@ class AppProvider with ChangeNotifier {
     }
 
     return totalPrice;
+  }
+
+  bool isInCart(String productId) {
+    return _cartProductList.any((product) => product.id == productId);
   }
 
   void updateQuantity(ProductModel productModel, int quantity) {

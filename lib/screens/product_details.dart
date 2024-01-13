@@ -1,11 +1,15 @@
 import 'package:buyers/constants/constants.dart';
 import 'package:buyers/constants/custom_routes.dart';
+import 'package:buyers/constants/custom_snackbar.dart';
+import 'package:buyers/constants/custom_text.dart';
 import 'package:buyers/constants/custome_button.dart';
 
 import 'package:buyers/models/product_model.dart';
 import 'package:buyers/providers/app_provider.dart';
 import 'package:buyers/screens/cart_screen.dart';
 import 'package:buyers/screens/check_out.dart';
+import 'package:buyers/screens/favorite_screen.dart';
+import 'package:buyers/screens/login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +29,7 @@ class ProductDetails extends StatefulWidget {
 }
 
 class _ProductDetailsState extends State<ProductDetails> {
+  final userId = FirebaseAuth.instance.currentUser;
   int quantity = 1;
 
   ScrollController? _scrollController;
@@ -77,9 +82,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                 ),
                 IconButton(
                   onPressed: () {
-                    FirebaseAuth.instance.signOut();
-                    // Routes.instance
-                    //     .push(widget: const FavoriteScreen(), context: context);
+                    Routes.instance
+                        .push(widget: const FavoriteScreen(), context: context);
                   },
                   icon: const Icon(
                     Icons.favorite,
@@ -141,9 +145,18 @@ class _ProductDetailsState extends State<ProductDetails> {
           const SizedBox(
             height: 12,
           ),
-          Text(
-            '${widget.singleProduct.quantity.toString()}   items Found',
-            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          text(
+              title:
+                  '${widget.singleProduct.size}  ${widget.singleProduct.measurement}'),
+          Row(
+            children: [
+              text(title: 'availableItems'.tr),
+              Text(
+                '         ${widget.singleProduct.quantity.toString()}',
+                style:
+                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+            ],
           ),
           SizedBox(height: 12),
           Row(
@@ -189,8 +202,13 @@ class _ProductDetailsState extends State<ProductDetails> {
             ],
           ),
           const SizedBox(height: 50),
-          Text(
-              'Total price: ${widget.singleProduct.discount == 0.0 ? widget.singleProduct.price * quantity : widget.singleProduct.discount * quantity}'),
+          Row(
+            children: [
+              text(title: 'totalPrice'.tr),
+              Text(
+                  '  ${widget.singleProduct.discount == 0.0 ? widget.singleProduct.price * quantity : widget.singleProduct.discount * quantity}'),
+            ],
+          ),
           const SizedBox(height: 20),
           Flexible(
             child: Row(
@@ -200,10 +218,16 @@ class _ProductDetailsState extends State<ProductDetails> {
                   onPressed: () {
                     AppProvider appProvider =
                         Provider.of(context, listen: false);
-                    ProductModel productModel =
-                        widget.singleProduct.copyWith(quantity: quantity);
-                    appProvider.addToCartproduct(productModel);
-                    showMessage('addedToCart'.tr);
+
+                    // Check if the product is already in the cart
+                    if (appProvider.isInCart(widget.singleProduct.id)) {
+                      showMessage('alreadyInCart'.tr);
+                    } else {
+                      ProductModel productModel =
+                          widget.singleProduct.copyWith(quantity: quantity);
+                      appProvider.addToCartproduct(productModel);
+                      showMessage('addedToCart'.tr);
+                    }
                   },
                   title: 'addToCart'.tr,
                 ),
@@ -212,13 +236,22 @@ class _ProductDetailsState extends State<ProductDetails> {
                 ),
                 CustomButton(
                   onPressed: () {
-                    ProductModel productModel =
-                        widget.singleProduct.copyWith(quantity: quantity);
-                    Routes.instance.push(
-                        widget: CheckOutScreen(
-                          singleProduct: productModel,
-                        ),
-                        context: context);
+                    if (userId != null) {
+                      ProductModel productModel =
+                          widget.singleProduct.copyWith(quantity: quantity);
+                      Routes.instance.push(
+                          widget: CheckOutScreen(
+                            singleProduct: productModel,
+                          ),
+                          context: context);
+                    } else {
+                      customSnackbar(
+                          context: context,
+                          message:
+                              'Please sign in before procede to the next step',
+                          backgroundColor: Colors.red);
+                      Routes.instance.push(widget: Login(), context: context);
+                    }
                   },
                   // color: Colors.green,
                   title: 'buy'.tr,

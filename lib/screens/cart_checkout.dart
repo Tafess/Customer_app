@@ -95,7 +95,7 @@ class _CartItemCheckoutState extends State<CartItemCheckout> {
                   const Icon(Icons.money),
                   const SizedBox(width: 20),
                   const Text(
-                    'Pay online',
+                    'Pay',
                     style: TextStyle(
                         fontSize: 20,
                         // color: Colors.blue,
@@ -110,26 +110,27 @@ class _CartItemCheckoutState extends State<CartItemCheckout> {
               //   color: Colors.blue.shade300,
               onPressed: () async {
                 if (groupValue == 1) {
+
+                
                   Routes.instance.push(
                       widget: ChapaPayment(
                         title: 'Balkis',
                       ),
                       context: context);
-                  // bool value = await FirebaseFirestoreHelper.instance
-                  //     .uploadOrderedProductFirebase(
-                  //         appProvider.getBuyproductList,
-                  //         context,
-                  //         'Pay With Chapa');
+
+                  bool value = await FirebaseFirestoreHelper.instance
+                      .uploadOrders(appProvider.getBuyproductList, context,
+                          'Pay With Chapa');
 
                   appProvider.clearBuyProduct();
                   appProvider.clearCart();
 
-                  //   if (value) {
-                  //     Future.delayed(const Duration(seconds: 1), () {
-                  //       Routes.instance.push(
-                  //           widget: const CustomBottomBar(), context: context);
-                  //     });
-                  //   }
+                  if (value) {
+                    Future.delayed(const Duration(seconds: 1), () {
+                      Routes.instance.push(
+                          widget: const CustomBottomBar(), context: context);
+                    });
+                  }
                   // } else {
                   //   int value = double.parse(
                   //           appProvider.totalPriceBuyProductList().toString())
