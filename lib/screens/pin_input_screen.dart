@@ -54,7 +54,7 @@ class _CustomPinInputState extends State<CustomPinInput> {
                 fieldWidth: 40,
                 activeColor: Colors.blue,
                 inactiveColor: Colors.grey,
-                selectedColor: Colors.green,
+                selectedColor: Colors.green.shade300,
               ),
               onChanged: (value) {},
               onCompleted: (value) async {

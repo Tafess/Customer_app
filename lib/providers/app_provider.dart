@@ -87,22 +87,22 @@ class AppProvider with ChangeNotifier {
   ///
   ///
   int calculateTotalQuantity(List<ProductModel> products) {
-  int totalQuantity = 0;
+    int totalQuantity = 0;
 
-  for (ProductModel product in products) {
-    totalQuantity += product.quantity ?? 0;
+    for (ProductModel product in products) {
+      totalQuantity += product.quantity ?? 0;
+    }
+
+    return totalQuantity;
   }
-
-  return totalQuantity;
-}
 
   double totalPrice() {
     double totalPrice = 0.0;
     for (var element in _cartProductList) {
       if (element.discount == 0.0) {
-        totalPrice += element.price * element.quantity;
+        totalPrice += element.price! * element.quantity!;
       } else {
-        totalPrice += element.discount * element.quantity;
+        totalPrice += element.discount! * element.quantity!;
       }
     }
 
@@ -113,9 +113,9 @@ class AppProvider with ChangeNotifier {
     double totalPrice = 0.0;
     for (var element in _buyProductList) {
       if (element.discount == 0.0) {
-        totalPrice += element.price * element.quantity;
+        totalPrice += element.price! * element.quantity!;
       } else {
-        totalPrice += element.discount * element.quantity;
+        totalPrice += element.discount! * element.quantity!;
       }
     }
 
@@ -123,7 +123,7 @@ class AppProvider with ChangeNotifier {
   }
 
   bool isInCart(String productId) {
-    return _cartProductList.any((product) => product.id == productId);
+    return _cartProductList.any((product) => product.productId == productId);
   }
 
   void updateQuantity(ProductModel productModel, int quantity) {
@@ -135,9 +135,11 @@ class AppProvider with ChangeNotifier {
   ///////////////////  Buy product ///////////////////////
   ///
 
-  void addBuyProduct(ProductModel model) {
-    _buyProductList.add(model);
-    notifyListeners();
+  void addBuyProduct(ProductModel? model) {
+    if (model != null) {
+      _buyProductList.add(model);
+      notifyListeners();
+    }
   }
 
   void addBuyProductCartList() {

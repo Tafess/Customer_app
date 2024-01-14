@@ -135,7 +135,7 @@ class _SignUpState extends State<SignUp> {
 
                 CustomButton(
                   title: 'createAccount'.tr,
-                  color: Colors.green,
+                  color: Colors.green.shade300,
                   onPressed: () async {
                     bool isValidate = signValidation(
                       email.text,

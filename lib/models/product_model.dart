@@ -6,45 +6,42 @@ ProductModel productModelFromJson(String str) =>
     ProductModel.fromJson(json.decode(str));
 
 class ProductModel {
-  String categoryId;
+  String? categoryId;
   String? description;
-  String id;
-  String image;
-  String name;
-  double price;
-  double discount;
-  int quantity;
-  double size;
-  String measurement;
-  String status;
-  bool isFavorite;
-  bool disabled;
-  String productId;
-  String sellerId;
+  String? image;
+  String? name;
+  double? price;
+  double? discount;
+  int? quantity;
+  double? size;
+  String? measurement;
+  String? status;
+  bool? isFavorite;
+  bool? disabled;
+  String? productId;
+  String? sellerId;
 
   ProductModel({
-    required this.categoryId,
-    required this.description,
-    required this.id,
-    required this.image,
-    required this.name,
-    required this.price,
-    required this.discount,
-    required this.quantity,
-    required this.size,
-    required this.measurement,
-    required this.status,
-    required this.isFavorite,
-    required this.disabled,
-    required this.productId,
-    required this.sellerId,
+     this.categoryId,
+     this.description,
+     this.image,
+     this.name,
+     this.price,
+     this.discount,
+     this.quantity,
+     this.size,
+     this.measurement,
+     this.status,
+     this.isFavorite,
+     this.disabled,
+     this.productId,
+     this.sellerId,
   });
 
   factory ProductModel.fromJson(Map<String, dynamic> json) {
     return ProductModel(
       categoryId: json['categoryId'] ?? '',
       description: json['description'] ?? '',
-      id: json['id'] ?? '',
       image: json['image'] ?? '',
       name: json['name'] ?? '',
       price: (json['price'] as num?)?.toDouble() ?? 0.0,
@@ -64,7 +61,7 @@ class ProductModel {
     return {
       'categoryId': categoryId,
       'description': description,
-      'id': id,
+   
       'image': image,
       'name': name,
       'price': price,
@@ -98,7 +95,7 @@ class ProductModel {
     return ProductModel(
       categoryId: categoryId ?? this.categoryId,
       description: description ?? this.description,
-      id: id ?? this.id,
+     
       image: image ?? this.image,
       name: name ?? this.name,
       price: price ?? this.price,

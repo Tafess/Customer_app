@@ -33,7 +33,7 @@ class _SingleFavoriteWidgetState extends State<SingleFavoriteWidget> {
                   child: Container(
                     height: 140,
                     //color: Colors.blue,
-                    child: Image.network(widget.singleProduct.image),
+                    child: Image.network(widget.singleProduct.image!),
                   ),
                 ),
                 Expanded(
@@ -53,7 +53,7 @@ class _SingleFavoriteWidgetState extends State<SingleFavoriteWidget> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    widget.singleProduct.name,
+                                    widget.singleProduct.name!,
                                     style: const TextStyle(
                                       fontSize: 16,
                                       // color: Colors.black
@@ -72,7 +72,7 @@ class _SingleFavoriteWidgetState extends State<SingleFavoriteWidget> {
                                 ],
                               ),
                               Text(
-                                  'Price: ETB ${(widget.singleProduct.price).toDouble()}'),
+                                  'Price: ETB ${(widget.singleProduct.price)!.toDouble()}'),
                             ],
                           ),
                         ],

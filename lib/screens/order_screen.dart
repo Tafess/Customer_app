@@ -90,7 +90,7 @@ class _OrderScreenState extends State<OrderScreen> {
                       decoration: BoxDecoration(
                           // color: Colors.white,
                           borderRadius: BorderRadius.circular(10),
-                          border: Border.all(color: Colors.green, width: 2)),
+                          border: Border.all(color: Colors.green.shade100, width: 2)),
 
                       //shadowColor: Colors.black,
                       child: ExpansionTile(
@@ -113,7 +113,7 @@ class _OrderScreenState extends State<OrderScreen> {
                                 width: 80,
                                 // color: Colors.white,
                                 child: Image.network(
-                                  orderModel.products![0].image,
+                                  orderModel.products![0].image!,
                                   fit: BoxFit.cover,
                                 ),
                               ),
@@ -133,7 +133,7 @@ class _OrderScreenState extends State<OrderScreen> {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
-                                            orderModel.products![0].name,
+                                            orderModel.products![0].name!,
                                             style: const TextStyle(
                                                 fontSize: 14,
                                                 //   color: Colors.black,
@@ -187,7 +187,7 @@ class _OrderScreenState extends State<OrderScreen> {
                                                                 'completed' ||
                                                             orderModel.status ==
                                                                 'delivery'
-                                                        ? Colors.green
+                                                        ? Colors.green.shade300
                                                         : Colors.black)),
                                           ),
                                         ),
@@ -199,7 +199,7 @@ class _OrderScreenState extends State<OrderScreen> {
                                           style: ButtonStyle(
                                               backgroundColor:
                                                   MaterialStatePropertyAll(
-                                                      Colors.green),
+                                                      Colors.green.shade300),
                                               shape: MaterialStateProperty.all(
                                                 RoundedRectangleBorder(
                                                   borderRadius:
@@ -292,7 +292,7 @@ class _OrderScreenState extends State<OrderScreen> {
                                                       ),
                                                       SizedBox(height: 10),
                                                       Container(
-                                                        color: Colors.green,
+                                                        color: Colors.green.shade300,
                                                         height: 40,
                                                       ),
                                                       SizedBox(height: 20)
@@ -329,7 +329,7 @@ class _OrderScreenState extends State<OrderScreen> {
                                           width: 50,
                                           color: Colors.grey.shade400,
                                           child: Image.network(
-                                            singleProduct.image,
+                                            singleProduct.image!,
                                             fit: BoxFit.cover,
                                           ),
                                         ),
@@ -344,7 +344,7 @@ class _OrderScreenState extends State<OrderScreen> {
                                               children: [
                                                 FittedBox(
                                                   child: Text(
-                                                    singleProduct.name,
+                                                    singleProduct.name!,
                                                     style: const TextStyle(
                                                         fontSize: 12,
                                                         color: Colors.black,
@@ -373,7 +373,7 @@ class _OrderScreenState extends State<OrderScreen> {
                                             ),
                                             SizedBox(height: 4),
                                             Text(
-                                              orderModel.products![0].status,
+                                              orderModel.products![0].status!,
                                               style: TextStyle(
                                                   fontSize: 12,
                                                   color: const Color.fromRGBO(

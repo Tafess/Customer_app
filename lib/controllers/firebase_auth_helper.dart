@@ -25,11 +25,12 @@ class FirebaseAuthHelper {
         password: password,
       );
 
-      Routes.instance
-          .pushAndRemoveUntil(widget: const Home(), context: context);
-      Navigator.of(context).pop();
+      // Routes.instance
+      //     .pushAndRemoveUntil(widget: const Home(), context: context);
+      Navigator.of(context, rootNavigator: true).pop();
       return true;
     } on FirebaseAuthException catch (error) {
+      Navigator.of(context, rootNavigator: true).pop();
       showMessage(error.code.toString());
       return false;
     }

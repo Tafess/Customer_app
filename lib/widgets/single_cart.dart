@@ -30,7 +30,7 @@ class _SIngleCartItemState extends State<SIngleCartItem> {
     super.initState();
     // Fetch product information from Firebase when the widget is initialized
     WidgetsBinding.instance!.addPostFrameCallback((_) {
-      getProductInfo(widget.singleProduct.productId);
+      getProductInfo(widget.singleProduct.productId!);
     });
   }
 
@@ -90,7 +90,7 @@ class _SIngleCartItemState extends State<SIngleCartItem> {
                   child: Container(
                     height: 140,
                     color: Theme.of(context).colorScheme.primary,
-                    child: Image.network(widget.singleProduct.image),
+                    child: Image.network(widget.singleProduct.image!),
                   ),
                 ),
                 Expanded(
@@ -111,7 +111,7 @@ class _SIngleCartItemState extends State<SIngleCartItem> {
                                 children: [
                                   FittedBox(
                                     child: Text(
-                                      widget.singleProduct.name,
+                                      widget.singleProduct.name!,
                                       style: const TextStyle(
                                         fontWeight: FontWeight.bold,
                                       ),
@@ -161,10 +161,10 @@ class _SIngleCartItemState extends State<SIngleCartItem> {
                                                 widget.singleProduct, quantity);
                                           },
                                           padding: EdgeInsets.zero,
-                                          child: const CircleAvatar(
+                                          child:  CircleAvatar(
                                             maxRadius: 14,
                                             foregroundColor: Colors.white,
-                                            backgroundColor: Colors.green,
+                                            backgroundColor: Colors.green.shade300,
                                             child: Icon(Icons.add),
                                           ),
                                         ),
@@ -203,7 +203,7 @@ class _SIngleCartItemState extends State<SIngleCartItem> {
                                       children: [
                                         text(title: 'price'.tr),
                                         Text(
-                                          '    ${(widget.singleProduct.discount == 0.0 ? widget.singleProduct.price : widget.singleProduct.discount).toDouble()} ',
+                                          '    ${(widget.singleProduct.discount == 0.0 ? widget.singleProduct.price : widget.singleProduct.discount)!.toDouble()} ',
                                         ),
                                         text(title: 'etb'.tr),
                                       ],
@@ -214,7 +214,7 @@ class _SIngleCartItemState extends State<SIngleCartItem> {
                                       children: [
                                         text(title: 'total'.tr),
                                         Text(
-                                          '  ${widget.singleProduct.discount == 0.0 ? widget.singleProduct.price * quantity : widget.singleProduct.discount * quantity} ',
+                                          '  ${widget.singleProduct.discount == 0.0 ? widget.singleProduct.price! * quantity : widget.singleProduct.discount !* quantity} ',
                                         ),
                                         text(title: 'etb'.tr),
                                       ],

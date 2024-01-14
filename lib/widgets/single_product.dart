@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:buyers/constants/custom_routes.dart';
 import 'package:buyers/constants/custom_text.dart';
 import 'package:buyers/models/product_model.dart';
@@ -40,7 +42,7 @@ class SingleProductWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      singleProduct.name,
+                      singleProduct.name!,
                       style: const TextStyle(
                           overflow: TextOverflow.ellipsis,
                           fontWeight: FontWeight.bold),
@@ -49,8 +51,8 @@ class SingleProductWidget extends StatelessWidget {
                     SizedBox(
                       height: 60,
                       width: double.infinity,
-                      child:
-                          Image.network(singleProduct.image, fit: BoxFit.cover),
+                      child: Image.network(singleProduct.image!,
+                          fit: BoxFit.cover),
                     ),
                     const SizedBox(
                       height: 6,
@@ -60,13 +62,13 @@ class SingleProductWidget extends StatelessWidget {
                         child: Row(
                           children: [
                             Text(
-                              ' ${singleProduct.discount.toStringAsFixed(2)}',
+                              ' ${singleProduct.discount!.toStringAsFixed(2)}',
                               // style:
                               //     themeData.textTheme.bodySmall
                             ),
                             const SizedBox(width: 10),
                             Text(
-                              '${(((singleProduct.price - singleProduct.discount) / (singleProduct.price)) * 100).toStringAsFixed(0)} %  ',
+                              '${(((singleProduct.price! - singleProduct.discount!) / (singleProduct.price!)) * 100).toStringAsFixed(0)} %  ',
                               style: TextStyle(
                                   // color: Colors.green.shade700,
                                   fontWeight: FontWeight.bold),
@@ -79,7 +81,7 @@ class SingleProductWidget extends StatelessWidget {
                       children: [
                         text(title: 'price'.tr),
                         Text(
-                          ' ${singleProduct.price.toStringAsFixed(2)}  ',
+                          ' ${singleProduct.price!.toStringAsFixed(2)}  ',
                           style: TextStyle(
                               decoration: singleProduct.discount != 0.0
                                   ? TextDecoration.lineThrough

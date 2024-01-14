@@ -10,7 +10,6 @@ import 'package:buyers/screens/custom_drawer.dart';
 import 'package:buyers/screens/favorite_screen.dart';
 import 'package:buyers/widgets/single_category.dart';
 import 'package:buyers/widgets/single_product.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
@@ -40,7 +39,7 @@ class _HomeState extends State<Home> {
     setState(() {
       isLoding = true;
     });
-    FirebaseFirestoreHelper.instance.updateTokenFromFirebase();
+   // FirebaseFirestoreHelper.instance.updateTokenFromFirebase();
     categoriesList = await FirebaseFirestoreHelper.instance.getCategories();
     productModelList = await FirebaseFirestoreHelper.instance.getProducts();
     productModelList.shuffle();
@@ -56,7 +55,7 @@ class _HomeState extends State<Home> {
   void searchProduct(String value) {
     searchList = productModelList
         .where((element) =>
-            element.name.toLowerCase().contains(value.toLowerCase()))
+            element.name!.toLowerCase().contains(value.toLowerCase()))
         .toList();
     setState(() {});
   }

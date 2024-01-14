@@ -44,7 +44,7 @@ class Welcome extends StatelessWidget {
                         width: MediaQuery.of(context).size.width / 2,
                         child: CustomButton(
                           title: 'signin'.tr,
-                          color: Colors.green,
+                          color: Colors.green.shade300,
                           onPressed: () {
                             Routes.instance
                                 .push(widget: const Login(), context: context);

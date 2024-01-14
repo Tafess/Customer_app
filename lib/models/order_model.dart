@@ -1,4 +1,5 @@
 import 'package:buyers/models/product_model.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class OrderModel {
   String? payment;
@@ -18,18 +19,18 @@ class OrderModel {
   String? deliveryPhone;
 
   OrderModel({
-     this.totalprice,
+    this.totalprice,
     required this.orderId,
-     this.payment,
-     this.products,
-     this.status,
-     this.userId,
-     this.sellerId,
+    this.payment,
+    this.products,
+    this.status,
+    this.userId,
+    this.sellerId,
     this.address,
     this.phoneNumber,
     this.latitude,
     this.longitude,
-     this.orderDate,
+    this.orderDate,
     this.deliveryId,
     this.deliveryName,
     this.deliveryPhone,
@@ -39,8 +40,10 @@ class OrderModel {
     return OrderModel(
       orderId: json['orderId'] != null ? json['orderId'] as String : "",
       products:
-          (productMap ?? []).map((e) => ProductModel.fromJson(e)).toList(),
-      totalprice: (json['totalprice'] as num?)?.toDouble() ?? 0.0,
+          List.from((productMap ?? []).map((e) => ProductModel.fromJson(e))),
+      totalprice: (json['totalprice'] is String)
+          ? double.tryParse(json['totalprice'] ?? "") ?? 0.0
+          : (json['totalprice'] as num?)?.toDouble() ?? 0.0,
       status: json['status'] != null ? json['status'] as String : "",
       payment: json['payment'] != null ? json['payment'] as String : "",
       userId: json['userId'] != null ? json['userId'] as String : "",
@@ -48,10 +51,14 @@ class OrderModel {
       address: json['address'] != null ? json['address'] as String : "",
       phoneNumber:
           json['phoneNumber'] != null ? json['phoneNumber'] as String : "",
-      latitude: (json['latitude'] as num?)?.toDouble() ?? 0.0,
-      longitude: (json['longitude'] as num?)?.toDouble() ?? 0.0,
+      latitude: (json['latitude'] is String)
+          ? double.tryParse(json['latitude'] ?? "") ?? 0.0
+          : (json['latitude'] as num?)?.toDouble() ?? 0.0,
+      longitude: (json['longitude'] is String)
+          ? double.tryParse(json['longitude'] ?? "") ?? 0.0
+          : (json['longitude'] as num?)?.toDouble() ?? 0.0,
       orderDate: json['orderDate'] != null
-          ? DateTime.parse(json['orderDate'])
+          ? (json['orderDate'] as Timestamp).toDate()
           : DateTime.now(),
       deliveryId:
           json['deliveryId'] != null ? json['deliveryId'] as String : "",

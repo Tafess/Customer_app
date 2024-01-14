@@ -99,7 +99,7 @@ class _ProductDetailsState extends State<ProductDetails> {
             height: 200,
             width: double.infinity,
             child: Image.network(
-              widget.singleProduct.image,
+              widget.singleProduct.image!,
               width: double.infinity,
               fit: BoxFit.cover,
             ),
@@ -108,7 +108,7 @@ class _ProductDetailsState extends State<ProductDetails> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                widget.singleProduct.name,
+                widget.singleProduct.name!,
                 style:
                     const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
@@ -116,9 +116,9 @@ class _ProductDetailsState extends State<ProductDetails> {
                 onPressed: () {
                   setState(() {
                     widget.singleProduct.isFavorite =
-                        !widget.singleProduct.isFavorite;
+                        !widget.singleProduct.isFavorite!;
                   });
-                  if (widget.singleProduct.isFavorite) {
+                  if (widget.singleProduct.isFavorite!) {
                     appProvider.addToFavoriteproduct(widget.singleProduct);
                     showMessage('addedToFavorites'.tr);
                   } else {
@@ -184,7 +184,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              if (quantity < widget.singleProduct.quantity)
+              if (quantity < widget.singleProduct.quantity!)
                 CupertinoButton(
                   onPressed: () {
                     setState(() {
@@ -192,10 +192,10 @@ class _ProductDetailsState extends State<ProductDetails> {
                     });
                   },
                   padding: EdgeInsets.zero,
-                  child: const CircleAvatar(
+                  child: CircleAvatar(
                     maxRadius: 14,
                     foregroundColor: Colors.white,
-                    backgroundColor: Colors.green,
+                    backgroundColor: Colors.green.shade300,
                     child: Icon(Icons.add),
                   ),
                 ),
@@ -206,7 +206,7 @@ class _ProductDetailsState extends State<ProductDetails> {
             children: [
               text(title: 'totalPrice'.tr),
               Text(
-                  '  ${widget.singleProduct.discount == 0.0 ? widget.singleProduct.price * quantity : widget.singleProduct.discount * quantity}'),
+                  '  ${widget.singleProduct.discount == 0.0 ? widget.singleProduct.price! * quantity : widget.singleProduct.discount! * quantity}'),
             ],
           ),
           const SizedBox(height: 20),
@@ -215,11 +215,10 @@ class _ProductDetailsState extends State<ProductDetails> {
             children: [
               CustomButton(
                 onPressed: () {
-                  AppProvider appProvider =
-                      Provider.of(context, listen: false);
-          
+                  AppProvider appProvider = Provider.of(context, listen: false);
+
                   // Check if the product is already in the cart
-                  if (appProvider.isInCart(widget.singleProduct.id)) {
+                  if (appProvider.isInCart(widget.singleProduct.productId!)) {
                     showMessage('alreadyInCart'.tr);
                   } else {
                     ProductModel productModel =

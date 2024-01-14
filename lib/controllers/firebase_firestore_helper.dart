@@ -59,6 +59,26 @@ class FirebaseFirestoreHelper {
   }
   //----------------------------------------------------------------------------
 
+  Future<List<ProductModel>> productByCategory(String categoryId) async {
+    try {
+      QuerySnapshot<Map<String, dynamic>> querySnapshot =
+          await _firebaseFirestore
+              .collection('products') // Change this to 'products' collection
+              .where('categoryId', isEqualTo: categoryId)
+              .get();
+
+      List<ProductModel> productModelList = querySnapshot.docs
+          .map((e) => ProductModel.fromJson(e.data()))
+          .where((product) => product.quantity! > 0)
+          .toList();
+
+      return productModelList;
+    } catch (e) {
+      showMessage(e.toString());
+      return [];
+    }
+  }
+
   //---------------------get products-------------------------------------------
 
   Future<List<ProductModel>> getProducts() async {
@@ -69,7 +89,7 @@ class FirebaseFirestoreHelper {
       List<ProductModel> productModelList = querySnapshot.docs
           .map((e) => ProductModel.fromJson(e.data()))
           .where((product) =>
-              product.quantity >
+              product.quantity! >
               0) // Filter products with quantity greater than 0
           .toList();
 
@@ -91,7 +111,7 @@ class FirebaseFirestoreHelper {
               .get();
       List<ProductModel> productModelList = querySnapshot.docs
           .map((e) => ProductModel.fromJson(e.data()))
-          .where((product) => product.quantity > 0)
+          .where((product) => product.quantity! > 0)
           .toList();
       return productModelList; // Return the mapped productModelList
     } catch (e) {
@@ -109,8 +129,8 @@ class FirebaseFirestoreHelper {
             .get();
     return UserModel.fromJson(querySnapshot.data()!);
   }
-//----------------------------------------------------------------------------
 
+//----------------------------------------------------------------------------
   Future<bool> uploadOrders(
       List<ProductModel> list, BuildContext context, String payment) async {
     String address = store.read('address');
@@ -118,6 +138,7 @@ class FirebaseFirestoreHelper {
     String longitude = store.read('longitude');
     String phoneNumber = store.read('phoneNumber');
     DateTime orderDate = DateTime.now();
+    String totalPrice = store.read('totalPrice');
     int calculateTotalQuantity(List<ProductModel> products) {
       int totalQuantity = 0;
 
@@ -132,24 +153,29 @@ class FirebaseFirestoreHelper {
 
     try {
       ShowLoderDialog(context);
-      double totalPrice = 0.0;
-      for (var element in list) {
-        totalPrice += element.price * element.quantity;
+
+      // Iterate through each product in the order
+      for (ProductModel product in list) {
+        // Get the productId for each product
+        String productId = product.productId ?? '';
+
+        // Update the product quantity in the 'products' collection
+        await _updateProductInCollection(
+            'products', productId, product.quantity ?? 0);
       }
-      DocumentReference documentReference = _firebaseFirestore
-          .collection('orderssssss')
-          .doc(FirebaseAuth.instance.currentUser!.uid);
 
-      QuerySnapshot<Map<String, dynamic>> querySnapshot =
-          await _firebaseFirestore.collectionGroup('products').get();
-      String productId = querySnapshot.docs.first.id;
+      DocumentReference documentReference =
+          _firebaseFirestore.collection('orderssss').doc();
 
-      DocumentSnapshot<Map<String, dynamic>> snapshot =
-          await _firebaseFirestore.collection('products').doc(productId).get();
-      String sellerId = snapshot['sellerId'];
+      DocumentSnapshot<Map<String, dynamic>> snapshot = await _firebaseFirestore
+          .collection('products')
+          .doc(list.first.productId)
+          .get();
+      String sellerId = snapshot['employeeId'];
       String uid = FirebaseAuth.instance.currentUser!.uid;
+
       documentReference.set({
-        'products': list.map((e) => e.toJson()),
+        'products': list.map((e) => e.toJson()).toList(),
         'status': 'pending',
         'totalprice': totalPrice,
         'payment': payment,
@@ -164,15 +190,15 @@ class FirebaseFirestoreHelper {
         'deliveryId': '',
         'deliveryName': '',
         'deliveryPhone': '',
-      }).then((value) {
-        _updateProductInCollection('products', productId, totalOrderedQuantity);
-        //  _updateProductInCollectionGroup('products', productId, totalOrderedQuantity);
       });
+
       showMessage('Ordered Successfully');
+      Navigator.of(context, rootNavigator: true).pop();
 
       return true;
     } catch (e) {
       showMessage(e.toString());
+      print(e.toString());
       Navigator.of(context, rootNavigator: true).pop();
       return false;
     }
@@ -190,7 +216,7 @@ class FirebaseFirestoreHelper {
   //     ShowLoderDialog(context);
   //     double totalPrice = 0.0;
   //     for (var element in list) {
-  //       totalPrice += element.price * element.quantity;
+  //       totalPrice += element.price! * element.quantity!;
   //     }
   //     DocumentReference documentReference = _firebaseFirestore
   //         .collection('userOrders')
@@ -266,8 +292,8 @@ class FirebaseFirestoreHelper {
       try {
         QuerySnapshot<Map<String, dynamic>> querySnapshot =
             await _firebaseFirestore
-                .collection('orders')
-                .where('userId', isEqualTo: userId)
+                .collection('orderssss')
+                // .where('userId', isEqualTo: userId)
                 .get();
 
         List<OrderModel> orderList = querySnapshot.docs
@@ -309,15 +335,15 @@ class FirebaseFirestoreHelper {
 
   // //----------------------------------------------------------------
 
-  void updateTokenFromFirebase() async {
-    String? token = await FirebaseMessaging.instance.getToken();
-    if (token != null) {
-      await _firebaseFirestore
-          .collection('sellers')
-          .doc(FirebaseAuth.instance.currentUser!.uid);
-      // .update({'notificationToken': token});
-    }
-  }
+  // void updateTokenFromFirebase() async {
+  //   String? token = await FirebaseMessaging.instance.getToken();
+  //   if (token != null) {
+  //     await _firebaseFirestore
+  //         .collection('sellers')
+  //         .doc(FirebaseAuth.instance.currentUser!.uid);
+  //     // .update({'notificationToken': token});
+  //   }
+  // }
 
 //-----------------------update orders-----------------------------------------
 
@@ -364,28 +390,22 @@ class FirebaseFirestoreHelper {
   Future<void> _updateProductInCollection(
       String collectionName, String productId, int quantity) async {
     try {
-      QuerySnapshot<Map<String, dynamic>> querySnapshot =
-          await _firebaseFirestore
-              .collection(collectionName)
-              .where('productId', isEqualTo: productId)
-              .get();
+      DocumentReference productRef =
+          _firebaseFirestore.collection(collectionName).doc(productId);
 
-      if (querySnapshot.docs.isNotEmpty) {
-        for (QueryDocumentSnapshot<Map<String, dynamic>> document
-            in querySnapshot.docs) {
-          DocumentReference productRef =
-              _firebaseFirestore.doc(document.reference.path);
+      DocumentSnapshot<Object?> document = await productRef.get();
 
-          Map<String, dynamic> productInfo = document.data();
-          int oldQuantity = productInfo['quantity'] ?? 0;
+      if (document.exists) {
+        Map<String, dynamic>? productInfo =
+            document.data() as Map<String, dynamic>?;
+        int oldQuantity = productInfo!['quantity'];
 
-          int newQuantity = oldQuantity - quantity;
-          if (newQuantity >= 0) {
-            await productRef.update({'quantity': newQuantity});
-          } else {
-            showMessage(
-                'Some error occurred while updating product quantity in $collectionName collection');
-          }
+        int newQuantity = oldQuantity - quantity;
+
+        if (newQuantity >= 0) {
+          await productRef.update({'quantity': newQuantity});
+        } else {
+          showMessage('Error: Quantity cannot be negative');
         }
       } else {
         print('Product not found in $collectionName collection');
@@ -414,10 +434,12 @@ class FirebaseFirestoreHelper {
           Map<String, dynamic> productInfo = document.data();
           int oldQuantity = productInfo['quantity'] ?? 0;
 
-          int newQuantity = oldQuantity - quantity;
+          int newQuantity = oldQuantity - 2;
           if (newQuantity >= 0) {
             await productRef.update({'quantity': newQuantity});
           } else {
+            print(
+                'Some error occurred while updating product quantity in $collectionGroupName collection group');
             showMessage(
                 'Some error occurred while updating product quantity in $collectionGroupName collection group');
           }

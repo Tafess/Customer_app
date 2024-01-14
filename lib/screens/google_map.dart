@@ -6,7 +6,9 @@ import 'package:buyers/constants/custom_routes.dart';
 import 'package:buyers/constants/custom_snackbar.dart';
 import 'package:buyers/constants/custom_text.dart';
 import 'package:buyers/constants/google_api_key.dart';
+import 'package:buyers/models/product_model.dart';
 import 'package:buyers/payment/chapa_payment.dart';
+import 'package:buyers/screens/finished_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/utils.dart';
@@ -425,10 +427,10 @@ class _MapScreenState extends State<MapScreen> {
                         title: 'conform'.tr,
                         onPressed: () {
                           Routes.instance.push(
-                              widget: ChapaPayment(
-                                title: '',
-                              ),
+                              widget: ChapaPayment(title: 'Belkis'),
                               context: context);
+                          // Routes.instance
+                          //     .push(widget: FinishedScreen(productModel: ProductModel(),), context: context);
                         },
                       ),
                     ),

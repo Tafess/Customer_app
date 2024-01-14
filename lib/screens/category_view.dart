@@ -1,10 +1,9 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:buyers/constants/custom_text.dart';
-import 'package:buyers/constants/custome_button.dart';
-import 'package:buyers/constants/custom_routes.dart';
 import 'package:buyers/controllers/firebase_firestore_helper.dart';
 import 'package:buyers/models/catagory_model.dart';
 import 'package:buyers/models/product_model.dart';
-import 'package:buyers/screens/product_details.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -26,7 +25,7 @@ class _CategoryViewState extends State<CategoryView> {
       isLoding = true;
     });
     productModelList = await FirebaseFirestoreHelper.instance
-        .getCategoryViewProduct(widget.categoryModel.id);
+        .productByCategory(widget.categoryModel.id);
     productModelList.shuffle();
     setState(() {
       isLoding = false;
@@ -92,7 +91,7 @@ class _CategoryViewState extends State<CategoryView> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          singleProduct.name,
+                                          singleProduct.name!,
                                           style: const TextStyle(
                                               overflow: TextOverflow.ellipsis,
                                               fontWeight: FontWeight.bold),
@@ -102,7 +101,7 @@ class _CategoryViewState extends State<CategoryView> {
                                           height: 60,
                                           width: double.infinity,
                                           child: Image.network(
-                                              singleProduct.image,
+                                              singleProduct.image!,
                                               fit: BoxFit.cover),
                                         ),
                                         const SizedBox(
@@ -113,13 +112,13 @@ class _CategoryViewState extends State<CategoryView> {
                                             child: Row(
                                               children: [
                                                 Text(
-                                                  ' ${singleProduct.discount.toStringAsFixed(2)}',
+                                                  ' ${singleProduct.discount!.toStringAsFixed(2)}',
                                                   // style:
                                                   //     themeData.textTheme.bodySmall
                                                 ),
                                                 const SizedBox(width: 10),
                                                 Text(
-                                                  '${(((singleProduct.price - singleProduct.discount) / (singleProduct.price)) * 100).toStringAsFixed(0)} %  ',
+                                                  '${(((singleProduct.price! - singleProduct.discount!) / (singleProduct.price!)) * 100).toStringAsFixed(0)} %  ',
                                                   style: TextStyle(
                                                       // color: Colors.green.shade700,
                                                       fontWeight:
@@ -133,7 +132,7 @@ class _CategoryViewState extends State<CategoryView> {
                                           children: [
                                             text(title: 'price'.tr),
                                             Text(
-                                              ' ${singleProduct.price.toStringAsFixed(2)}  ',
+                                              ' ${singleProduct.price!.toStringAsFixed(2)}  ',
                                               style: TextStyle(
                                                   decoration:
                                                       singleProduct.discount !=

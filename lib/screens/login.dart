@@ -24,6 +24,22 @@ class _LoginState extends State<Login> {
   bool isShowPassword = false;
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
+
+  Future<void> handleGoogleSignIn() async {
+    try {
+      await _authHelper.signInWithGoogle();
+      // Actions to perform after successful Google sign-in
+      Routes.instance.pushAndRemoveUntil(
+        widget: CustomBottomBar(),
+        context: context,
+      );
+    } catch (e) {
+      // Handle any errors that occurred during sign-in
+      print('Error signing in with Google: $e');
+      // You can display an error message or take other actions as needed
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,10 +66,7 @@ class _LoginState extends State<Login> {
                         color: Colors.grey,
                         child: CupertinoButton(
                           onPressed: () {
-                            _authHelper.signInWithGoogle();
-
-                            Routes.instance.pushAndRemoveUntil(
-                                widget: CustomBottomBar(), context: context);
+                            handleGoogleSignIn();
                           },
                           child: Row(
                             children: [
@@ -72,12 +85,12 @@ class _LoginState extends State<Login> {
                         ),
                       ),
                       Container(
-                        color: Colors.green,
+                        color: Colors.green.shade300,
                         child: CupertinoButton(
                           onPressed: () {
                             // bool isLoagin = _authHelper.signInWithGoogle();
                             // if (isLoagin) {
-                            Routes.instance.pushAndRemoveUntil(
+                            Routes.instance.push(
                                 widget: PhoneAuthScreen(), context: context);
                             //}
                           },
@@ -133,7 +146,7 @@ class _LoginState extends State<Login> {
                 SizedBox(height: 10),
                 CustomButton(
                     title: 'login'.tr,
-                    color: Colors.green,
+                    color: Colors.green.shade300,
                     onPressed: () async {
                       bool isValidate =
                           loginValidation(email.text, password.text);
@@ -143,6 +156,7 @@ class _LoginState extends State<Login> {
                         if (islogined) {
                           Routes.instance.pushAndRemoveUntil(
                               widget: CustomBottomBar(), context: context);
+                          Navigator.of(context, rootNavigator: true).pop();
                         }
                       }
                     }),

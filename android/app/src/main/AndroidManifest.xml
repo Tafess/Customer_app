@@ -10,7 +10,7 @@
       </queries>
    
     <application 
-        android:label="buyers"
+        android:label="Belikis Customers"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
